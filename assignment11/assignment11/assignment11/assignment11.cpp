@@ -28,13 +28,13 @@ int main()
         living = 650.00;
         other = 90.00;
         delta = 60.00;
-        std::cout << "\t" << "Item" << std::setw(13) << "  " << "Projected" << std::endl;
-        std::cout << "\t" << "=============" << std::setw(13) << "  " << "==========" << std::endl;
-        std::cout << "\tIncome" << std::setw(13) << "$" << std::setw(9)  << income << std::endl;
-        std::cout << "\tTaxes" << std::setw(13) << "$" << std::setw(9)  << taxes << std::endl;
-        std::cout << "\tTithing" << std::setw(13) << "$" << std::setw(9)  << tithing << std::endl;
-        std::cout << "\tLiving" << std::setw(13) << "$" << std::setw(9)  << living << std::endl;
-        std::cout << "\tOther" << std::setw(13) << "$" << std::setw(9)  << other << std::endl;
-        std::cout << "\t" << "=============" << std::setw(13) << "  " << "==========" << std::endl;
-        std::cout << "\tDelta" << std::setw(13) << "$" << std::setw(9)  << delta << std::endl;
+        std::cout << "\t" << "Item" << "           " << "Projected" << std::endl;
+        std::cout << "\t" << "=============" <<  "  " << "==========" << std::endl;
+        std::cout << "\tIncome" << std::setw(10) << "$" << std::setw(9)  << income << std::endl;
+        std::cout << "\tTaxes" << std::setw(11) << "$" << std::setw(9)  << taxes << std::endl;
+        std::cout << "\tTithing" << std::setw(9) << "$" << std::setw(9)  << tithing << std::endl;
+        std::cout << "\tLiving" << std::setw(10) << "$" << std::setw(9)  << living << std::endl;
+        std::cout << "\tOther" << std::setw(11) << "$" << std::setw(9)  << other << std::endl;
+        std::cout << "\t" << "============="  << "  " << "==========" << std::endl;
+        std::cout << "\tDelta" << std::setw(11) << "$" << std::setw(9)  << delta << std::endl;
 }
