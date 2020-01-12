@@ -9,8 +9,8 @@
 *
 *    Estimated:  0.0 hrs
 *    Actual:     0.0 hrs
-*       The most difficult part comprised remembering
-* which operator outputs the string to the console.
+*       The most difficult part comprised understanding why
+* setw() works for the column lines but not for the headings.
 ************************************************************************/
 
 #include <iostream>
