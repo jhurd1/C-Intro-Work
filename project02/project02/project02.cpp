@@ -25,13 +25,14 @@
 class Budget{
 public:
     float income, budgetExp, livingExp, taxes, tithe, other, difference;
-    float actIncome, actTaxes, actTithe, actLiving, actOther;
+    float actIncome, actTaxes, actTithe, actLiving, actOther, differenceTwo;
     //Default constructor
     Budget(){//Initialized this constructor with semicolon as you do in header and led to wonky, undebuggable error.
         
     }
     //Non-default constructor
     Budget(float income, float actIncome){
+        
     }
         
     void promptProjected(){
@@ -41,8 +42,7 @@ public:
         std::cin >> budgetExp;
         std::cout << "\tYour projected living expenses:" << std::endl;
         std::cin >> livingExp;
-        //return income;
-        }
+    }
     
     void promptActual(){
             std::cout << "\tYour actual monthly income:" << std::endl;
@@ -55,7 +55,6 @@ public:
             std::cin >> actTithe;
             std::cout << "\tYour actual other expenses:\n" << std::endl;
             std::cin >> actOther;
-        //return actIncome;
     }
     
     void display(){
@@ -67,12 +66,12 @@ public:
             std::cout << "\tYour actual taxes withheld:  " << actTaxes << std::endl;
             std::cout << "\tYour actual tithe offerings:  " << actTithe << std::endl;
             std::cout << "\tYour actual other expenses:  " << actOther << "\n" << std::endl;
-        //return income;
     }
     
     void displayReport(){
-        float differenceInit = 0.00;
+        //float differenceInit = 0.00;
         difference = income - (livingExp + taxes + tithe + other);
+        differenceTwo = actIncome - (actLiving + actTaxes + actTithe + actOther);
         std::cout << "The following is a report on your monthly expenses" << std::endl;
         std::cout << "Item" << std::setw(23) << "Budget" << std::setw(18) << "Actual" << std::endl;
         std::cout << "===============" <<  "  " << "===============" << "  " <<  "===============" << std::endl;
@@ -82,7 +81,7 @@ public:
         std::cout << "Living" << std::setw(12) << "$" << std::setw(5) << "" << livingExp << std::setw(6) << "$" << std::setw(10) << actLiving << std::endl;
         std::cout << "Other" << std::setw(13) << "$" << std::setw(7) << "" << other << std::setw(6) << "$" << std::setw(10) << actOther << std::endl;
         std::cout << "===============" <<  "  " << "===============" << "  " <<  "===============" << std::endl;
-        std::cout << "Difference" << std::setw(8) << "$" << std::setw(9) << "" << differenceInit << std::setw(4) << "$" << std::setw(10) << difference << std::endl ;
+        std::cout << "Difference" << std::setw(8) << "$" << std::setw(9) << "" << difference << std::setw(4) << "$" << std::setw(10) << differenceTwo << std::endl ;
     }
 };
 
