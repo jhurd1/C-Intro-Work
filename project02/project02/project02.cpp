@@ -95,14 +95,6 @@ int main()
 {
     std::cout << std::fixed;
     std::cout.precision(2);
-    float income, budgetExp, livingExp, taxes, tithe, other, difference;
-    income = 0.0;
-    budgetExp = 0.0;
-    livingExp = 0.0;
-    taxes = 0.0;
-    tithe = 0.0;
-    other = 0.0;
-    difference = 0.0;
     Budget budget;
     budget.promptProjected();
     budget.promptActual();
