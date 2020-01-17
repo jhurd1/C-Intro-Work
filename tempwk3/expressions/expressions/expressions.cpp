@@ -1,6 +1,6 @@
 /***********************************************************************
 * Program:
-*    Prepare 1.3, Expressions        (e.g. Assignment 10, Hello World)
+*    Assignment 13, Expressions        (e.g. Assignment 10, Hello World)
 *    Brother Schwieder, CS124
 * Author:
 *    Jamie Hurd
@@ -9,7 +9,10 @@
 *
 *    Estimated:  0.0 hrs
 *    Actual:     0.0 hrs
-*       The most difficult part comprised
+*       The most difficult part comprised getting the loop to run.
+* Initially, I had a for loop but the one proved unnecessary
+* as I did not have numbers to count, so got rid of it and left the
+* if statement.
 ************************************************************************/
 #include <iostream>
 /**********************************************************************
@@ -20,9 +23,9 @@ class Celsius{
 private:
     float celsius;
     float fahrenheit;
-    float third = 5.0;
-    float fourth = 9.0;
-    float fifth = 32.0;
+    const float third = 5.0;
+    const float fourth = 9.0;
+    const float fifth = 32.0;
     bool run = true;
 protected:
 public:
