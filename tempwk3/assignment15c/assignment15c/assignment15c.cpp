@@ -26,7 +26,8 @@
 #include <iostream>
 
 /*****************************************************
- *
+ *Passes in income and tithe, instantiates the boolean and tests
+ *input against the tithing standard to evaluate who shall pass.
  *****************************************************/
 bool isFullTithePayer(float income, float tithe)
 {
