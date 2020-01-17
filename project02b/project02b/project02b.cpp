@@ -1,6 +1,6 @@
 /***********************************************************************
 * Program:
-*    Project02, Monthly Budget
+*    Project 02, Monthly Budget
 *    Brother Schwieder, CS124
 * Author:
 *    Jamie Hurd
@@ -11,8 +11,8 @@
 *
 *    Estimated:  0.0 hrs
 *    Actual:     0.0 hrs
-*       The most difficult part comprised trying
-* to do more than what was required because
+*       The most difficult part comprised implem-
+* enting a class  because
 * I then had to go back and redo this project.
 ************************************************************************/
 #include <iostream>
@@ -28,8 +28,8 @@ int main()
 {
     std::cout << std::fixed;
     std::cout.precision(2);
-    float income, budgetExp, livingExp, taxes, tithe, other, difference;
-    float actIncome, actTaxes, actTithe, actLiving, actOther, differenceTwo;
+    float income, budgetExp, livingExp, taxes, tithe, other;
+    float actIncome, actTaxes, actTithe, actLiving, actOther;
     income = 0.0;
     budgetExp = 0.0;
     livingExp = 0.0;
@@ -57,16 +57,14 @@ int main()
     std::cin >> actOther;
     std::cout << std::endl;
     float differenceInit = 0.00;
-    //difference = income - (livingExp + taxes + tithe + other);
-    //differenceTwo = actIncome - (actLiving + actTaxes + actTithe + actOther);
     std::cout << "The following is a report on your monthly expenses" << std::endl;
     std::cout << "\tItem" << std::setw(24) << "Budget" << std::setw(16) << "Actual" << std::endl;
     std::cout << "\t===============" <<  " " << "===============" <<  " ===============" << std::endl;
-    std::cout << "\tIncome" << std::setw(11) << "$" << std::setw(7) << "" << income << std::setw(5) << "$" << std::setw(11) << income << std::endl;
-    std::cout << "\tTaxes" << std::setw(12) << "$" << std::setw(7) << "" << taxes << std::setw(5) << "$" << std::setw(11) << actTaxes << std::endl;
-    std::cout << "\tTithing" << std::setw(10) << "$" << std::setw(7) << "" << tithe << std::setw(5) << "$" << std::setw(11) << actTithe << std::endl;
-    std::cout << "\tLiving" << std::setw(11) << "$" << std::setw(7) << "" << budgetExp << std::setw(5) << "$" << std::setw(11) << actLiving << std::endl;
-    std::cout << "\tOther" << std::setw(12) << "$" << std::setw(7) << "" << other << std::setw(5) << "$" << std::setw(11) << actOther << std::endl;
+    std::cout << "\tIncome          $" << std::setw(11) << income <<  "    $" << std::setw(11) << income << std::endl;
+    std::cout << "\tTaxes           $" << std::setw(11) << taxes  << "    $" << std::setw(11) << actTaxes << std::endl;
+    std::cout << "\tTithing         $" << std::setw(11) << tithe << "    $"  << std::setw(11) << actTithe << std::endl;
+    std::cout << "\tLiving          $" << std::setw(11) << budgetExp << "    $"  << std::setw(11) << actLiving << std::endl;
+    std::cout << "\tOther           $" << std::setw(11) << other <<  "    $"  << std::setw(11) << actOther << std::endl;
     std::cout << "\t===============" <<  " " << "===============" << " " <<  "===============" << std::endl;
     std::cout << "\tDifference" << std::setw(7) << "$" << std::setw(7) << "" << differenceInit << std::setw(5) << "$" << std::setw(11) << differenceInit << std::endl ;
     return 0;
