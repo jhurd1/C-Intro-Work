@@ -16,7 +16,9 @@
 #include <iostream>
 #include <iomanip>
 #include <stdio.h>
-
+/**********************************************************************
+ * Main prompts for your income before displaying it with a tab.
+ **********************************************************************/
 int main()
 {
     std::cout << std::fixed;
