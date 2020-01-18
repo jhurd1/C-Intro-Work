@@ -13,7 +13,8 @@
 *    Actual:     1.5 hrs
 *       The most difficult part comprised comprehending
 * access and scope so that my report table output the
-* user input.
+* user input in addition to finding what other's calcu-
+* lation should be.
 ************************************************************************/
 #include <stdio.h>
 #include <iomanip>
@@ -25,18 +26,18 @@
  *****************************************/
 class Budget{
 private:
-   float income;
-   float living;
-   float taxes;
-   float tithe;
-   float other;
-   float difference;
-   float actIncome;
-   float actTaxes;
-   float actTithe;
-   float actLiving;
-   float actOther;
-   float differenceTwo;
+   double income;
+   double living;
+   double taxes;
+   double tithe;
+   double other;
+   double difference;
+   double actIncome;
+   double actTaxes;
+   double actTithe;
+   double actLiving;
+   double actOther;
+   double differenceTwo;
 public:
    
    /******************************************
@@ -45,40 +46,53 @@ public:
    * with child classes or using the parent class.
     *****************************************/
    //mutators
-
+   double setTithing(double tithe){
+      this->tithe = income * .1;
+      return tithe;
+   }
+   
+   double setOther(double other){
+      this->other = income - (taxes + tithe + living);
+      return other;
+   }
    //accessors
-   float getIncome(){
+   double getIncome(){
       std::cout << "\tYour monthly income: ";
       std::cin >> income;
       return income;
    }
    
-   float getLiving(){
+   double getLiving(){
       std::cout << "\tYour budgeted living expenses: ";
       std::cin >> living;
       return living;
    }
    
-   float getActLiving(){
+   double getActLiving(){
       std::cout << "\tYour actual living expenses: ";
       std::cin >> actLiving;
       return actLiving;
    }
    
-   float getActOther(){
+   double getOther(){
+      std::cin >> other;
+      return other;
+   }
+   
+   double getActOther(){
       std::cout << "\tYour actual other expenses: ";
       std::cin >> actOther;
       std::cout << std::endl;
       return actOther;
    }
    
-   float getActTithe(){
+   double getActTithe(){
       std::cout << "\tYour actual tithe offerings: ";
       std::cin >> actTithe;
       return actTithe;
    }
    
-   float getActTax(){
+   double getActTax(){
       std::cout << "\tYour actual taxes withheld: ";
       std::cin >> actTaxes;
       return actTaxes;
@@ -89,7 +103,7 @@ public:
         
     }
     //Non-default constructor
-    Budget(float income, float actIncome){
+    Budget(double income, double actIncome){
         
     }
     
@@ -99,7 +113,8 @@ public:
     }
     
     void displayReport(){
-      float differenceInit = 0.00;
+       Budget budget;
+      double differenceInit = 0.00;
       taxes = 0.0;
       difference = income - (actLiving + actTaxes + actTithe + actOther);
       std::cout << "The following is a report on your monthly expenses" << std::endl;
@@ -118,11 +133,15 @@ public:
 /******************************************
 *Main accesses public members from class Budget
 * before spinning the program up by tying them together.
+* Getters and setters allow programmers to protect data
+* members by making variables private.
  *****************************************/
 int main()
 {
    std::cout << std::fixed;
    std::cout.precision(2);
+   double tithe = 0.0;
+   double other = 0.0;
    Budget temp;
    temp.displayIntro();
    temp.getIncome();
@@ -130,6 +149,8 @@ int main()
    temp.getActLiving();
    temp.getActTax();
    temp.getActTithe();
+   temp.setTithing(tithe);
+   temp.setOther(other);
    temp.getActOther();
    temp.displayReport();
    return 0;
