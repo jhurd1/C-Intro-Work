@@ -22,6 +22,7 @@ private:
    const int bracket4 = 28;
    const int bracket5 = 33;
    const int bracket6 = 35;
+   const int brackets[];
 protected:
 public:
    //mutators
@@ -33,7 +34,7 @@ public:
                     const int bracket5,
                     const int bracket6);
    //accessors
-   const int getBrackets();
+   int getBrackets(int brackets[]);
    int getIncome();
    //default constructor
    TaxBracket();
