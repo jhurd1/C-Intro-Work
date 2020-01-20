@@ -16,13 +16,12 @@
 class TaxBracket{
 private:
    int income;
-   const int bracket1 = 10;
-   const int bracket2 = 15;
-   const int bracket3 = 25;
-   const int bracket4 = 28;
-   const int bracket5 = 33;
-   const int bracket6 = 35;
-   const int brackets[];
+   int bracket1 = 10;
+   int bracket2 = 15;
+   int bracket3 = 25;
+   int bracket4 = 28;
+   int bracket5 = 33;
+   int bracket6 = 35;
 protected:
 public:
    //mutators
@@ -34,8 +33,8 @@ public:
                     const int bracket5,
                     const int bracket6);
    //accessors
-   int getBrackets(int brackets[]);
    int getIncome();
+   int getBrackets();
    //default constructor
    TaxBracket();
    //non-default constructor
