@@ -72,7 +72,7 @@ const int bracket4,
 const int bracket5,
                  const int bracket6){
    TaxBracket iterate;
-   int income = iterate.getIncome();
+    int income = iterate.getIncome();
    //switch determines user tax bracket based on six tests
    switch(income){
       case 1:
