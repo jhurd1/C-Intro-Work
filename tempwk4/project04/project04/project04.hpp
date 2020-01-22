@@ -25,12 +25,12 @@ class BudgetCT{//budget-compute-tithing
 private:
    double tithing;
    double income;
-   int bracket1 = 10;
-   int bracket2 = 15;
-   int bracket3 = 25;
-   int bracket4 = 28;
-   int bracket5 = 33;
-   int bracket6 = 35;
+   double bracket1 = .10;
+   double bracket2 = .15;
+   double bracket3 = .25;
+   double bracket4 = .28;
+   double bracket5 = .33;
+   double bracket6 = .35;
    double living;
    double taxes;
    double other;
@@ -43,17 +43,18 @@ private:
    double differenceTwo;
 protected:
 public:
+   double annual;
    //constructor
    BudgetCT();
    //non-default constructor
    BudgetCT(double tithing);
    //accessors
-   int getBracket1();
-   int getBracket2();
-   int getBracket3();
-   int getBracket4();
-   int getBracket5();
-   int getBracket6();
+   double getBracket1();
+   double getBracket2();
+   double getBracket3();
+   double getBracket4();
+   double getBracket5();
+   double getBracket6();
    double getTaxes();
    double getTithe();
    double getOther();
@@ -66,13 +67,14 @@ public:
    double getActLiving();
    double getActOther();
    double getDifferenceTwo();
+   double getABunch();
    //mutators
-   void setBracket1(int bracket1);
-   void setBracket2(int bracket2);
-   void setBracket3(int bracket3);
-   void setBracket4(int bracket4);
-   void setBracket5(int bracket5);
-   void setBracket6(int bracket6);
+   void setBracket1(double bracket1);
+   void setBracket2(double bracket2);
+   void setBracket3(double bracket3);
+   void setBracket4(double bracket4);
+   void setBracket5(double bracket5);
+   void setBracket6(double bracket6);
    void setTaxes(double taxes);
    void setTithe(double tithing);
    void setOther(double other);
@@ -85,11 +87,12 @@ public:
    void setActOther(double actOther);
    void setDifferenceTwo(double differenceTwo);
    //other methods
-   double calcTithing(double tithing);
-   double computeTax(double income);
+   double calcTithing();
+   double computeTax();
    std::string iterator();
    void displayIntro();
    void displayReport();
+   void prompt();
    
 };
 #endif /* project04_hpp */
