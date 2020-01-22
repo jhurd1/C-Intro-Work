@@ -93,6 +93,7 @@ public:
    void displayIntro();
    void displayReport();
    void prompt();
+   double calcDiff();
    
 };
 #endif /* project04_hpp */

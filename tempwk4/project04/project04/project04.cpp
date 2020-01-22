@@ -131,98 +131,6 @@ double BudgetCT::getActOther(){
 }
 
 /*********************************************************************
-*Use setters to allow main() to access private data members.
- *********************************************************************/
-/*
-void BudgetCT::setBracket1(double bracket1)
-{
-   this->bracket1 = bracket1;
-}
-void BudgetCT::setBracket2(double bracket2)
-{
-   this->bracket2 = bracket2;
-}
-
-void BudgetCT::setBracket3(double bracket3)
-{
-   this->bracket3 = bracket3;
-}
-
-void BudgetCT::setBracket4(double bracket4)
-{
-   this->bracket4 = bracket4;
-}
-
-void BudgetCT::setBracket5(double bracket5)
-{
-   this->bracket5 = bracket5;
-}
-
-void BudgetCT::setBracket6(double bracket6)
-{
-   this->bracket6 = bracket6;
-}
-
-void BudgetCT::setTaxes(double taxes)
-{
-   this->taxes = taxes;
-}
-
-void BudgetCT::setTithe(double tithing)
-{
-   this->tithing = tithing;
-}
-
-void BudgetCT::setOther(double other)
-{
-   this->other = other;
-}
-
-void BudgetCT::setDifference(double difference)
-{
-   this->difference = difference;
-}
-
-void BudgetCT::setIncome(double income)
-{
-   this->income = income;
-}
-
-void BudgetCT::setActIncome(double actIncome)
-{
-   this->actIncome = actIncome;
-}
-
-void BudgetCT::setActTaxes(double actTaxes)
-{
-   this->actTaxes = actTaxes;
-}
-
-void BudgetCT::setActTithe(double actTithe)
-{
-   this->actTithe = actTithe;
-}
-
-void BudgetCT::setactLiving(double actLiving)
-{
-   this->actLiving = actLiving;
-}
-
-void BudgetCT::setActOther(double actOther)
-{
-   this->actOther = actOther;
-}*/
-
-/*********************************************************************
-* Use iterators to repeat the string when you calculate the tax bracket.
-*********************************************************************/
-std::string BudgetCT::iterator()
-{
-   std::string displayBracket = "Your tax bracket is ";
-   return displayBracket;
-}
-
-/*********************************************************************
  * Compute the user's tax bracket for projecting the tax imposition.
  *********************************************************************/
 double BudgetCT::computeTax(){
@@ -271,6 +179,12 @@ double BudgetCT::calcTithing()
    return tithing;
 }
 
+double BudgetCT::calcDiff()
+{
+   BudgetCT diff;
+   difference = diff.getIncome() - (diff.getActLiving() + diff.getActTaxes() + diff.getActTithe() + diff.getActOther());
+   return difference;
+}
 /*********************************************************************
 * Display the doubleroduction for the report.
 *********************************************************************/
@@ -285,7 +199,7 @@ void BudgetCT::displayReport(){
        BudgetCT budget;
       double differenceInit = 0.00;
       taxes = 0.0;
-      difference = income - (actLiving + actTaxes + actTithe + actOther);
+      difference = budget.getIncome() - (budget.getActLiving() + budget.getActTaxes() + budget.getActTithe() + budget.getActOther());
       std::cout << "The following is a report on your monthly expenses" << std::endl;
       std::cout << "\tItem" << std::setw(24) << "Budget" << std::setw(16) << "Actual" << std::endl;
       std::cout << "\t===============" <<  " " << "===============" <<  " ===============" << std::endl;
@@ -295,7 +209,7 @@ void BudgetCT::displayReport(){
       std::cout << "\tLiving          $" << std::setw(11) << budget.getLiving() << "    $"  << std::setw(11) << budget.getActLiving() << std::endl;
       std::cout << "\tOther           $" << std::setw(11) << budget.getOther() <<  "    $"  << std::setw(11) << budget.getActOther() << std::endl;
       std::cout << "\t===============" <<  " " << "===============" << " " <<  "===============" << std::endl;
-      std::cout << "\tDifference" << std::setw(7) << "$" << std::setw(7) << "" << differenceInit << std::setw(5) << "$" << std::setw(11) << budget.getDifference() << std::endl ;
+      std::cout << "\tDifference" << std::setw(7) << "$" << std::setw(7) << "" << differenceInit << std::setw(5) << "$" << std::setw(11) << difference << std::endl ;
     }
 
 /*********************************************************************
