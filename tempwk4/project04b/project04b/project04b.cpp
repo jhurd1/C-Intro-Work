@@ -21,12 +21,33 @@
 #include <stdio.h>
 #include <iomanip>
 #include <iostream>
-#include "project04.hpp"
 
+class BudgetCT{
+private:
+   double tithing;
+      double income;
+      double bracket1 = .10;
+      double bracket2 = .15;
+      double bracket3 = .25;
+      double bracket4 = .28;
+      double bracket5 = .33;
+      double bracket6 = .35;
+      double living;
+      double taxes;
+      double other;
+      double difference;
+      double actIncome;
+      double actTaxes;
+      double actTithe;
+      double actLiving;
+      double actOther;
+   protected:
+   public:
+      double annual;
 /*********************************************************************
 * Construct an object to work from.
 *********************************************************************/
-BudgetCT::BudgetCT()
+BudgetCT()
 {
    
 }
@@ -34,52 +55,52 @@ BudgetCT::BudgetCT()
 /*********************************************************************
 *Use getters to allow main() to access private data members.
  *********************************************************************/
-double BudgetCT::getBracket1()
+double getBracket1()
 {
    return bracket1;
 }
 
-double BudgetCT::getBracket2()
+double getBracket2()
 {
    return bracket2;
 }
 
-double BudgetCT::getBracket3()
+double getBracket3()
 {
    return bracket3;
 }
 
-double BudgetCT::getBracket4()
+double getBracket4()
 {
    return bracket4;
 }
 
-double BudgetCT::getBracket5()
+double getBracket5()
 {
    return bracket5;
 }
 
-double BudgetCT::getBracket6()
+double getBracket6()
 {
    return bracket6;
 }
 
-double BudgetCT::getTaxes()
+double getTaxes()
 {
    return taxes;
 }
 
-double BudgetCT::getTithe()
+double getTithe()
 {
    return tithing;
 }
 
-double BudgetCT::getOther()
+double getOther()
 {
    return other;
 }
 
-void BudgetCT::prompt()
+void prompt()
 {
    std::cout << "\tYour monthly income: ";
    std::cin >> income;
@@ -96,39 +117,39 @@ void BudgetCT::prompt()
    std::cout << std::endl;
 }
 
-double BudgetCT::getIncome(){
+double getIncome(){
    return income;
 }
 
-double BudgetCT::getLiving(){
+double getLiving(){
    return living;
 }
 
-double BudgetCT::getActIncome()
+double getActIncome()
 {
    return actIncome;
 }
 
-double BudgetCT::getActTaxes(){
+double getActTaxes(){
    return actTaxes;
 }
 
-double BudgetCT::getActTithe(){
+double getActTithe(){
    return actTithe;
 }
 
-double BudgetCT::getActLiving(){
+double getActLiving(){
    return actLiving;
 }
 
-double BudgetCT::getActOther(){
+double getActOther(){
    return actOther;
 }
 
 /*********************************************************************
  * Compute the user's tax bracket for projecting the tax imposition.
  *********************************************************************/
-double BudgetCT::computeTax(){
+double computeTax(){
    BudgetCT calc;
    annual = calc.getIncome() * 12;
    if((annual > 0) && (annual < 15100))
@@ -166,7 +187,7 @@ double BudgetCT::computeTax(){
 /*********************************************************************
 * Calculate the tithing.
 *********************************************************************/
-double BudgetCT::calcTithing()
+double calcTithing()
 {
    BudgetCT forTithe;
    forTithe.getIncome();
@@ -177,14 +198,14 @@ double BudgetCT::calcTithing()
 /*********************************************************************
 * Display the doubleroduction for the report.
 *********************************************************************/
-void BudgetCT::displayIntro(){
+void displayIntro(){
       BudgetCT dis;
       std::cout << "This program keeps track of your monthly budget" << std::endl;
       std::cout << "Please enter the following:" << std::endl;
       dis.prompt();
    }
     
-void BudgetCT::displayReport(){
+void displayReport(){
    std::cout << std::fixed;
    std::cout.precision(2);
    BudgetCT budget;
@@ -202,7 +223,7 @@ void BudgetCT::displayReport(){
    std::cout << "\t===============" <<  " " << "===============" << " " <<  "===============" << std::endl;
    std::cout << "\tDifference" << std::setw(7) << "$" << std::setw(7) << "" << differenceInit << std::setw(5) << "$" << std::setw(11) << difference << std::endl ;
 }
-
+};
 /*********************************************************************
 * Spin up the program with main.
 *********************************************************************/

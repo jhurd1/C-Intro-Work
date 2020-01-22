@@ -1,6 +1,6 @@
 /***********************************************************************
 * Program:
-*    Project 03, Monthly Budget
+*    Project 04, Monthly Budget
 *    Brother Schwieder, CS124
 * Author:
 *    Jamie Hurd
@@ -11,17 +11,19 @@
 *
 *    Estimated:  1.0 hrs
 *    Actual:     1.5 hrs
-*       The most difficult part comprised comprehending
-* access and scope so that my report table output the
-* user input in addition to finding what other's calcu-
-* lation should be.
+*       The most difficult part comprised getting
+* the tax calculator to recognize the income variable. I
+* assumed that calling getIncome() would allow it to see
+* it, but it didn't. Showing the method as part of the class
+* allowed me to scope "income" in by itself without having
+* to call extemporaneous methods, like getters..
 ************************************************************************/
 
 #ifndef project04_hpp
 #define project04_hpp
-
 #include <stdio.h>
-class BudgetCT{//budget-compute-tithing
+
+class BudgetCT{
 private:
    double tithing;
    double income;
@@ -40,7 +42,6 @@ private:
    double actTithe;
    double actLiving;
    double actOther;
-   double differenceTwo;
 protected:
 public:
    double annual;
@@ -58,7 +59,6 @@ public:
    double getTaxes();
    double getTithe();
    double getOther();
-   double getDifference();
    double getIncome();
    double getLiving();
    double getActIncome();
@@ -66,26 +66,7 @@ public:
    double getActTithe();
    double getActLiving();
    double getActOther();
-   double getDifferenceTwo();
-   double getABunch();
    //mutators
-   void setBracket1(double bracket1);
-   void setBracket2(double bracket2);
-   void setBracket3(double bracket3);
-   void setBracket4(double bracket4);
-   void setBracket5(double bracket5);
-   void setBracket6(double bracket6);
-   void setTaxes(double taxes);
-   void setTithe(double tithing);
-   void setOther(double other);
-   void setDifference(double difference);
-   void setIncome(double income);
-   void setActIncome(double actIncome);
-   void setActTaxes(double actTaxes);
-   void setActTithe(double actTithe);
-   void setactLiving(double actLiving);
-   void setActOther(double actOther);
-   void setDifferenceTwo(double differenceTwo);
    //other methods
    double calcTithing();
    double computeTax();
@@ -94,6 +75,5 @@ public:
    void displayReport();
    void prompt();
    double calcDiff();
-   
 };
 #endif /* project04_hpp */
