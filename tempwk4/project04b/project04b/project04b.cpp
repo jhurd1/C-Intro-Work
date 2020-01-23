@@ -22,28 +22,37 @@
 #include <iomanip>
 #include <iostream>
 
+/**Brother Schwieder:
+ *Make variables local when they won't pass testbed,
+ *simplify the code by deleting the class completely
+ *then see if it passes testbed
+ *(copy project03 in as needed.)
+ *Won't be going into classes in this class
+ *but will be addressing pointers.
+ */
+
 class BudgetCT{
 private:
-   double tithing;
-      double income;
-      double bracket1 = .10;
-      double bracket2 = .15;
-      double bracket3 = .25;
-      double bracket4 = .28;
-      double bracket5 = .33;
-      double bracket6 = .35;
-      double living;
-      double taxes;
-      double other;
-      double difference;
-      double actIncome;
-      double actTaxes;
-      double actTithe;
-      double actLiving;
-      double actOther;
-   protected:
+   double annual;
+     double tithing;
+     double income;
+     double bracket1 = .10;
+     double bracket2 = .15;
+     double bracket3 = .25;
+     double bracket4 = .28;
+     double bracket5 = .33;
+     double bracket6 = .35;
+     double living;
+     double taxes;
+     double other;
+     double difference;
+     double actIncome;
+     double actTaxes;
+     double actTithe;
+     double actLiving;
+     double actOther;
    public:
-      double annual;
+  
 /*********************************************************************
 * Construct an object to work from.
 *********************************************************************/
@@ -117,6 +126,7 @@ void prompt()
    std::cout << std::endl;
 }
 
+   
 double getIncome(){
    return income;
 }
@@ -151,35 +161,35 @@ double getActOther(){
  *********************************************************************/
 double computeTax(){
    BudgetCT calc;
-   annual = calc.getIncome() * 12;
+   annual = income * 12;
    if((annual > 0) && (annual < 15100))
    {
-      calc.getBracket1();
+      //calc.getBracket1();
       taxes = bracket1 * income;
    }
    if((annual > 15100) && (annual < 61300))
    {
-     calc.getBracket2();
+     //calc.getBracket2();
       taxes = bracket2 * income;
    }
    if((annual > 61300) && (annual < 123700))
    {
-      calc.getBracket3();
+      //calc.getBracket3();
       taxes = bracket3 * income;
    }
    if((annual > 123700) && (annual < 188450))
    {
-       calc.getBracket4();
+       //calc.getBracket4();
        taxes = bracket4 * income;
    }
    if((annual > 188450) && (annual < 336550))
    {
-      calc.getBracket5();
+      //calc.getBracket5();
       taxes = bracket5 * income;
    }
    if(annual > 336550){
-      calc.getBracket6();
-      taxes = bracket6 * calc.getIncome();
+      //calc.getBracket6();
+      taxes = bracket6 * income;
    }
    return taxes;
    }
@@ -211,15 +221,15 @@ void displayReport(){
    BudgetCT budget;
    double differenceInit = 0.00;
    taxes = 0.0;
-   difference = budget.getIncome() - (budget.getActLiving() + budget.getActTaxes() + budget.getActTithe() + budget.getActOther());
+   difference = income - (actLiving + actTaxes + actTithe + actOther);
    std::cout << "The following is a report on your monthly expenses" << std::endl;
    std::cout << "\tItem" << std::setw(24) << "Budget" << std::setw(16) << "Actual" << std::endl;
    std::cout << "\t===============" <<  " " << "===============" <<  " ===============" << std::endl;
-   std::cout << "\tIncome          $" << std::setw(11) << budget.getIncome() <<  "    $" << std::setw(11) << budget.getIncome() << std::endl;
-   std::cout << "\tTaxes           $" << std::setw(11) << budget.computeTax()  << "    $" << std::setw(11) << budget.getActTaxes() << std::endl;
-   std::cout << "\tTithing         $" << std::setw(11) << budget.calcTithing() << "    $"  << std::setw(11) << budget.getActTithe() << std::endl;
-   std::cout << "\tLiving          $" << std::setw(11) << budget.getLiving() << "    $"  << std::setw(11) << budget.getActLiving() << std::endl;
-   std::cout << "\tOther           $" << std::setw(11) << budget.getActOther() <<  "    $"  << std::setw(11) << budget.getActOther() << std::endl;
+   std::cout << "\tIncome          $" << std::setw(11) << income <<  "    $" << std::setw(11) << income << std::endl;
+   std::cout << "\tTaxes           $" << std::setw(11) << budget.computeTax()  << "    $" << std::setw(11) << actTaxes << std::endl;
+   std::cout << "\tTithing         $" << std::setw(11) << budget.calcTithing() << "    $"  << std::setw(11) << actTithe << std::endl;
+   std::cout << "\tLiving          $" << std::setw(11) << living << "    $"  << std::setw(11) << actLiving << std::endl;
+   std::cout << "\tOther           $" << std::setw(11) << actOther <<  "    $"  << std::setw(11) << actOther << std::endl;
    std::cout << "\t===============" <<  " " << "===============" << " " <<  "===============" << std::endl;
    std::cout << "\tDifference" << std::setw(7) << "$" << std::setw(7) << "" << differenceInit << std::setw(5) << "$" << std::setw(11) << difference << std::endl ;
 }
