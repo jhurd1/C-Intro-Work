@@ -233,4 +233,3 @@ int main()
    begin.displayIntro();
    begin.displayReport();
 }
-
