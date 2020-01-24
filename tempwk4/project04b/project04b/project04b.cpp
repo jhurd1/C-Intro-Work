@@ -27,15 +27,6 @@
 #include <iomanip>
 #include <iostream>
 
-/**Brother Schwieder:
- *Make variables local when they won't pass testbed,
- *simplify the code by deleting the class completely
- *then see if it passes testbed
- *(copy project03 in as needed.)
- *Won't be going into classes in this class
- *but will be addressing pointers.
- */
-
 class BudgetCT{
 private:
    double annual;
@@ -104,36 +95,29 @@ double getBracket6()
  * Compute the user's tax bracket for projecting the tax imposition.
  *********************************************************************/
 double computeTax(){
-   BudgetCT calc;
        annual = income * 12;
-       if((annual > 0) && (annual < 15100))
+       if(annual >= 0 && annual <= 15100)//This still evaluated before I changed the parantheses, which looked like those if statements below
        {
-          //calc.getBracket1();
-          taxes = getBracket1() * income;
+          taxes = getBracket1() * income;//We know this evaluates fine. It's working to here.
        }
-       if((annual > 15100) && (annual < 61300))
+       if((annual >= 15100) && (annual <= 61300))
        {
-         //calc.getBracket2();
-          taxes = getBracket2() * income;
+          taxes = (1510 + (getBracket2() * (annual - 15100))) / 12;
        }
-       if((annual > 61300) && (annual < 123700))
+       if((annual >= 61300) && (annual <= 123700))
        {
-          //calc.getBracket3();
-          taxes = getBracket3() * income;
+          taxes = (8440 + (getBracket3() * (annual - 61300))) / 12;
        }
-       if((annual > 123700) && (annual < 188450))
+       if((annual >= 123700) && (annual <= 188450))
        {
-           //calc.getBracket4();
-           taxes = getBracket4() * income;
+           taxes = (24040 + (getBracket4() * (annual - 123700))) / 12;
        }
-       if((annual > 188450) && (annual < 336550))
+       if((annual >= 188450) && (annual <= 336550))
        {
-          //calc.getBracket5();
-          taxes = bracket5 * income;
+          taxes = (42170 + (bracket5 * (annual - 188450))) / 12;
        }
-       if(annual > 336550){
-          //calc.getBracket6();
-          taxes = getBracket6() * income;
+       if(annual >= 336550){
+          taxes = (91043 + (getBracket6() * (annual - 336550))) / 12;
        }
    return taxes;
    }
@@ -152,7 +136,7 @@ double computeTax(){
       
       double setOther(double other){
          this->other = other;// I had line 155 assigned here, jumping the gun
-         other = income - (taxes + tithing + living);//I needed to tell the compiler that this other should be other first on line 154
+         other = income - (taxes + setTithing(tithing) + living);//I needed to tell the compiler that this other should be other first on line 154
          return other;//Had to do the same for setTithing.
       }
       //accessors
