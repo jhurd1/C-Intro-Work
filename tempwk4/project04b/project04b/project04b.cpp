@@ -26,7 +26,9 @@
 #include <stdio.h>
 #include <iomanip>
 #include <iostream>
-
+/**********************************************************************
+* BudgetCT holds data members.
+ *********************************************************************/
 class BudgetCT{
 private:
    double annual;
@@ -96,9 +98,9 @@ double getBracket6()
  *********************************************************************/
 double computeTax(){
        annual = income * 12;
-       if(annual >= 0 && annual <= 15100)//This still evaluated before I changed the parantheses, which looked like those if statements below
+       if(annual >= 0 && annual <= 15100)
        {
-          taxes = getBracket1() * income;//We know this evaluates fine. It's working to here.
+          taxes = getBracket1() * income;
        }
        if((annual >= 15100) && (annual <= 61300))
        {
@@ -122,11 +124,11 @@ double computeTax(){
    return taxes;
    }
       
-      /******************************************
-      * Accessors and mutators help provide programmers with
-      * control over what parameters can be implemented
-      * with child classes or using the parent class.
-       *****************************************/
+   /******************************************
+   * Accessors and mutators help provide programmers with
+   * control over what parameters can be implemented
+   * with child classes or using the parent class.
+   *****************************************/
       //mutators
       double setTithing(double tithing){
          this->tithing = tithing;
@@ -135,9 +137,9 @@ double computeTax(){
       }
       
       double setOther(double other){
-         this->other = other;// I had line 155 assigned here, jumping the gun
-         other = income - (taxes + setTithing(tithing) + living);//I needed to tell the compiler that this other should be other first on line 154
-         return other;//Had to do the same for setTithing.
+         this->other = other;
+         other = income - (taxes + setTithing(tithing) + living);
+         return other;
       }
       //accessors
       double getIncome(){
@@ -204,12 +206,12 @@ double computeTax(){
        }
    };
 
-   /******************************************
-   *Main accesses public members from class Budget
-   * before spinning the program up by tying them together.
-   * Getters and setters allow programmers to protect data
-   * members by making variables private.
-    *****************************************/
+/******************************************
+* Main accesses public members from class Budget
+* before spinning the program up by tying them together.
+* Getters and setters allow programmers to protect data
+* members by making variables private.
+*****************************************/
    int main()
    {
       std::cout << std::fixed;
