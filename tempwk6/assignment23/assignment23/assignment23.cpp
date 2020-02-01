@@ -74,26 +74,22 @@ void setLimit(int limit)
 /***********************************************************************
 *Others
 ***********************************************************************/
-void prompt(int multiple)
+void prompt()//Line 77 is the point of failure. By trying to pass in multiple, the rest of the program could not discern which multiple it needed.
    {
       std::cout << "What multiples are we adding? " << std::endl;
       std::cin >> multiple;
    }
    
-   int doingTheMath(int multiple, int limit)
+   int doingTheMath()
    {
-      Loopy gettinLoopy;
-      doTheMath = getLimit() / getMultiple();
-      int doMoreMath = getMultiple() * doTheMath;
-      return doMoreMath;
+      doTheMath = limit / multiple;//limit was okay in output; we're not getting multiple for some reason
+      //int doMoreMath = getMultiple() * doTheMath;
+      return doTheMath;
    }
    
 void display()
    {
-      Loopy test;
-      test.prompt(multiple);
-      test.doingTheMath(multiple, limit);
-      std::cout << "The sum of multiples of  " << multiple << " less than 100 are: " << doingTheMath(multiple, limit) ;
+      std::cout << "The sum of multiples of  " << multiple << " less than 100 are: " << doingTheMath() << std::endl;
    }
 };
 
@@ -103,5 +99,6 @@ void display()
 int main()
 {
    Loopy loop;
+   loop.prompt();
    loop.display();
 }
