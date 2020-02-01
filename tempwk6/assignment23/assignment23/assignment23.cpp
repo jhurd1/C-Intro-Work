@@ -8,14 +8,12 @@
 *    This program incorporates a lesson in loop syntax.
 *
 *    Estimated:  1.0 hrs
-*    Actual:     1.5 hrs
+*    Actual:     2.5 hrs
 *       The most difficult part comprised calculating multiples or doing the math.
 ************************************************************************/
 #include <stdio.h>
 #include <iomanip>
 #include <iostream>
-#include <limits>
-#include <stdexcept>
 
 /***********************************************************************
 *One loop class to rule all the loops.
@@ -83,43 +81,29 @@ void prompt()
    }
    
 /***********************************************************************
-*Manage incorrect input.
-***********************************************************************/
-void errorCheck()
-   {
-      while(std::cin.fail())
-      {
-         std::cin.clear();
-         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-         std::cin >> multiple;
-      }
-   }
-   
-/***********************************************************************
 *Calculate the sum of the multiples less than 100
 ***********************************************************************/
    int calculate()
-   {
-      if(multiple < limit)
       {
-         for(int i = 0; i < limit - multiple; i++)
+         do
          {
-            sum += multiple;
+            prompt();
          }
-      }
-      if(multiple > 100)
-      {
-         errorCheck();
-      }
-      return sum;
-   }
+         while(multiple < 1 || multiple > 100);
+         for(int i = 0; i < 100; i += multiple)
+            {
+                       sum += i;
+            }
+         display();
+         return 0;
+         }
    
 /***********************************************************************
 *Display
 ***********************************************************************/
 void display()
    {
-      std::cout << "The sum of multiples of " << multiple << " less than 100 are: " << calculate() << std::endl;
+      std::cout << "The sum of multiples of " << multiple << " less than 100 are: " << sum << std::endl;
    }
 };
 
@@ -129,7 +113,5 @@ void display()
 int main()
 {
    Loopy loop;
-   loop.prompt();
    loop.calculate();
-   loop.display();
 }
