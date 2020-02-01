@@ -10,7 +10,6 @@
 *    Estimated:  1.0 hrs
 *    Actual:     1.5 hrs
 *       The most difficult part comprised calculating multiples or doing the math.
-* I found help at   //https://www.geeksforgeeks.org/sum-multiples-number-n/
 ************************************************************************/
 #include <stdio.h>
 #include <iomanip>
@@ -24,6 +23,7 @@ private:
    int multiple;
    int doTheMath;
    int limit = 100;
+   int sum = 0;
 protected:
 public:
 /***********************************************************************
@@ -72,24 +72,43 @@ void setLimit(int limit)
       this->limit = limit;
    }
 /***********************************************************************
-*Others
+*Prompt for the multiple
 ***********************************************************************/
-void prompt()//Line 77 is the point of failure. By trying to pass in multiple, the rest of the program could not discern which multiple it needed.
+void prompt()
    {
-      std::cout << "What multiples are we adding? " << std::endl;
+      std::cout << "What multiples are we adding? ";
       std::cin >> multiple;
    }
    
-   int doingTheMath()
+/***********************************************************************
+*Calculate the sum of the multiples less than 100
+***********************************************************************/
+   int calculate()
    {
-      doTheMath = limit / multiple;//limit was okay in output; we're not getting multiple for some reason
-      //int doMoreMath = getMultiple() * doTheMath;
-      return doTheMath;
+      if(multiple < limit)
+      {
+         for(int i = 1; i < limit; i++)
+         {
+                //multiple += multiple;
+            sum += i;
+         }
+      }
+      if(multiple > 100)
+      {
+         std::cin.fail();
+         std::cin.ignore();
+         std::cin.clear();
+         std::cout << "Ya done did wrong.";
+      }
+      return sum;
    }
    
+/***********************************************************************
+*Display
+***********************************************************************/
 void display()
    {
-      std::cout << "The sum of multiples of  " << multiple << " less than 100 are: " << doingTheMath() << std::endl;
+      std::cout << "The sum of multiples of " << multiple << " less than 100 are: " << calculate() << std::endl;
    }
 };
 
@@ -100,5 +119,6 @@ int main()
 {
    Loopy loop;
    loop.prompt();
+   loop.calculate();
    loop.display();
 }
