@@ -87,10 +87,13 @@ void prompt()
    {
       if(multiple < limit)
       {
-         for(int i = 1; i < limit; i++)
+         for(int i = 0; i < limit - multiple; i++)
          {
-                //multiple += multiple;
-            sum += i;
+            /*I noticed the result was too large by an interval
+             and concluded it must be by the interval of the multiple
+             so I subtracted the multiple from the limit and voila!
+             It calculated the correct sum.*/
+            sum += multiple;
          }
       }
       if(multiple > 100)
