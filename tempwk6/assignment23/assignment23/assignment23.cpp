@@ -14,6 +14,8 @@
 #include <stdio.h>
 #include <iomanip>
 #include <iostream>
+#include <limits>
+#include <stdexcept>
 
 /***********************************************************************
 *One loop class to rule all the loops.
@@ -81,6 +83,19 @@ void prompt()
    }
    
 /***********************************************************************
+*Manage incorrect input.
+***********************************************************************/
+void errorCheck()
+   {
+      while(std::cin.fail())
+      {
+         std::cin.clear();
+         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+         std::cin >> multiple;
+      }
+   }
+   
+/***********************************************************************
 *Calculate the sum of the multiples less than 100
 ***********************************************************************/
    int calculate()
@@ -89,19 +104,12 @@ void prompt()
       {
          for(int i = 0; i < limit - multiple; i++)
          {
-            /*I noticed the result was too large by an interval
-             and concluded it must be by the interval of the multiple
-             so I subtracted the multiple from the limit and voila!
-             It calculated the correct sum.*/
             sum += multiple;
          }
       }
       if(multiple > 100)
       {
-         std::cin.fail();
-         std::cin.ignore();
-         std::cin.clear();
-         std::cout << "Ya done did wrong.";
+         errorCheck();
       }
       return sum;
    }
