@@ -24,6 +24,7 @@ private:
    int offset;
    int month;
    int year;
+   bool isLeapYear;
 protected:
 public:
 /***********************************************************************
@@ -61,7 +62,23 @@ void setNumDays(int numDays)
    {
       return offset;
    }
-
+/***********************************************************************
+*Calculate Leap Years
+***********************************************************************/
+      int leapYear()
+      {
+         //if the year is divisible by four and 400, the year is a leap year.
+         if((year % 4 == 0) && (year % 400 == 0))
+         {
+            isLeapYear = true;
+            
+         }
+         if(isLeapYear == true)
+         {
+            
+         }
+         return 0;
+      }
 /***********************************************************************
 *Prompt
 ***********************************************************************/
@@ -78,15 +95,24 @@ void setNumDays(int numDays)
 ***********************************************************************/
    void displayTable()
    {
-      for(int i = 0; i < 31; i++)
-         if(year > 1753)
+      for(int i = year; i > 1753; i--)//decrement to count back so as to reach the beginning point for day one, 1753, which provides an anchor point in the math
          {
-            offset = 2;
+            numDays += 365;//concatenate numDays with 365 and assign it to itself
+            if(isLeapYear)//if it's a leap year add an additional offset day
+            {
+               numDays += 1;
+            }
+            /*offset = 2;
             std::cout << "" << std::setw(offset) <<  month;
-            /*set the offset with if statements per range.
+            set the offset with if statements per range.
              Then, pass in offset as a parameter to setw or
              a similar spacing method*/
+            //offset = numDays % 7;get the remainder betwixt numDays and days of the week.
          }
+      for(int j = 0; j <= 12; j++){
+         if(//month begins with Sunday)
+            //offset == 6;
+      }
    }
    
    void displayMonth()
