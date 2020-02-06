@@ -110,10 +110,33 @@ void setNumDays(int numDays)
             //offset = numDays % 7;get the remainder betwixt numDays and days of the week.
          }
       for(int j = 0; j <= 12; j++){
-         if(//month begins with Sunday)
-            //offset == 6;
+         if(offset == 0)
+         {
+            std::cout <<   " "  << " 1" <<   " 2" <<  " 3" <<  " 4"  <<  " 5"  <<   " 6"  << std::endl;
+            std::cout << "\t 7"  << "  8" << "  9" << "  10" << " 11" << " 12"  << " 13" << std::endl;
+            std::cout << "\t15"  << "   16" << "   17" << "   18" << "   19" << "   20"  << std::endl;
+            std::cout << "\t21"  << "   22" << "   23" << "   24" << "   25" << "   26"  << std::endl;
+            std::cout << "\t27"  << "   28" << "   29" << "   30" << "   31" << "  "  << std::endl;
+         }
+         if(offset == 1)
+         {
+            std::cout <<   " "  << "  " <<   " 1" <<  " 2" <<  " 3"  <<  " 4"  <<   " 5"  << std::endl;
+            std::cout << "\t 6"  << "  7" << "  8" << "  9" << " 10" << " 11"  << " 12" << std::endl;
+            std::cout << "\t13"  << "   14" << "   15" << "   16" << "   17" << "   18"  << std::endl;
+            std::cout << "\t19"  << "   20" << "   21" << "   22" << "   23" << "   24"  << std::endl;
+            std::cout << "\t25"  << "   26" << "   27" << "   28" << "   29" << "   30"  << std::endl;
+            std::cout << "t31";
+         }
       }
    }
+   
+   /***********************************************************************
+   *Display
+   ***********************************************************************/
+      void displayColumnHeader()
+      {
+         std::cout << "\tSu  Mo  Tu  We  Th  Fr  Sa" << std::endl;
+      }
    
    void displayMonth()
    {
