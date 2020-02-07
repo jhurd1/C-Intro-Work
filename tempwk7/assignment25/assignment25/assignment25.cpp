@@ -92,6 +92,11 @@ void setNumDays(int numDays)
    }
 /***********************************************************************
 *Display Table
+* Remember to provide a table for each contingency, long vs. short months and leap year Feb
+* vs. non-leap year Feb. Long months: 7. Short months: 6. If there are seven different days on
+* which each month can start, that works out to (7 * 7) + (5 * 7). Then, add to this the 7 days
+* on which February can begin and that's 2 * 7 (one for leap- and one for non-leap-year). It
+* simply isn't feasible to code in 49 + 35 + 14 different month options.
 ***********************************************************************/
    void displayTable()
    {
@@ -126,6 +131,28 @@ void setNumDays(int numDays)
             std::cout << "\t19"  << "   20" << "   21" << "   22" << "   23" << "   24"  << std::endl;
             std::cout << "\t25"  << "   26" << "   27" << "   28" << "   29" << "   30"  << std::endl;
             std::cout << "t31";
+         }
+         if(offset == 2)
+         {
+            std::cout <<   " "  << "  " <<   " " <<  " 1" <<  " 2"  <<  " 3"  <<   " 4"  << std::endl;
+            std::cout << "\t 5"  << "  6" << "  7" << "  8" << " 9" << " 10"  << " 11" << std::endl;
+            std::cout << "\t12"  << "   13" << "   14" << "   15" << "   16" << "   17"  << std::endl;
+            std::cout << "\t18"  << "   19" << "   20" << "   21" << "   22" << "   23"  << std::endl;
+            std::cout << "\t24"  << "   25" << "   26" << "   27" << "   28" << "   29"  << std::endl;
+            std::cout << "t30" << " 31";
+         }
+         if(offset == 3)
+         {
+            std::cout <<   " "  << "  " <<   " " <<  " " <<  " 1"  <<  " 2"  <<   " 3"  << std::endl;
+            std::cout << "\t 4"  << "  5" << "  6" << "  7" << " 8" << " 9"  << " 10" << std::endl;
+            std::cout << "\t11"  << "   12" << "   13" << "   14" << "   15" << "   16"  << std::endl;
+            std::cout << "\t17"  << "   18" << "   19" << "   20" << "   21" << "   22"  << std::endl;
+            std::cout << "\t23"  << "   24" << "   25" << "   26" << "   27" << "   28"  << std::endl;
+            std::cout << "t\29" << " 30" << " 31";
+         }
+         if(offset == 4)
+         {
+            
          }
       }
    }
