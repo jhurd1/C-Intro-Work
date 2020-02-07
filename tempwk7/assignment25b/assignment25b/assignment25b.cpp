@@ -50,23 +50,31 @@ public:
 *******************************************************************/
 template<typename T> void printNext(T t, const char& width)
    {
-      std::cout << t << std::setw(otherWidth) << numDays++ << std::endl;
+      std::cout << t << std::setw(otherWidth) << numDays++;// increments numDays from 1-31
    }
-   
+
 /*******************************************************************
 *displayTable()
 *******************************************************************/
    int displayTable(int numDays, int offset)
    {
+      offset = 6;
       printElement(' ', width);
-      for(int i = 1; i <= numDays; i++)
+      if(offset == 6)
       {
-         printNext(' ', otherWidth);
+      for(int i = 1; i <= 31; i++)
+         {
+                printNext(' ', width);
+         }
       }
+      // Implement the offset here, later: if(offset == )
       return 0;
    }
 };
 
+/******************************************************************
+*Main initializes the members in the class.
+******************************************************************/
 int main()
 {
    LoopDesign test;
