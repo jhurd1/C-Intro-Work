@@ -24,30 +24,48 @@ private:
    std::ifstream inFile;
    std::ofstream outFile;
    std::string fileName;
+   float uno, dos, tres, quatro, cinco, seis, siete, ocho, nueve, diez;
 protected:
 public:
 /**********************************************************************
 *Accessor
 **********************************************************************/
-   void getFileName(char filename[])
+   char getFileName(char filename[])
    {
       std::cout << "Please enter the filename: " << std::endl;
       std::cin >> fileName;
       inFile.open(fileName.c_str());
+      return *filename;
    }
    
    float readFile(char fileName[])
    {
-      return 0;
+      float average = 0.0;
+      std::ifstream temp(fileName, std::ios::in);
+      for(int i = 0; i <= 10; i++)
+      {
+      if(!temp)
+         std::cerr << "" << std::endl;
+      while(temp >> uno >> dos >> tres >> quatro >> cinco >> seis >> siete >> ocho >> nueve >> diez)
+      {
+         int average = uno + dos + tres + quatro + cinco + seis + siete + ocho + nueve + diez / 10;
+         std::cout << std::endl;
+      }
+      }
+      temp.close();
+      return average;
    }
    
    void display(float average)
    {
+      getFileName(fileName);
       std::cout << "Average Grade: ";
    }
 };
 
 int main()
 {
-   
+   float average = 0.0;
+   Files foo;
+   foo.display(average);
 }

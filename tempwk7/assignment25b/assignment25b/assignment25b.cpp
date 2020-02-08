@@ -48,18 +48,76 @@ public:
    }
 
 /*******************************************************************
-*A template to manage the formatting of the numDays
+*A template to manage the formatting of the calendar's integers
 *******************************************************************/
 template<typename T> void printNext(T t, const char& width)
    {
-      std::cout << t << std::setw(otherWidth) << std::setfill(space) << numDays++;// increments numDays from 1-31
+      std::cout<< t << std::setw(otherWidth) << std::setfill(space) << numDays++;
    }
 /*******************************************************************
 *Accessors
-********************************************************************/
-int getDays()//only works for callng the class object outside the class--as in main()
+*******************************************************************/
+   int getDays()
    {
       return numDays;
+   }
+/*******************************************************************
+*Mutators
+*******************************************************************/
+void setDays(int numDays)
+   {
+      this->numDays = numDays;
+   }
+/*******************************************************************
+*calcOffset()
+*******************************************************************/
+void setOffset(int offset)
+   {
+      this->offset = offset;
+   }
+   
+int getOffset()
+   {
+      return offset;
+   }
+   
+void calcOffset()
+      {
+         for(int i = 0; offset <= i; i++)
+         {
+            if(offset == 0)
+            {
+               //space = "  ";
+            }
+            if(offset == 1)
+            {
+               //space = "   ";
+            }
+            if(offset == 2)
+            {
+               //space = "       ";
+            }
+            if(offset == 3)
+            {
+               //space = "             ";
+            }
+            if(offset == 4)
+            {
+               //space = "                     ";
+            }
+            if(offset == 5)
+            {
+               //space = "                              ";
+            }
+            if(offset == 6)
+            {
+               //space = "                                        ";
+            }
+            if(offset == 7)
+            {
+               //space = "                                                      ";
+            }
+      }
    }
 /*******************************************************************
 *displayTable()
@@ -67,6 +125,7 @@ int getDays()//only works for callng the class object outside the class--as in m
    int displayTable(int numDays, int offset)
    {
       numDays = 1;
+      offset = 0;
       month = 3;
       isLeapYear = false;
       printElement(' ', otherWidth);
@@ -96,12 +155,13 @@ int getDays()//only works for callng the class object outside the class--as in m
       std::cout << std::endl;
       while(numDays >= 27 && numDays < 32)
       {
-         if(isLeapYear && month != 2)//this logic will be changed later; just testing for now
-         {
+         //if(isLeapYear && month != 2)//this logic will be changed later; just testing for now
+         //{
             printNext(' ', otherWidth);
                     numDays++;
-         }
+         //}
       }
+      std::cout << std::endl;
         return 0;
       }
 };
@@ -112,5 +172,10 @@ int getDays()//only works for callng the class object outside the class--as in m
 int main()
 {
    LoopDesign test;
+   /*std::cout << "Number of days: " << std::endl;
+   test.setDays(numDays);
+   std::cin >> numDays;
+   std::cout << "Offset: " << std::endl;
+    Place the prompt in a separate function.*/
    test.displayTable(' ', 6);
 }
