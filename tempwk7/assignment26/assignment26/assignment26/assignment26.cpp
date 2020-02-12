@@ -1,14 +1,11 @@
 /***********************************************************************
 * Program:
-*    Assignment 26, Loop Design
+*    Assignment 26, Files
 *    Brother Schwieder, CS124
 * Author:
 *    Jamie Hurd
 * Summary:
-*    This program incorporates a calendar, which
-* calculates the days of the month conjunctive with an offset,
-* then displays the days in calendar format.
-*
+*    This program incorporates
 *    Estimated:  1.0 hrs
 *    Actual:     1.5 hrs
 *       The most difficult part comprised
@@ -45,12 +42,12 @@ public:
       for(int i = 0; i <= 10; i++)
       {
       if(!temp)
-         std::cerr << "" << std::endl;
+         std::cerr << "Error reading the file" << "\"" << fileName << "\"" << std::endl;
       while(temp >> uno >> dos >> tres >> quatro >> cinco >> seis >> siete >> ocho >> nueve >> diez)
       {
-         int average = uno + dos + tres + quatro + cinco + seis + siete + ocho + nueve + diez / 10;
+         float average = uno + dos + tres + quatro + cinco + seis + siete + ocho + nueve + diez / 10;
          std::cout << std::endl;
-      }
+         }
       }
       temp.close();
       return average;
@@ -58,8 +55,7 @@ public:
    
    void display(float average)
    {
-      getFileName(fileName);
-      std::cout << "Average Grade: ";
+      std::cout << "Average Grade: " << average;
    }
 };
 
@@ -67,5 +63,7 @@ int main()
 {
    float average = 0.0;
    Files foo;
+   char filename = ' ';
+   //foo.getFileName(filename);
    foo.display(average);
 }
