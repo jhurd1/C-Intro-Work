@@ -36,7 +36,6 @@ public:
 *********************************************************************/
    template<typename T> void printElement(T t, const char& width)
    {
-      //make this formatted line reflect a calendar line
       std::cout << t << std::setw(testWidth) << "Su"
       << std::setw(testWidth) << "Mo"
       << std::setw(testWidth) << "Tu"
@@ -52,7 +51,7 @@ public:
 *******************************************************************/
 template<typename T> void printNext(T t, const char& width)
    {
-      std::cout<< t << std::setw(otherWidth) << std::setfill(space) << numDays++;
+      std::cout<< t << " " << std::setw(otherWidth) << std::setfill(space) << numDays++;
    }
 /*******************************************************************
 *Accessors
