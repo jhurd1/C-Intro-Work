@@ -5,13 +5,14 @@
 * Author:
 *    Jamie Hurd
 * Summary:
-*    This program incorporates a calendar, which
+*    This program incorporates a calendar displayTable, which
 * calculates the days of the month conjunctive with an offset,
-* then displays the days in calendar format.
+* then displays the days in calendar format with or without a new line.
 *
 *    Estimated:  1.0 hrs
-*    Actual:     1.5 hrs
-*       The most difficult part comprised figuring out how to coordinate the offset and
+*    Actual:     7.5 hrs
+*       The most difficult part comprised figuring out how to coordinate the offset and numDays
+* between day names and the last line when the final day lands on Saturday.
 ************************************************************************/
 #include <stdio.h>
 #include <iomanip>
@@ -69,7 +70,7 @@ TableTest()
               std::cout <<  std::endl;//carriage return at each line's end except for the last line
           }
       }
-      if(numDays >= 30 && offset >= 4)
+      if(numDays >= 30 && offset == 4)
       {
          std::cout << "";
       } else
