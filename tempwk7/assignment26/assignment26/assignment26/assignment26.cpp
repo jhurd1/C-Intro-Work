@@ -41,7 +41,7 @@ public:
       std::ifstream temp(fileName, std::ios::in);
       for(int i = 0; i <= 10; i++)
       {
-      if(!temp)
+      if(!temp || i > 10)
          std::cerr << "Error reading the file" << "\"" << fileName << "\"" << std::endl;
       while(temp >> uno >> dos >> tres >> quatro >> cinco >> seis >> siete >> ocho >> nueve >> diez)
       {
