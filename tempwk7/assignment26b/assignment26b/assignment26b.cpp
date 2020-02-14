@@ -70,16 +70,20 @@ public:
       //You must declare what fin is first.
       std::ifstream fin(fileName);
       //error test immediately after attempting to open
+      if(fin.fail())
+      {
+         std::cout << "Error reading file: " << "\"" << fileName << "\"";
+         return -1;
+      }
       //Read the data.
       float average;
       char values[256];
       fin >> average >> values;
-      //Loop through ten values
-      for(int i = 0; i <= 10; i++)//only use for if you know a set number of reads taht you're going to do
+      //for(int i = 0; i <= 10; i++)//only use "for" if you know a set number of reads that you're going to do
          //use while instead
+      while()
       {
-         //We'll never reach a point greater than 10 because of our loop, so this needs repair.
-         //cuont, sum and score
+         //count, sum and score
          //while fin score if count not 10 error out and return negative one a second time
          //return casts as float a sum divided by the count
          //The error fileName << "\"\n"
