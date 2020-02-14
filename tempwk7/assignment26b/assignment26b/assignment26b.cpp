@@ -67,16 +67,30 @@ public:
 *********************************************************************/
    float readFile(char fileName[])
    {
+      //You must declare what fin is first.
       std::ifstream fin(fileName);
-      for(int i = 0; i <= 10; i++)
+      //error test immediately after attempting to open
+      //Read the data.
+      float average;
+      char values[256];
+      fin >> average >> values;
+      //Loop through ten values
+      for(int i = 0; i <= 10; i++)//only use for if you know a set number of reads taht you're going to do
+         //use while instead
       {
+         //We'll never reach a point greater than 10 because of our loop, so this needs repair.
+         //cuont, sum and score
+         //while fin score if count not 10 error out and return negative one a second time
+         //return casts as float a sum divided by the count
+         //The error fileName << "\"\n"
+         //increment count and concat sum to score inside while block
          if(i > 10)
          {
             fin.fail();
             std::cout << "Error reading file " << "\"" << fileName << "\"";
-            return -1;
+            return -1;//clues in on an error with negative number
          }
-         average = value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9 + value10 / 10;
+         average = (value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9 + value10) / 10;
          fin >> average;
       }
       fin.close();
@@ -88,7 +102,14 @@ public:
 **********************************************************************/
    void display(float average)
    {
-      std::cout << average;
+      //getFileName(fileName);
+      std::ofstream fout(fileName);//fout not needed for this assignment but for the next one, yes
+      fout.precision(2);
+      fout.setf(std::ios::fixed);
+      fout.setf(std::ios::showpoint);
+      std::cout << "Average Grade: " <<  std::endl;
+      std::fout << average;
+      std::cout << "%";
    }
 };
 
