@@ -21,6 +21,7 @@ class Files{
 private:
    float value1, value2, value3, value4, value5, value6, value7, value8, value9, value10;
    float average;
+   float count, sum, score;
 public:
 /**********************************************************************
 *Default Constructor
@@ -70,32 +71,31 @@ public:
       //You must declare what fin is first.
       std::ifstream fin(fileName);
       //error test immediately after attempting to open
+      fin.open(fileName);
       if(fin.fail())
       {
          std::cout << "Error reading file: " << "\"" << fileName << "\"";
          return -1;
       }
       //Read the data.
-      float average;
-      char values[256];
-      fin >> average >> values;
+      //char sum[256];
+      fin >> average >> sum;
       //for(int i = 0; i <= 10; i++)//only use "for" if you know a set number of reads that you're going to do
          //use while instead
-      while()
+      while(count <= 10)
       {
          //count, sum and score
-         //while fin score if count not 10 error out and return negative one a second time
+         average = sum / 10;
+         //while fin score
+         if(count != 10)//if count not 10 error out and return negative one a second time
+         {
+            std::cout << "Error reading file: " << "\"" << fileName << "\"";
+                    return -1;
+         }
          //return casts as float a sum divided by the count
          //The error fileName << "\"\n"
-         //increment count and concat sum to score inside while block
-         if(i > 10)
-         {
-            fin.fail();
-            std::cout << "Error reading file " << "\"" << fileName << "\"";
-            return -1;//clues in on an error with negative number
-         }
-         average = (value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9 + value10) / 10;
-         fin >> average;
+         count++;//increment count and concat sum to score inside while block
+         sum += score;
       }
       fin.close();
       return average;
@@ -107,12 +107,9 @@ public:
    void display(float average)
    {
       //getFileName(fileName);
-      std::ofstream fout(fileName);//fout not needed for this assignment but for the next one, yes
-      fout.precision(2);
-      fout.setf(std::ios::fixed);
-      fout.setf(std::ios::showpoint);
+      //std::ofstream fout(fileName);//fout not needed for this assignment but for the next one, yes
       std::cout << "Average Grade: " <<  std::endl;
-      std::fout << average;
+      std::cout << getAverage();
       std::cout << "%";
    }
 };
