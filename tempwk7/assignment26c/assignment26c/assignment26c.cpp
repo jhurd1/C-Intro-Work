@@ -20,6 +20,16 @@ class ReadFile
 private:
    std::string fileName;
    float count;
+   float firstValue;
+   float secondValue;
+   float thirdValue;
+   float fourthValue;
+   float fifthValue;
+   float sixthValue;
+   float seventhValue;
+   float eighthValue;
+   float ninthValue;
+   float tenthValue;
    float sum;
    float average;
 public:
@@ -55,11 +65,14 @@ public:
          std::ifstream fin(fileName);
          if(fin.is_open())
          {
-            while(fin >> count >> sum >> average)//testBed sees this statement reference three values only; we need 10
+            while(fin >> firstValue >> secondValue >> thirdValue >> fourthValue >> fifthValue >>
+                  sixthValue >> seventhValue >> eighthValue >> ninthValue >> tenthValue)//testBed sees this statement reference three values only; we need 10
             {
-               count++;
-               sum += average;
-               std::cout << count << " " << sum << " " << average << std::endl;
+               count = 10;
+               sum = firstValue + secondValue + thirdValue + fourthValue + fifthValue
+               + sixthValue + seventhValue + eighthValue + ninthValue + tenthValue;
+               average = sum / 10;
+               //std::cout << count << " " << sum << " " << average << std::endl;
             }
             fin.close();
          }
@@ -93,7 +106,7 @@ public:
 int main()
 {
    float average = 0.0;
-   char fileName[10];
+   char* fileName = nullptr;
    ReadFile temp;
    temp.getFileName(fileName);
    temp.readFile(fileName);
