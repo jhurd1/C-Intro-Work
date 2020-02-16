@@ -14,6 +14,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <vector>
 
 class ReadFile
 {
@@ -47,7 +48,14 @@ public:
       {
          
       }
-   
+/*********************************************************************
+*Accessors, which are needed only if calling private const members outside of the class.
+* (I insert these for memory's sake.)
+*********************************************************************/
+      float getAverage()
+      {
+         return average;
+      }
 /*********************************************************************
 *getFileName() prompts for a file name to read from.
 *********************************************************************/
@@ -72,7 +80,6 @@ public:
                sum = firstValue + secondValue + thirdValue + fourthValue + fifthValue
                + sixthValue + seventhValue + eighthValue + ninthValue + tenthValue;
                average = sum / 10;
-               //std::cout << count << " " << sum << " " << average << std::endl;
             }
             fin.close();
          }
@@ -98,16 +105,15 @@ public:
          //getFileName(fileName);
          //std::ofstream fout(fileName);//fout not needed for this assignment but for the next one, yes
          std::cout << "Average Grade: " <<  std::endl;
-         std::cout << average;
+         std::cout << getAverage();
          std::cout << "%";
       }
 };
 
 int main()
 {
-   float average = 0.0;
-   char* fileName = nullptr;
    ReadFile temp;
+   float average = 0.0;
    temp.getFileName(fileName);
    temp.readFile(fileName);
    temp.display(average);
