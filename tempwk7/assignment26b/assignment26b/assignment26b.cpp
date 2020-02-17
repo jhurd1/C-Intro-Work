@@ -61,7 +61,8 @@
             {
                if (fin.is_open()) {
                    int i = 0;
-                   while (fin >> count) {
+                   while (fin >> count)
+                   {
                        array[i++] = count;
                       size_t size = (sizeof array / sizeof array[0]);
                       std::cout << size << std::endl;
