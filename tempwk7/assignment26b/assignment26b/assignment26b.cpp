@@ -20,7 +20,8 @@
 class Files{
 private:
    float value1, value2, value3, value4, value5, value6, value7, value8, value9, value10;
-   float count, sum, average;
+   int value, count, sum, average;
+   char fileName;
 public:
 /**********************************************************************
 *Default Constructor
@@ -58,6 +59,7 @@ public:
 *********************************************************************/
    void getFileName(char fileName[])
    {
+      this->fileName = *fileName;
       std::cout << "Please enter the filename: ";
       std::cin >> fileName;
    }
@@ -67,17 +69,34 @@ public:
 *********************************************************************/
    float readFile(char fileName[])
    {
+      this->fileName = *fileName;
+         value;
+         sum = 0;
+         count = 0;
       std::ifstream fin(fileName);
       fin.open(fileName);
-      while(count <= 10)
+      while(fin >> value)
       {
-         if(count != 10 || fin.fail())
-         {
-            std::cout << "Error reading file: " << "\"" << fileName << "\"";
-                    return -1;
-         }
-         sum = value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9 + value10;
-         average = sum / 10;
+         count++;
+         sum += value;
+         average = (sum) / 10;
+      }
+      /*count = 0;
+      if(fin.is_open())
+      {
+          while(count == 0)
+          {
+             count++;
+             fin >> value1 >> value2 >> value3 >> value4 >> value5 >> value6 >> value7 >> value8 >> value9 >> value10;
+             sum = value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9 + value10;
+             average = (sum) / 10;
+             display(average);
+          }
+      }*/
+      while(value >= 10 || fin.fail())
+      {
+         std::cout << "Error reading file " << "\"" << fileName << "\"" << "\n";
+         return -1;
       }
       fin.close();
       return average;
@@ -88,7 +107,10 @@ public:
 **********************************************************************/
    void display(float average)
    {
-      std::cout << "Average Grade: " << "\"" << getAverage() << "\"" <<  "%";
+      this->average = average;
+      std::cout << std::fixed;
+      std::cout << std::setprecision(0);
+      std::cout << "Average Grade: " <<  average <<  "%" << "\n";
    }
 };
 
@@ -98,10 +120,8 @@ public:
 int main()
 {
    Files file;
-   float average = 0.0;
    char fileName[50];
    //char &fileName = fileName;
    file.getFileName(fileName);
    file.readFile(fileName);
-   file.display(average);
 }
