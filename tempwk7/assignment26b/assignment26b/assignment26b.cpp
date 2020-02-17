@@ -20,7 +20,8 @@
 class Files{
 private:
    float value1, value2, value3, value4, value5, value6, value7, value8, value9, value10;
-   int value, count, sum, average;
+   float value, sum, average;
+   int count;
    char fileName;
 public:
 /**********************************************************************
@@ -70,18 +71,33 @@ public:
    float readFile(char fileName[])
    {
       this->fileName = *fileName;
-         value;
-         sum = 0;
-         count = 0;
+      int ARRAY_SIZE = 10;
+      int value[ARRAY_SIZE];
       std::ifstream fin(fileName);
       fin.open(fileName);
-      while(fin >> value)
-      {
-         count++;
-         sum += value;
-         average = (sum) / 10;
-      }
-      /*count = 0;
+      if(fin.good())
+           {
+              count = 0;
+              while(count < ARRAY_SIZE && fin >> value[count])
+              {
+                 count++;
+                 /*if(fin >> value1 >> value2 >> value3 >> value4 >> value5 >> value6 >> value7 >> value8 >> value9 >> value10)
+                 {*/
+                    sum = value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9 + value10;
+                    average = (sum) / 10;
+                    display(average);
+                    fin.close();
+                 }
+           } else if(/*value* < 0 || value* > 10*/count > ARRAY_SIZE && fin >> value[count])
+           {
+                 std::cout << "Error reading file " << "\"" << fileName << "\"" << "\n";
+                 return -1;
+     }
+      return average;
+   }
+     
+      /*fin.open(fileName);
+      count = 0;
       if(fin.is_open())
       {
           while(count == 0)
@@ -92,15 +108,12 @@ public:
              average = (sum) / 10;
              display(average);
           }
-      }*/
+      }
       while(value >= 10 || fin.fail())
       {
          std::cout << "Error reading file " << "\"" << fileName << "\"" << "\n";
          return -1;
-      }
-      fin.close();
-      return average;
-   }
+      }*/
 
 /**********************************************************************
 * Display will show the average on the console.
