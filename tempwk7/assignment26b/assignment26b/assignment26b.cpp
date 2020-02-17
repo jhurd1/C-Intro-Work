@@ -18,14 +18,10 @@
 #include <sstream>
 #include <istream>
 #include <vector>
+#include <cmath>
 
-   int value, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10;
-   int sum, average;
-   int count;
-   int array[11];
    char fileName[50];
    std::ifstream fin(fileName);
-   std::vector<int> totalOfIntegers;
    
 /*********************************************************************
 *getFileName() prompts for a file name to read from.
@@ -39,7 +35,7 @@
 /**********************************************************************
 * Display will show the average on the console.
 **********************************************************************/
-   void display()
+   void display(int average)
    {
       std::cout << std::fixed << std::setprecision(0) << "Average Grade: " <<  ((float)average) <<  "%" << "\n";
    }
@@ -49,40 +45,32 @@
 *********************************************************************/
    float readFile()
    {
+      int x = 0;
+      float total = 0;
+      int counter = 0;
       fin.open(fileName);//I realized that by making this "fin" local, it wasn't getting passed in appropriately, so I made it global (above)
       if(!fin)//alt: if(!fin.is_open())
       {
          std::cout << "Error reading file " << "\"" << fileName << "\"" << "\n";
          return -1;
       }
-      while(!fin.eof())
+      while(fin >> x)
          {
-            for(std::string line; std::getline(fin, line);)
-            {
-               if (fin.is_open()) {
-                   int i = 0;
-                   while (fin >> count)
-                   {
-                       array[i++] = count;
-                      size_t size = (sizeof array / sizeof array[0]);
-                      std::cout << size << std::endl;
-                   }
-               }
-            }
-            fin >> value >> value1 >> value2 >> value3 >> value4 >> value5 >> value6 >> value7 >> value8 >> value9;
-            //std::cout << "total ints: " << totalOfIntegers.size();
-            sum = value + value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9;
-            average = (sum) / 10;
+            total += x;//total is going to be sum all counts.
+            counter++;//tells me how many loops we've done; this while loop just needs to tell us the quantity of loops to get the average
+            std::cout << x << std::endl;
+            /*average = (sum) / 10;
             display();
-            fin.close();
+            fin.close();*/
          }
       
-         if(count < 10 || count > 10)//The problem is: How do I associate "count" with the quantity of integers in the doggone file?
+         if(counter < 10 || counter > 10)//The problem is: How do I associate "count" with the quantity of integers in the doggone file?
          {
             std::cout << "Error reading file " << "\"" << fileName << "\"" << "\n";
             return -1;
          }
-       return ((float)average);
+     
+       return total/counter;
    }
 
 /*********************************************************************
@@ -90,6 +78,11 @@
 *********************************************************************/
 int main()
 {
+   int avg = 0;
    getFileName();
-   readFile();
+   avg = readFile();
+   if(avg != -1)
+   {
+      display(avg);
+   }
 }
