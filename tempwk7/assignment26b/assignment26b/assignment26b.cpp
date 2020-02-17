@@ -5,10 +5,11 @@
 * Author:
 *    Jamie Hurd
 * Summary:
-*    This program incorporates...
+*    This program incorporates a file reader that takes 10 integers from a text file
+* sums them, and calculates their average.
 *    Estimated:  1.0 hrs
-*    Actual:     1.5 hrs
-*       The most difficult part comprised...
+*    Actual:     20 hrs
+*       The most difficult part comprised the body code and while loop condition.
 ************************************************************************/
 #include <stdio.h>
 #include <iomanip>
@@ -37,7 +38,8 @@
 **********************************************************************/
    void display(int average)
    {
-      std::cout << std::fixed << std::setprecision(0) << "Average Grade: " <<  ((float)average) <<  "%" << "\n";
+      average = average + 1;
+      std::cout << std::fixed << std::setprecision(0) << "Average Grade: " << ((float)average) <<  "%" << "\n";
    }
 
 /*********************************************************************
@@ -48,8 +50,8 @@
       int x = 0;
       float total = 0;
       int counter = 0;
-      fin.open(fileName);//I realized that by making this "fin" local, it wasn't getting passed in appropriately, so I made it global (above)
-      if(!fin)//alt: if(!fin.is_open())
+      fin.open(fileName);
+      if(!fin)
       {
          std::cout << "Error reading file " << "\"" << fileName << "\"" << "\n";
          return -1;
@@ -58,10 +60,6 @@
          {
             total += x;//total is going to be sum all counts.
             counter++;//tells me how many loops we've done; this while loop just needs to tell us the quantity of loops to get the average
-            std::cout << x << std::endl;
-            /*average = (sum) / 10;
-            display();
-            fin.close();*/
          }
       
          if(counter < 10 || counter > 10)//The problem is: How do I associate "count" with the quantity of integers in the doggone file?
@@ -70,7 +68,7 @@
             return -1;
          }
      
-       return total/counter;
+       return (total/counter);
    }
 
 /*********************************************************************
