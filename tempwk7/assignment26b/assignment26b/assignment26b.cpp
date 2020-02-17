@@ -33,7 +33,7 @@ public:
 /**********************************************************************
 *Non-default constructor
 **********************************************************************/
-   Files(float average)
+   Files(char fileName[])
    {
       
    }
@@ -99,8 +99,8 @@ int main()
 {
    Files file;
    float average = 0.0;
-   char *fileName = (char *) fileName;//I threw this in to resolve an error with accessing "fileName" from main(): "use of undeclared identifier"
-   //and that's my principal problem right now: Getting main to actually "see" the data members
+   char fileName[50];
+   //char &fileName = fileName;
    file.getFileName(fileName);
    file.readFile(fileName);
    file.display(average);
