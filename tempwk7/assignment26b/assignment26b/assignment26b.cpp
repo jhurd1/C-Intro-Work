@@ -16,13 +16,14 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <istream>
 
 class Files{
 private:
-   float value1, value2, value3, value4, value5, value6, value7, value8, value9, value10;
-   float value, sum, average;
+   float value;
+   float sum, average;
    int count;
-   char fileName;
+   char fileName[];
 public:
 /**********************************************************************
 *Default Constructor
@@ -58,9 +59,8 @@ public:
 /*********************************************************************
 *getFileName() prompts for a file name to read from.
 *********************************************************************/
-   void getFileName(char fileName[])
+   void getFileName()
    {
-      this->fileName = *fileName;
       std::cout << "Please enter the filename: ";
       std::cin >> fileName;
    }
@@ -68,32 +68,33 @@ public:
 /*********************************************************************
 * readFile() computes the average as it reads ten floats from the file.
 *********************************************************************/
-   float readFile(char fileName[])
+   float readFile()
    {
-      this->fileName = *fileName;
-      int ARRAY_SIZE = 10;
-      int value[ARRAY_SIZE];
       std::ifstream fin(fileName);
       fin.open(fileName);
-      if(fin.good())
+      /*if(fin.fail())
+      {
+         std::cout << "Error reading file " << "\"" << fileName << "\"" << "\n";
+         return -1;
+      }*/
+      while(!fin.eof())//this should run while there are 10 values to manage and while the file successfully opens
            {
-              count = 0;
-              while(count < ARRAY_SIZE && fin >> value[count])
+              if(count <= 10)
               {
-                 count++;
-                 /*if(fin >> value1 >> value2 >> value3 >> value4 >> value5 >> value6 >> value7 >> value8 >> value9 >> value10)
-                 {*/
-                    sum = value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9 + value10;
-                    average = (sum) / 10;
-                    display(average);
-                    fin.close();
-                 }
-           } else if(/*value* < 0 || value* > 10*/count > ARRAY_SIZE && fin >> value[count])
-           {
+                 fin >> value;//This does not work the way I expect it: It should associate value with the integers in the file.
+                 count++;//this assumes that we start with zero integers in the file and prevents an infinite loop by incrementing count each time
+                 sum += value;//The problem with this statement is that it doesn't know what sum is supposed to be or value, for that matter
+                 average = (sum) / 10;
+                 display(average);
+                 fin.close();
+              }
+            if(count != 10)//The problem is: How do I associate "count" with the quantity of integers in the doggone file?
+              {
                  std::cout << "Error reading file " << "\"" << fileName << "\"" << "\n";
                  return -1;
-     }
-      return average;
+              }
+           }
+       return average;
    }
      
       /*fin.open(fileName);
@@ -133,8 +134,7 @@ public:
 int main()
 {
    Files file;
-   char fileName[50];
    //char &fileName = fileName;
-   file.getFileName(fileName);
-   file.readFile(fileName);
+   file.getFileName();
+   file.readFile();
 }
