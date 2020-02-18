@@ -23,11 +23,13 @@ private:
    bool isLeapYear;
    int year;
    int month;
+   int leapFeb;
 public:
    std::map  <int, std::string> months;
-   /***********************************************************************
-   *Constructors
-   ***********************************************************************/
+   
+/***********************************************************************
+*Constructors
+***********************************************************************/
 MonthYear()
    {
       
@@ -66,10 +68,44 @@ MonthYear()
          std::cin >> month;
          //for the months in the map, if the month from the user matches,
          //input that value into the calculation
-            if(month == months[i])//how does one compare user input of an integer to the keys of the map
-            {
-               
-            }
+         switch(month)
+         {
+            case 1:
+               months[1];
+               numDays = 31;
+            case 2:
+               months[2];
+               numDays = 28;
+            case 3:
+               months[3];
+               numDays = 31;
+            case 4:
+               months[4];
+               numDays = 30;
+            case 5:
+               months[5];
+               numDays = 31;
+            case 6:
+               months[6];
+               numDays = 30;
+            case 7:
+               months[7];
+               numDays = 31;
+            case 8:
+               months[8];
+               numDays = 31;
+            case 9:
+               months[9];
+               numDays = 30;
+            case 10:
+               months[10];
+               numDays = 31;
+            case 11:
+               months[11];
+            case 12:
+               months[12];
+               numDays = 31;
+         }
          std::cout << "Enter year: " << std::endl;
          std::cin >> year;
       }
@@ -92,12 +128,11 @@ MonthYear()
 /***********************************************************************
 *displayTable()
 ***********************************************************************/
+   
+   //rework this logic to work with the month and year input from the user
+   //the offset depends on the month and year
    void displayTable()
    {
-      //std::cout << "Number of days: ";
-      std::cin >> numDays;
-      //std::cout << "Offset: ";
-      std::cin >> offset;
       std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
       
       for(int j = 0; j <= offset; j++)
@@ -134,23 +169,15 @@ MonthYear()
          if((year % 4 == 0) && (year % 100 == 0) && (year % 400 == 0))
          {
             isLeapYear = true;
-            
          }
          if(isLeapYear == true)
          {
-            //add 1 to 28
+            //add 1 to 28 for the second month
+            months[2] = numDays += 1;
          }
-         return 0;
+         return leapFeb;
       }
 };
-
-
-/***********************************************************************
-*Main()
-***********************************************************************/
-/***********************************************************************
-*Main()
-***********************************************************************/
 
 /***********************************************************************
 *Main()
