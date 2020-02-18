@@ -58,11 +58,12 @@
       }
       while(fin >> x)
          {
-            total += x;//total is going to be sum all counts.
+            total += x;//total is going to sum all.
             counter++;//tells me how many loops we've done; this while loop just needs to tell us the quantity of loops to get the average
          }
       
          if(counter < 10 || counter > 10)//The problem is: How do I associate "count" with the quantity of integers in the doggone file?
+            //Answer: counter counts the quantity of loops and points to the quantity of integers in the text file
          {
             std::cout << "Error reading file " << "\"" << fileName << "\"" << "\n";
             return -1;
