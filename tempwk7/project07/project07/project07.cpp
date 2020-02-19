@@ -24,6 +24,7 @@ private:
    int year;
    int month;
    int leapFeb;
+   int displayDays = 1;
 public:
    std::map  <int, std::string> months;
    
@@ -133,18 +134,10 @@ MonthYear()
    //the offset depends on the month and year
    void displayTable()
    {
-      std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
+      MonthYear temp;
+      temp.processTheYearAndMonth();
       
-      for(int j = 0; j <= offset; j++)
-      {
-          if(offset == 6)
-          {
-              break;//If the offset falls on Sunday, break out of the loop to prevent the addition of a space
-          }
-          std::cout << "    ";
-      }
-
-      int displayDays = 1;
+      std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
       
       for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)//increments month's days and considers the offset
       {
@@ -177,6 +170,34 @@ MonthYear()
          }
          return leapFeb;
       }
+   
+/***********************************************************************
+ *Process the year (and month) for setting the offset
+ ***********************************************************************/
+int processTheYearAndMonth()
+   {
+      //Offset depends on the year and month
+      //Therefore a condition statement will be necessary before running the for loop
+      int i;
+      for(int j = 0; j <= offset; j++)
+      {
+         //this will need to be more generic for this function to work
+         //i.e., the if condition won't apply to any other year and month combination
+         //if it's left set to 1753 and January.
+         if(year == 1753 && months[i] == "January")//Thought I could query whether months[i] equaled an int of 1, but it wanted the string value
+           {
+              offset = 0;
+           }
+          if(offset == 6)
+          {
+              break;//If the offset falls on Sunday, break out of the loop to prevent the addition of a space
+          }
+          std::cout << "    ";
+      }
+      
+      return offset;
+   }
+   
 };
 
 /***********************************************************************
