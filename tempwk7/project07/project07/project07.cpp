@@ -21,8 +21,8 @@ private:
    int numDays;
    int offset;
    bool isLeapYear;
-   int year;
-   int month;
+   int year = 1753;
+   int month = 1;
    int leapFeb;
    int displayDays = 1;
 public:
@@ -135,7 +135,7 @@ MonthYear()
    void displayTable()
    {
       MonthYear temp;
-      temp.processTheYearAndMonth();
+      temp.processTheYearAndMonth();//calculates the right offset for month and year
       
       std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
       
@@ -176,18 +176,15 @@ MonthYear()
  ***********************************************************************/
 int processTheYearAndMonth()
    {
+      //I think I can do this with a double for loop
+      //and a map for the offsets of the months in 1753.
+      offset = 0;
+      
       //Offset depends on the year and month
       //Therefore a condition statement will be necessary before running the for loop
       int i;
-      for(int j = 0; j <= offset; j++)
+      for(int j = 0; j <= offset; j++)//this loop will actually work still to increment the offset each year
       {
-         //this will need to be more generic for this function to work
-         //i.e., the if condition won't apply to any other year and month combination
-         //if it's left set to 1753 and January.
-         if(year == 1753 && months[i] == "January")//Thought I could query whether months[i] equaled an int of 1, but it wanted the string value
-           {
-              offset = 0;
-           }
           if(offset == 6)
           {
               break;//If the offset falls on Sunday, break out of the loop to prevent the addition of a space
