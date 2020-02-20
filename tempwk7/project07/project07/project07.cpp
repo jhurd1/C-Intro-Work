@@ -20,11 +20,15 @@ class MonthYear
 private:
    int numDays;
    int offset;
-   bool isLeapYear;
-   int year = 1753;
-   int month = 1;
+   int countOffset;
+   bool isLeapYear = false;
+   int year; //represents the year input by a user
+   int anchorYear = 1753;//represents the start year for this program
    int leapFeb;
+   int month = 1;
    int displayDays = 1;
+   int leapOffsetAnchor = 3;//represents first month of the first leap year from the anchorYear 1753
+   int commonOffsetAnchor = 0;//represents the first month of the first common year of 1753
 public:
    std::map  <int, std::string> months;
    
@@ -67,6 +71,7 @@ MonthYear()
       {
          std::cout << "Enter a month number: " << std::endl;
          std::cin >> month;
+         checkInput();
          //for the months in the map, if the month from the user matches,
          //input that value into the calculation
          switch(month)
@@ -109,6 +114,7 @@ MonthYear()
          }
          std::cout << "Enter year: " << std::endl;
          std::cin >> year;
+         checkInput();
       }
 
 /***********************************************************************
@@ -139,6 +145,8 @@ MonthYear()
       
       std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
       
+      formatTheTable();
+      
       for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)//increments month's days and considers the offset
       {
          std::cout << std::setw(4) << displayDays;
@@ -159,31 +167,67 @@ MonthYear()
       int leapYear()
       {
          //if the year is divisible by four and 400, the year is a leap year.
-         if((year % 4 == 0) && (year % 100 == 0) && (year % 400 == 0))
+         if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))//this logic was tough
          {
             isLeapYear = true;
          }
          if(isLeapYear == true)
          {
             //add 1 to 28 for the second month
-            months[2] = numDays += 1;
+            months[2] = numDays + 1;//I think adding one here is sufficient, so change this operator to + 1 only instead of concatenation
          }
          return leapFeb;
       }
    
 /***********************************************************************
- *Process the year (and month) for setting the offset
+ *Process the year (and month) for setting the offset per year, month, and leapYear
  ***********************************************************************/
 int processTheYearAndMonth()
    {
-      //I think I can do this with a double for loop
-      //and a map for the offsets of the months in 1753.
-      offset = 0;
+      countOffset = year - 1753;//tells us the number of years from 1753
+      for(int k = 0; k < countOffset; k++)//loop through the total years
+      {
+         offset = (offset + 365);//figures the year's offset
+      }
       
-      //Offset depends on the year and month
-      //Therefore a condition statement will be necessary before running the for loop
-      int i;
-      for(int j = 0; j <= offset; j++)//this loop will actually work still to increment the offset each year
+      
+      
+      /*This needs to consider what year and month it is to correlate the offset.
+       It should loop through possible offsets and return an incremented offset
+       per year based on whether the year is common or leap.
+       */
+      for(int i = 0; i <= 6; i++)//increment the offset per month and common year
+      {
+      if(isLeapYear == false )//this tests for if it's a common year
+         {
+            offset += commonOffsetAnchor;// with each loop, concatentate the offset with the commonOffsetAnchor.
+         }
+         if(isLeapYear == true)
+         {
+            leapOffsetAnchor += offset;
+         }
+      }
+      /*Loop through the months and check if it's a leap year
+       If it's a leap year, the offset will be different per month.
+       Assign the offset based on leap year interval and month interval*/
+      for(int j = 0; j <= 11;j++)
+      {//someone in here month % 12 to get the offset
+         if(isLeapYear == true)
+         {
+            offset += leapOffsetAnchor;
+         }
+      }
+         
+         //if the year is leapYear && has a certain modulus result for calculating the offset
+         //in the body of the if condition statement, add the one for the month of February
+ 
+      return offset;
+   }
+   
+   int formatTheTable()
+   {
+      //This loop formats the calendar table.
+      for(int j = 0; j <= offset; j++)
       {
           if(offset == 6)
           {
@@ -191,7 +235,6 @@ int processTheYearAndMonth()
           }
           std::cout << "    ";
       }
-      
       return offset;
    }
    
