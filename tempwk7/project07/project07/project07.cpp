@@ -80,7 +80,8 @@ MonthYear()
       need to pluck the case I need and nothing more.
       
       Checking up on the possibility of an iterator
-      for the processOffset() method.
+      for the processOffset() method. This may or may not
+      fix the gap in the offset seen in larger years' calendar tables.
       
       switch(month)
          {
@@ -203,6 +204,13 @@ int processOffset()
               offset = ((offset + 365 + year) % 7);//figures the year's offset
             //Note how regardless of year and month, the offset possibilities will always range between 0 and 6 (7)
          }
+         //to replace the for loop below, possibly
+         for(auto const& x : months)
+         {
+            
+         }
+         
+         
          for(int l = 1; l < month; l++)
          {
             offset += year + (month) % 7;//somewhere in here I need to pass in the prompt with its map
