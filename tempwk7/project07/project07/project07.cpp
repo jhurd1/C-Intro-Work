@@ -69,12 +69,20 @@ MonthYear()
 ***********************************************************************/
       void prompt()
       {
-         std::cout << "Enter a month number: " << std::endl;
+         std::cout << "Enter a month number: ";
          std::cin >> month;
          checkInput();
          //for the months in the map, if the month from the user matches,
          //input that value into the calculation
-         switch(month)
+     /*
+      The debugger was observed sequencing through the cases
+      beginning with the input month. I don't need or want that. I only
+      need to pluck the case I need and nothing more.
+      
+      Checking up on the possibility of an iterator
+      for the processOffset() method.
+      
+      switch(month)
          {
             case 1:
                months[1];
@@ -111,8 +119,8 @@ MonthYear()
             case 12:
                months[12];
                numDays = 31;
-         }
-         std::cout << "Enter year: " << std::endl;
+         }*/
+         std::cout << "Enter year: ";
          std::cin >> year;
          checkInput();
       }
@@ -123,7 +131,7 @@ MonthYear()
    int checkInput()
       {
          MonthYear checker;
-         if((month > 12) || (year < 1753))
+         if((month > 12) && (year < 1753))
          {
             std::cin.fail();
             std::cin.clear();
@@ -141,11 +149,11 @@ MonthYear()
    void displayTable()
    {
       MonthYear temp;
-      temp.processTheYearAndMonth();//calculates the right offset for month and year
+      temp.processOffset();//calculates the right offset for month and year
       
       std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
       
-      formatTheTable();
+      //formatTheTable();
       
       for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)//increments month's days and considers the offset
       {
@@ -164,8 +172,9 @@ MonthYear()
    /***********************************************************************
    *Calculate Leap Years
    ***********************************************************************/
-      int leapYear()
+      int leapYear(int year)
       {
+         this->year = year;
          //if the year is divisible by four and 400, the year is a leap year.
          if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))//this logic was tough
          {
@@ -176,54 +185,36 @@ MonthYear()
             //add 1 to 28 for the second month
             months[2] = numDays + 1;//I think adding one here is sufficient, so change this operator to + 1 only instead of concatenation
          }
-         return leapFeb;
+         return year;
       }
    
 /***********************************************************************
  *Process the year (and month) for setting the offset per year, month, and leapYear
+ * As it stands, this logic is quite verbose; maybe can be made more succinct, especially for larger
+ * years where we subtract the year from anchorYear 1753.
  ***********************************************************************/
-int processTheYearAndMonth()
+int processOffset()
    {
-      countOffset = year - 1753;//tells us the number of years from 1753
+      countOffset = year - anchorYear;//tells us the number of years from 1753
       for(int k = 0; k < countOffset; k++)//loop through the total years
       {
-         offset = (offset + 365);//figures the year's offset
-      }
-      
-      
-      
-      /*This needs to consider what year and month it is to correlate the offset.
-       It should loop through possible offsets and return an incremented offset
-       per year based on whether the year is common or leap.
-       */
-      for(int i = 0; i <= 6; i++)//increment the offset per month and common year
-      {
-      if(isLeapYear == false )//this tests for if it's a common year
-         {
-            offset += commonOffsetAnchor;// with each loop, concatentate the offset with the commonOffsetAnchor.
-         }
          if(isLeapYear == true)
          {
-            leapOffsetAnchor += offset;
+              offset = ((offset + 365 + year) % 7);//figures the year's offset
+            //Note how regardless of year and month, the offset possibilities will always range between 0 and 6 (7)
          }
-      }
-      /*Loop through the months and check if it's a leap year
-       If it's a leap year, the offset will be different per month.
-       Assign the offset based on leap year interval and month interval*/
-      for(int j = 0; j <= 11;j++)
-      {//someone in here month % 12 to get the offset
-         if(isLeapYear == true)
+         for(int l = 1; l < month; l++)
          {
-            offset += leapOffsetAnchor;
+            offset += year + (month) % 7;//somewhere in here I need to pass in the prompt with its map
          }
       }
-         
-         //if the year is leapYear && has a certain modulus result for calculating the offset
-         //in the body of the if condition statement, add the one for the month of February
- 
-      return offset;
+        return offset;
    }
    
+/***********************************************************************
+*formatTheTable appears to conflict with processOffset
+* it may be necessary to give the variables different names
+***********************************************************************/
    int formatTheTable()
    {
       //This loop formats the calendar table.
@@ -246,5 +237,7 @@ int processTheYearAndMonth()
 int main()
 {
    MonthYear temp;
+   temp.prompt();
+   temp.processOffset();
    temp.displayTable();
 }
