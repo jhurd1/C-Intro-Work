@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <iomanip>
 #include <iostream>
+#include <map>
 
 /**********************************************************************
 *CalendarFull class
@@ -31,6 +32,7 @@ private:
    int numDays;
    int yearDiff;
 public:
+
    
 /**********************************************************************
 *Constructors
@@ -171,10 +173,70 @@ void displayHeader()
 {
    std::cout << "Enter a month number: ";
    std::cin >> month;
+   inputCheck();
    std::cout << "Enter year: ";
    std::cin >> year;
+   inputCheck();
+   std::cout << std::endl;
+   if(month == 1)
+   {
+      std::cout << "January" << ", " << year << std::endl;
+   } else if (month == 2)
+   {
+      std::cout << "February" << ", " << year << std::endl;
+   } else if (month == 3)
+   {
+      std::cout << "March" << ", " << year << std::endl;
+   } else if (month == 4)
+   {
+      std::cout << "April" << ", " << year << std::endl;
+   } else if (month == 5)
+   {
+      std::cout << "May" << ", " << year << std::endl;
+   } else if (month == 6)
+   {
+      std::cout << "June" << ", " << year << std::endl;
+   } else if (month == 7)
+   {
+      std::cout << "July" << ", " << year << std::endl;
+   } else if (month == 8)
+   {
+      std::cout << "August" << ", " << year << std::endl;
+   } else if (month == 9)
+   {
+      std::cout << "September" << ", " << year << std::endl;
+   } else if (month == 10)
+   {
+      std::cout << "October" << ", " << year << std::endl;
+   } else if (month == 11)
+   {
+      std::cout << "November" << ", " << year << std::endl;
+   } else
+   {
+      std::cout << "December" << ", " << year << std::endl;
+   }
 }
-
+   
+/**********************************************************************
+* Input check
+**********************************************************************/
+void inputCheck()
+   {
+      if(month < 1 || month > 12)
+      {
+         std::cin.fail();
+         std::cin.clear();
+         std::cin.ignore();
+         std::cout << "Month must be between 1 and 12." << "\n";
+      if(year < 1753)
+      {
+         std::cin.fail();
+         std::cin.clear();
+         std::cin.ignore();
+         std::cout << "Year must be greater than 1752." << std::endl;//endl actually clears the memory cache
+      }
+   }
+}
 /**********************************************************************
 *Calculate the number of days
 **********************************************************************/
