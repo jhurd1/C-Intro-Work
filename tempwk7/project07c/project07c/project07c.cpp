@@ -145,7 +145,7 @@ int computeOffset(int offset, int year, int month, bool isLeapYear, int yearDiff
 *Display methods
 ***********************************************************************/
    void displayTable(int numDays, int offset, bool isLeapYear, int month, int totalYearsDays, int year, int yearDiff){
-      int displayDays = 1;
+      int displayDays = 0;
       
      std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
      
@@ -158,10 +158,11 @@ int computeOffset(int offset, int year, int month, bool isLeapYear, int yearDiff
          std::cout << "    ";
      }
      /*for(int i = computeOffset(offset, year, month, isLeapYear, yearDiff, totalYearsDays) + 1; i <= numDays + computeOffset(offset, year, month, isLeapYear, yearDiff, totalYearsDays); i++, displayDays++)//This doesn't get an offset from computeOffset()*/
-      for(int i = displayDays; displayDays <= numDays; i++)//last method I had to instantiate vars at the top of the method to get them to evaluate
+      for(int i = displayDays; displayDays <= computeNumDays(month, isLeapYear, year); i++)//last method I had to instantiate vars at the top of the method to get them to evaluate
      {
+        displayDays++;
         std::cout << std::setw(4) << displayDays;
-           if(offset % 7 == 6)
+           if(displayDays % 7 == 6)
          {
              std::cout <<  std::endl;//carriage return at each line's end except for the last line
          }
