@@ -96,6 +96,30 @@ int getPreviousMonthsDays()
       return totalPreviousDays;
    }
 
+   /************************************************************************
+   * getTotalLeapYears()
+   ************************************************************************/
+   int getTotalLeapYears()
+      {
+         //loop through all the years from input to 1753 and check each one for leap year
+         if(year > 1753)
+         {
+             yearDiff = year - 1753;
+         } else
+            yearDiff = 1573 - year;
+        
+         totalLeapYears = 0;
+         for(int i = yearDiff; i >= 0; i++)
+         {
+               if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))//this isn't working for some reason
+               {
+                  totalLeapYears += year;
+               }
+         }
+         commonYears = totalLeapYears - yearDiff;
+         return totalLeapYears;
+      }
+
 /***********************************************************************
 *ComputeOffset
 ***********************************************************************/
@@ -113,10 +137,10 @@ int computeOffset()
    if(isLeapYear == true)
    {
       addFebruarysExtraDay = numDays + 1;
-       totalDays = yearDiff + totalLeapYears + numDays + addFebruarysExtraDay + getPreviousMonthsDays();
+      totalDays = yearDiff + totalLeapYears + numDays + addFebruarysExtraDay + previousMonthsDays;
    } else
 
-   totalDays = yearDiff + totalLeapYears + numDays + getPreviousMonthsDays();
+      totalDays = yearDiff + totalLeapYears + numDays + previousMonthsDays;
    
    offset = totalDays % 7;
          
@@ -222,30 +246,7 @@ void inputCheck()
          std::cin.clear();
          std::cin.ignore();
       }
-
-/************************************************************************
-* getTotalLeapYears()
-************************************************************************/
-int getTotalLeapYears()
-   {
-      //loop through all the years from input to 1753 and check each one for leap year
-      if(year > 1753)
-      {
-          yearDiff = year - 1753;
-      } else
-         yearDiff = 1573 - year;
-     
-      totalLeapYears = 0;
-      for(int i = yearDiff; i >= 0; i++)
-      {
-            if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
-            {
-               totalLeapYears += year;
-            }
-      }
-      commonYears = totalLeapYears - yearDiff;
-      return totalLeapYears;
-   }
+   
 /**********************************************************************
 *Conclude whether it's a leap year.
 **********************************************************************/
@@ -264,6 +265,7 @@ int main()
 {
    CalendarFull temp;
    temp.displayHeader();
+   temp.getTotalLeapYears();
    temp.computeOffset();
    temp.displayTable();
 }
