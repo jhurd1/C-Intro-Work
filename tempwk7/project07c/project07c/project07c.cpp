@@ -62,11 +62,15 @@ bool getLeapYear(bool isLeapYear)
 /************************************************************************
 * getTotalLeapYears()
 ************************************************************************/
-int getTotalLeapYears(int year, int yearDiff, bool isLeapYear)
+int getCommonAndLeapDays(int year, int yearDiff, bool isLeapYear)
    {
       //loop through all the years from input to 1753 and check each one for leap year
       int count = 0;
       int commonYears = 0;
+      int totalYearsDays = 0;
+      int commonYearsDays = 0;
+      int leapYearsDays = 0;
+      
       if(year > 1753)
       {
           yearDiff = year - 1753;
@@ -93,17 +97,20 @@ int getTotalLeapYears(int year, int yearDiff, bool isLeapYear)
       {
          commonYears = yearDiff - totalLeapYears;
       }
-      
-      return totalLeapYears;
+      commonYearsDays = commonYears * 365;
+      leapYearsDays = totalLeapYears * 366;//These two new vars were returning arbitrary data because the program needed to know where to get them from
+      //and instantiating them local to the method vs local to this block allowed the program to find the right values
+      totalYearsDays = commonYearsDays + leapYearsDays;
+  
+      return totalYearsDays;
    }
 
-int computeOffset(int offset, int year, int month, bool isLeapYear, int yearDiff)//this is passing in the false value. Why?
+int computeOffset(int offset, int year, int month, bool isLeapYear, int yearDiff, int totalYearsDays)//this is passing in the false value. Why?
 {
    //Get the numDays for the input month
    int addFebruarysExtraDay = 0;
-   int totalLeapYears = 0;
    int previousMonthsDays = 0;
-   int totalDays;
+   int totalDays =0;
    int numDays = 0;
    if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
    {
@@ -117,14 +124,19 @@ int computeOffset(int offset, int year, int month, bool isLeapYear, int yearDiff
    {
       numDays = 28;
    }
-   if(leapYear(isLeapYear, year))//had to actually call the function here, otherwise it  will always be its original value in main
+   if(leapYear(isLeapYear, year) && month == 2)//had to actually call the function here, otherwise it  will always be its original value in main
    {
       addFebruarysExtraDay = numDays + 1;//this isn't evaluating correctly as it should fire only for Feb
-      totalDays = yearDiff + totalLeapYears + numDays + addFebruarysExtraDay + previousMonthsDays;
-   } else
-
-      totalDays = yearDiff + totalLeapYears + numDays + previousMonthsDays;
-   
+      totalDays = getCommonAndLeapDays(year, yearDiff, isLeapYear) + numDays + addFebruarysExtraDay + previousMonthsDays;
+   }
+   if(leapYear(isLeapYear, year))
+   {
+         totalDays = getCommonAndLeapDays(year, yearDiff, isLeapYear) + numDays + previousMonthsDays;
+   }
+   if(!leapYear(isLeapYear, year))
+   {
+      totalDays = getCommonAndLeapDays(year, yearDiff, isLeapYear) + numDays + previousMonthsDays;
+   }
    offset = totalDays % 7;
          
     return offset;
@@ -133,8 +145,8 @@ int computeOffset(int offset, int year, int month, bool isLeapYear, int yearDiff
 /***********************************************************************
 *Display methods
 ***********************************************************************/
-   void displayTable(int numDays, int offset){
-      int displayDays = 1;
+   void displayTable(int numDays, int offset, bool isLeapYear, int month, int totalYearsDays, int year, int yearDiff){
+      
      std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
      
      for(int j = 0; j <= offset; j++)
@@ -145,8 +157,8 @@ int computeOffset(int offset, int year, int month, bool isLeapYear, int yearDiff
          }
          std::cout << "    ";
      }
-     for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)//This doesn't get an offset from computeOffset()
-      //for(int displayDays = 1; displayDays <= numDays; displayDays++)
+     /*for(int i = computeOffset(offset, year, month, isLeapYear, yearDiff, totalYearsDays) + 1; i <= numDays + computeOffset(offset, year, month, isLeapYear, yearDiff, totalYearsDays); i++, displayDays++)//This doesn't get an offset from computeOffset()*/
+      for(int displayDays = 1; displayDays <= numDays; displayDays++)
      {
         std::cout << std::setw(4) << displayDays;
            if(offset % 7 == 6)
@@ -224,6 +236,7 @@ int main()
    int year = 0;
    int month = 0;
    int yearDiff = 0;
+   int totalYearsDays = 0;
    std::cout << "Enter a month number: ";
    std::cin >> month;
    std::cout << "Enter year: ";
@@ -233,7 +246,6 @@ int main()
    bool isLeapYear = false;//change this to call the function instead after next step
    displayHeader(year,month);
    leapYear(isLeapYear, year);
-   getTotalLeapYears(year, yearDiff, isLeapYear);
-   computeOffset(offset, year, month, isLeapYear, yearDiff);
-   displayTable(numDays, offset);
+   getCommonAndLeapDays(year, yearDiff, isLeapYear);
+   displayTable(numDays, offset, isLeapYear, month, totalYearsDays, year, yearDiff);
 }
