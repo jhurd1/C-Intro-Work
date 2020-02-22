@@ -17,9 +17,9 @@
 #include <iostream>
 #include <map>
 
-/**********************************************************************
+/***********************************************************************
 *CalendarFull class
-**********************************************************************/
+***********************************************************************/
 class CalendarFull
 {
 private:
@@ -31,12 +31,17 @@ private:
    int offset;
    int numDays;
    int yearDiff;
+   int totalLeapYears;
+   int previousMonthsDays;
+   int totalPreviousDays;
+   int addFebruarysExtraDay;
+   int totalDays;
 public:
 
    
-/**********************************************************************
+/***********************************************************************
 *Constructors
-**********************************************************************/
+***********************************************************************/
 CalendarFull()
    {
       
@@ -47,9 +52,9 @@ CalendarFull()
       
    }
    
-/**********************************************************************
+/***********************************************************************
 *Accessors
-**********************************************************************/
+***********************************************************************/
 int getMonth()
 {
    std::cout << "Month: ";
@@ -61,29 +66,38 @@ int getYear()
    return year;
 }
 
-/********************************************************************
+/*********************************************************************
 * Get the previous month's days
-********************************************************************/
+*********************************************************************/
 int getPreviousMonthsDays()
    {
-      int previousMonthsDays = month - 1;
+      previousMonthsDays = month - 12;
+      //iterate across those to hit each of the remaining months and get their days.
         month = previousMonthsDays;
-        if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
-        {
-           numDays = 31;
-        }
-        if(month == 4 || month == 6 || month == 9 || month == 11)
-        {
-           numDays = 31;
-        } else numDays = 28;
-      return numDays;
+      for(int i = previousMonthsDays; i <= previousMonthsDays; i++)
+      {
+         if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+         {
+            numDays = 31;
+         }
+         if(month == 4 || month == 6 || month == 9 || month == 11)
+         {
+            numDays = 31;
+         } else
+         {
+            numDays = 28;
+         }
+         numDays += totalPreviousDays;
+      }
+      return totalPreviousDays;
    }
 
-/**********************************************************************
+/***********************************************************************
 *ComputeOffset
-**********************************************************************/
+***********************************************************************/
 int computeOffset()
 {
+   //Get the numDays for the input month
    if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
    {
       numDays = 31;
@@ -92,54 +106,22 @@ int computeOffset()
    {
       numDays = 30;
    } else numDays = 28;
-   //return numDays;
-   
-   if(isLeapYear == false)
+   if(isLeapYear == true)
    {
-      yearDiff = (year - 1753) * 365;
-   }
-   else
-   {
-      yearDiff = (year - 1753) * 366;
-   }
-   int totalDays = yearDiff + numDays + getPreviousMonthsDays();
+      addFebruarysExtraDay = numDays + 1;
+       totalDays = yearDiff + totalLeapYears + numDays + addFebruarysExtraDay + getPreviousMonthsDays();
+   } else
+
+   totalDays = yearDiff + totalLeapYears + numDays + getPreviousMonthsDays();
    
-   int sum = totalDays % 7;
-         switch(sum)
-         {
-            case 1:
-               offset = 0;
-               break;
-            case 2:
-               offset = 1;
-               break;
-            case 3:
-               offset = 2;
-               break;
-            case 4:
-               offset = 3;
-               break;
-            case 5:
-               offset = 4;
-               break;
-            case 6:
-               offset = 5;
-               break;
-            case 7:
-               offset = 6;
-               break;
-         }
+   offset = totalDays % 7;
+         
     return offset;
    }
 
-/**********************************************************************
+/***********************************************************************
 *Display methods
-**********************************************************************/
-void display()
-{
-   
-}
-
+***********************************************************************/
    void displayTable(){
      std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
      
@@ -151,10 +133,9 @@ void display()
          }
          std::cout << "    ";
      }
-
-     int displayDays = 1;
-     
+      int displayDays = 1;
      for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)//increments month's days and considers the offset
+      //for(int displayDays = 1; displayDays <= numDays; displayDays++)
      {
         std::cout << std::setw(4) << displayDays;
            if(i % 7 == 6)
@@ -169,14 +150,26 @@ void display()
       std::cout << "\n";
   }
 
+/**************************************************************************
+* DisplayHeader
+**************************************************************************/
 void displayHeader()
 {
    std::cout << "Enter a month number: ";
    std::cin >> month;
-   inputCheck();
+    while(month < 1 || month > 13)
+    {
+        inputCheck();
+       std::cout << "Month must be between 1 and 12." << "\n";
+    }
+  
    std::cout << "Enter year: ";
    std::cin >> year;
-   inputCheck();
+   while(year < 1753){
+       inputCheck();
+      std::cout << "Year must be greater than 1752." << std::endl;
+   }
+  
    std::cout << std::endl;
    if(month == 1)
    {
@@ -217,45 +210,38 @@ void displayHeader()
    }
 }
    
-/**********************************************************************
+/***********************************************************************
 * Input check
-**********************************************************************/
+***********************************************************************/
 void inputCheck()
    {
-      if(month < 1 || month > 12)
-      {
          std::cin.fail();
          std::cin.clear();
          std::cin.ignore();
-         std::cout << "Month must be between 1 and 12." << "\n";
-      if(year < 1753)
-      {
-         std::cin.fail();
-         std::cin.clear();
-         std::cin.ignore();
-         std::cout << "Year must be greater than 1752." << std::endl;//endl actually clears the memory cache
       }
-   }
-}
-/**********************************************************************
-*Calculate the number of days
-**********************************************************************/
-int numDaysInYear()
-{
-   return yearDays;
-}
 
-int numDaysInMonth()
-{
-   return monthDays;
-}
-   
+/************************************************************************
+* getTotalLeapYears()
+************************************************************************/
+int getTotalLeapYears()
+   {
+      //loop through all the years from input to 1753 and check each one for leap year
+      totalLeapYears = 0;
+      for(int i = yearDiff; i >= 0; i++)
+      {
+            if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+            {
+               totalLeapYears += year;
+            }
+      }
+      return totalLeapYears;
+   }
 /**********************************************************************
 *Conclude whether it's a leap year.
 **********************************************************************/
 bool leapYear()
    {
-   if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))//this logic was tough
+   if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
            {
               isLeapYear = true;
            } else
