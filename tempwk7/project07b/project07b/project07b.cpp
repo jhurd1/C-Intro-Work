@@ -11,6 +11,8 @@
 *       The most difficult part comprised
 ************************************************************************/
 
+//next steps: Try it without global variables; review structure map for which variables need passing in and do it that way
+
 #include <stdio.h>
 #include <stdio.h>
 #include <iomanip>
@@ -36,6 +38,7 @@ private:
    int totalPreviousDays;
    int addFebruarysExtraDay;
    int totalDays;
+   int commonYears;
 public:
 
    
@@ -71,7 +74,7 @@ int getYear()
 *********************************************************************/
 int getPreviousMonthsDays()
    {
-      previousMonthsDays = month - 12;
+      previousMonthsDays = 12 - month;
       //iterate across those to hit each of the remaining months and get their days.
         month = previousMonthsDays;
       for(int i = previousMonthsDays; i <= previousMonthsDays; i++)
@@ -83,9 +86,10 @@ int getPreviousMonthsDays()
          if(month == 4 || month == 6 || month == 9 || month == 11)
          {
             numDays = 31;
-         } else
+         }
+         if(month == 2)
          {
-            numDays = 28;
+               numDays = 28;
          }
          numDays += totalPreviousDays;
       }
@@ -133,12 +137,11 @@ int computeOffset()
          }
          std::cout << "    ";
      }
-      int displayDays = 1;
-     for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)//increments month's days and considers the offset
-      //for(int displayDays = 1; displayDays <= numDays; displayDays++)
+     //for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)//This is the break. It's not evaluating the body code because offset is not less than numDays. But why?
+      for(int displayDays = 1; displayDays <= numDays; displayDays++)
      {
         std::cout << std::setw(4) << displayDays;
-           if(i % 7 == 6)
+           if(offset % 7 == 6)
          {
              std::cout <<  std::endl;//carriage return at each line's end except for the last line
          }
@@ -226,6 +229,12 @@ void inputCheck()
 int getTotalLeapYears()
    {
       //loop through all the years from input to 1753 and check each one for leap year
+      if(year > 1753)
+      {
+          yearDiff = year - 1753;
+      } else
+         yearDiff = 1573 - year;
+     
       totalLeapYears = 0;
       for(int i = yearDiff; i >= 0; i++)
       {
@@ -234,6 +243,7 @@ int getTotalLeapYears()
                totalLeapYears += year;
             }
       }
+      commonYears = totalLeapYears - yearDiff;
       return totalLeapYears;
    }
 /**********************************************************************
