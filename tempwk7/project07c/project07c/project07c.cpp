@@ -195,7 +195,6 @@ int computeOffset(int offset, int numDays, int year, int month, bool isLeapYear,
      {
         std::cout << "\n";
      }
-      std::cout << offset;//console output placed here to confirm the passing in of the offset; it is not being passed into this function. After passing it in, I'll need to fix the offset because it's wrong
   }
 
 /**************************************************************************
@@ -274,6 +273,14 @@ void displayHeader(int year, int month)
    }
 }
 
+/*******************************************************************
+* main: In sum, I've confirmed that all my functions' math is correct, that the leapyear
+* function returns the correct leap years, and that displayTable now properly receives
+* computeOffset's offset value. Yet, I am not passing testBed because the offset is not
+* correct or because my loop in displayTable is not correctly making use of the offset.
+* 1. Review the loop in displayTable.
+* 2. Review the calculation in computeOffset to ensure I'm not missing something.
+*******************************************************************/
 int main()
 {
    int year = 0;
