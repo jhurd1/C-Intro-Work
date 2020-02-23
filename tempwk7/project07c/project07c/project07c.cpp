@@ -7,10 +7,11 @@
 * Summary:
 *    This program incorporates a calendar program.
 *    Estimated:  1.0 hrs
-*    Actual:     20 hrs
+*    Actual:     24 hrs
 *       The most difficult part comprised getting that pesky displayTable loop to run correctly
 * with this new set of methods and variables. I deleted the class and global variables as ad-
-* vised.
+* vised. I wrestled with the offset and displayTable until midnight. Sorry to say, I just couldn't
+* get this one sorted out.
 ************************************************************************/
 
 #include <stdio.h>
@@ -18,8 +19,6 @@
 #include <stdio.h>
 #include <iomanip>
 #include <iostream>
-
- int displayDays = 1;
 
 /**********************************************************************
 *Accessors
@@ -75,12 +74,12 @@ int getPreviousMonthsDays(int month, int numDays, bool isLeapYear, int year)
    {
       int totalPreviousDays = 0;
       int daysPerMonth[] = {31, (leapYear(isLeapYear, year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-      for(int i = 1; i < month; ++i)
+      for(int i = 1; i < month; ++i)//this is taking in the correct user's input for the month; confirmed
       {
          totalPreviousDays += daysPerMonth[i - 1];
       }
          numDays += totalPreviousDays;
-         return totalPreviousDays;
+         return totalPreviousDays;//this math is also confirmed: It returns the correct number of days for a leap year
       }
              
 
@@ -126,16 +125,15 @@ int getCommonAndLeapDays(int year, int yearDiff, bool isLeapYear)
       leapYearsDays = totalLeapYears * 366;
       totalYearsDays = commonYearsDays + leapYearsDays;
   
-      return totalYearsDays;
+      return totalYearsDays;//The math is correct for totalYearsDays
    }
-
 /**************************************************************
  * compute the input month's days
  **************************************************************/
 int computeNumDays(int month, bool isLeapYear, int year)
 {
    int numDays = 0;
-   int addFebruarysExtraDay = 0;
+   int addFebruarysExtraDay = 1;
    if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
    {
       numDays = 31;
@@ -148,11 +146,11 @@ int computeNumDays(int month, bool isLeapYear, int year)
    {
       numDays = 28;
    }
-   if(leapYear(isLeapYear, year) && month == 2)
+   if(leapYear(isLeapYear, year) && month == 2)//this is the clause that adds the additional day for the leap year and month of February
    {
-      addFebruarysExtraDay = numDays + 1;
+      numDays += addFebruarysExtraDay;
    }
-   return numDays;
+   return numDays;//not successfully returning Feb's extra day with this logic
    }
    
 /**************************************************************
@@ -160,40 +158,21 @@ int computeNumDays(int month, bool isLeapYear, int year)
 **************************************************************/
 int computeOffset(int offset, int numDays, int year, int month, bool isLeapYear, int yearDiff, int totalYearsDays)
 {
-   
-   bool leap = leapYear(isLeapYear, year);
-   if(leap && month == 2)
-   {
-   int totalDays = getCommonAndLeapDays(year, yearDiff, isLeapYear) + computeNumDays(month, isLeapYear, year)  + getPreviousMonthsDays(month, numDays, isLeapYear, year);
-      offset = totalDays % 7;
-      return offset;
-      
-   }
-   if(leap)
-   {
-     int totalDays = getCommonAndLeapDays(year, yearDiff, isLeapYear) + computeNumDays(month, isLeapYear, year)  + getPreviousMonthsDays(month, numDays, isLeapYear, year);
-      offset = totalDays % 7;
-      return offset;
-      
-   }
-   if(!leap)
-   {
-      int totalDays = getCommonAndLeapDays(year, yearDiff, isLeapYear) + computeNumDays(month, isLeapYear, year)  + getPreviousMonthsDays(month, numDays, isLeapYear, year);
-      offset = totalDays % 7;
-      return offset;
-   }
-    return offset;//this statement should never be reached
-   }
+   offset = (computeNumDays(month, isLeapYear, year) + getCommonAndLeapDays(year, yearDiff, isLeapYear) + getPreviousMonthsDays(month, numDays, isLeapYear, year)) % 7;
+
+   return offset;
+}
 
 /***********************************************************************
 *Display methods
 ***********************************************************************/
    void displayTable(int numDays, int offset, bool isLeapYear, int month, int totalYearsDays, int year, int yearDiff){
-      
-      //offset = computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays);
+      int displayDays = 1;
      std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
-     
-     for(int j = 0; j <= computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays); j++)
+      offset = computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays);//this appears to be passing in the value for offset to the next for loop, now. A step in the right direction.
+     for(int j = 0; j <= computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays); j++)//the offset tested was set to two, but mousing over the offset return a 0 value
+        //but the offset should be 5 for March, 1760.
+      
      {
          if(offset == 6)
          {
@@ -201,7 +180,7 @@ int computeOffset(int offset, int numDays, int year, int month, bool isLeapYear,
          }
          std::cout << "    ";
      }
-      for(int i = computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays) + 1; i <=  + offset; i++, displayDays++)
+      for(int i = computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays) + 1; i <= computeNumDays(month, isLeapYear, year) + computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays); i++, displayDays++)
      {
         std::cout << std::setw(4) << displayDays;
            if(i % 7 == 6)
@@ -209,11 +188,14 @@ int computeOffset(int offset, int numDays, int year, int month, bool isLeapYear,
              std::cout <<  std::endl;
          }
      }
-      if((numDays = computeNumDays(month, isLeapYear, year) >= 30 && computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays) == 4))
+      if((computeNumDays(month, isLeapYear, year) >= 30 && computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays) == 4))
      {
         std::cout << "";
      } else
-      std::cout << "\n";
+     {
+        std::cout << "\n";
+     }
+      std::cout << offset;//console output placed here to confirm the passing in of the offset; it is not being passed into this function. After passing it in, I'll need to fix the offset because it's wrong
   }
 
 /**************************************************************************
@@ -221,8 +203,15 @@ int computeOffset(int offset, int numDays, int year, int month, bool isLeapYear,
 **************************************************************************/
 int promptMonth(int month)
 {
-   std::cout << "Enter a month: ";
+   std::cout << "Enter a month number: ";
    std::cin >> month;
+   while(month < 1 || month > 12)
+   {
+        inputCheck();
+      std::cout << "Month must be between 1 and 12." << "\n";
+      std::cout << "Enter a month number: ";
+      std::cin >> month;
+   }
    return month;
 }
 
@@ -230,6 +219,13 @@ int promptYear(int year)
 {
    std::cout << "Enter year: ";
    std::cin >> year;
+   while(year < 1753)
+     {
+         inputCheck();
+        std::cout << "Year must be 1753 or later." << std::endl;
+        std::cout << "Enter year: ";
+        std::cin >> year;
+     }
    return year;
 }
 
@@ -238,17 +234,6 @@ int promptYear(int year)
 **************************************************************************/
 void displayHeader(int year, int month)
 {
-   if(month < 1 || month > 12)
-   {
-        inputCheck();
-       std::cout << "Month must be between 1 and 12." << "\n";
-    }
-   if(year < 1753)
-   {
-       inputCheck();
-      std::cout << "Year must be greater than 1752." << std::endl;
-   }
-  
    std::cout << std::endl;
    if(month == 1)
    {

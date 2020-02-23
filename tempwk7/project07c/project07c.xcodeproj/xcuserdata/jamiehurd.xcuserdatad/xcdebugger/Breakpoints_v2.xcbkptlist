@@ -7,31 +7,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A1863163-2F2C-40EF-9D8F-53FF004AD6CA"
+            uuid = "03C85ECC-70D6-449C-99B1-BD9AADF04A2A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "project07c/project07c.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "getPreviousMonthsDays(month, numDays, isLeapYear, year)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1B258122-FF5B-4A13-B894-5DC2D35C8AD7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "project07c/project07c.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "displayTable(numDays, offset, isLeapYear, month, totalYearsDays, year, yearDiff)"
             landmarkType = "9">
          </BreakpointContent>
