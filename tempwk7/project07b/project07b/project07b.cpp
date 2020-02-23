@@ -7,7 +7,7 @@
 * Summary:
 *    This program incorporates a calendar.
 *    Estimated:  1.0 hrs
-*    Actual:     3.5 hrs
+*    Actual:     20 hrs
 *       The most difficult part comprised
 ************************************************************************/
 
@@ -39,6 +39,9 @@ private:
    int addFebruarysExtraDay;
    int totalDays;
    int commonYears;
+   int totalYearsDays;
+   int commonYearsDays;
+   int leapYearsDays;
 public:
 
    
@@ -60,12 +63,15 @@ CalendarFull()
 ***********************************************************************/
 int getMonth()
 {
-   std::cout << "Month: ";
+   int month;
+   std::cin >> month;
    return month;
 }
 
 int getYear()
 {
+   int year;
+   std::cin >> year;
    return year;
 }
 
@@ -73,84 +79,112 @@ int getYear()
 * Get the previous month's days
 *********************************************************************/
 int getPreviousMonthsDays()
+{
+   //totalPreviousDays = 0;
+   int daysPerMonth[] = {31, (leapYear() ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+   for(int i = 1; i < month; ++i)
    {
-      previousMonthsDays = 12 - month;
-      //iterate across those to hit each of the remaining months and get their days.
-        month = previousMonthsDays;
-      for(int i = previousMonthsDays; i <= previousMonthsDays; i++)
-      {
-         if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
-         {
-            numDays = 31;
-         }
-         if(month == 4 || month == 6 || month == 9 || month == 11)
-         {
-            numDays = 31;
-         }
-         if(month == 2)
-         {
-               numDays = 28;
-         }
-         numDays += totalPreviousDays;
-      }
+      totalPreviousDays += daysPerMonth[i - 1];
+   }
+      numDays += totalPreviousDays;
       return totalPreviousDays;
    }
 
    /************************************************************************
    * getTotalLeapYears()
    ************************************************************************/
-   int getTotalLeapYears()
-      {
-         //loop through all the years from input to 1753 and check each one for leap year
-         if(year > 1753)
-         {
-             yearDiff = year - 1753;
-         } else
-            yearDiff = 1573 - year;
-        
-         totalLeapYears = 0;
-         for(int i = yearDiff; i >= 0; i++)
-         {
-               if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))//this isn't working for some reason
-               {
-                  totalLeapYears += year;
-               }
-         }
-         commonYears = totalLeapYears - yearDiff;
-         return totalLeapYears;
-      }
+   int getCommonAndLeapDays()
+    {
+       //loop through all the years from input to 1753 and check each one for leap year
+       int count = 0;
+       commonYearsDays = 0;
+       leapYearsDays = 0;
+       if(year > 1753)
+       {
+           yearDiff = year - 1753;
+       } else
+          yearDiff = 1573 - year;
+       for(int i = year; i > 1753; i--)
+       {
+          year--;
+          //if(isLeapYear)
+             if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+             {
+                totalLeapYears = 1;
+                count++;
+                totalLeapYears += count;//need a variable holding the count of leap years and this doesn't do it
+             }
+       }
+       if(totalLeapYears > yearDiff)
+       {
+          commonYears = totalLeapYears - yearDiff;
+       }
+       if(yearDiff > totalLeapYears)
+       {
+          commonYears = yearDiff - totalLeapYears;
+       }
+       commonYearsDays = commonYears * 365;
+       leapYearsDays = totalLeapYears * 366;
+       totalYearsDays = commonYearsDays + leapYearsDays;
+   
+       return totalYearsDays;
+    }
 
-/***********************************************************************
-*ComputeOffset
-***********************************************************************/
+/**************************************************************
+* compute the offset
+**************************************************************/
 int computeOffset()
 {
-   //Get the numDays for the input month
-   if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
-   {
-      numDays = 31;
-   }
-   if(month == 4 || month == 6 || month == 9 || month == 11)
-   {
-      numDays = 30;
-   } else numDays = 28;
-   if(isLeapYear == true)
-   {
-      addFebruarysExtraDay = numDays + 1;
-      totalDays = yearDiff + totalLeapYears + numDays + addFebruarysExtraDay + previousMonthsDays;
-   } else
-
-      totalDays = yearDiff + totalLeapYears + numDays + previousMonthsDays;
+   int totalDays =0;
    
+   if(leapYear() && month == 2)
+   {
+      totalDays = totalYearsDays + numDays + totalPreviousDays + 1;//gets previous days for Jan (31) and adds a day for February on a leap year.
+   }
+   if(leapYear())
+   {
+         totalDays = totalYearsDays + numDays  + getPreviousMonthsDays();//this calculates if we need 29 for Feb
+   }
+   if(!leapYear())//don't need this twice
+   {
+      totalDays = totalYearsDays + numDays  + getPreviousMonthsDays();//this calculates also if we don't need 29 for Feb but only for previous months
+   }
    offset = totalDays % 7;
          
     return offset;
    }
 
+   /**************************************************************
+    * compute the input month's days
+    **************************************************************/
+   int computeNumDays()
+   {
+      numDays = 0;
+      int addFebruarysExtraDay = 0;
+      if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+      {
+         numDays = 31;
+      }
+      if(month == 4 || month == 6 || month == 9 || month == 11)
+      {
+         numDays = 30;
+      }
+      if(month == 2)
+      {
+         numDays = 28;
+      }
+      if(leapYear() && month == 2)
+      {
+         addFebruarysExtraDay = numDays + 1;
+      }
+      return numDays;
+      }
+   
 /***********************************************************************
 *Display methods
 ***********************************************************************/
    void displayTable(){
+      int displayDays = 1;
      std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
      
      for(int j = 0; j <= offset; j++)
@@ -161,11 +195,11 @@ int computeOffset()
          }
          std::cout << "    ";
      }
-     //for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)//This is the break. It's not evaluating the body code because offset is not less than numDays. But why?
-      for(int displayDays = 1; displayDays <= numDays; displayDays++)
+     for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)//This is the break. It's not evaluating the body code because offset is not less than numDays. But why?
+      //for(int displayDays = 1; displayDays <= numDays; displayDays++)
      {
         std::cout << std::setw(4) << displayDays;
-           if(offset % 7 == 6)
+           if(i % 7 == 6)
          {
              std::cout <<  std::endl;//carriage return at each line's end except for the last line
          }
@@ -265,7 +299,8 @@ int main()
 {
    CalendarFull temp;
    temp.displayHeader();
-   temp.getTotalLeapYears();
+   //temp.getTotalLeapYears();
+   temp.computeNumDays();
    temp.computeOffset();
    temp.displayTable();
 }
