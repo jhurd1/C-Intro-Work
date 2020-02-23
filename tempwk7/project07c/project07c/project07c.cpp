@@ -82,6 +82,30 @@ int getPreviousMonthsDays(int month, int numDays, bool isLeapYear, int year)
          return totalPreviousDays;//this math is also confirmed: It returns the correct number of days for a leap year
       }
              
+/***********************************************************************
+* get just the given year's days
+***********************************************************************/
+int getJustTheInputYearsDays(int year, int yearDiff, bool isLeapYear)
+{
+   int justTheInputYearsDays = 0;
+   int leapYearsDays = 0;
+
+   if(year > 1753)
+   {
+       yearDiff = year - 1753;
+   } else
+      yearDiff = 1753 - year;
+   bool leap = leapYear(isLeapYear, year);
+   if(leap)
+   {
+      leapYearsDays = 1 * 366;
+   } else
+   {
+      year = 1 * 365;
+   }
+   justTheInputYearsDays = year;
+   return justTheInputYearsDays;
+}
 
 /************************************************************************
 * getTotalLeapYears()
@@ -99,7 +123,9 @@ int getCommonAndLeapDays(int year, int yearDiff, bool isLeapYear)
       {
           yearDiff = year - 1753;
       } else
-         yearDiff = 1573 - year;
+         yearDiff = 1753 - year;//spotted a typographical error here just now while debugging on the day after the due date; had set to 1573, but should be 1753
+      //and this may have been my problem all along with the offset
+      //therefore, be prepared to roll back to the former computeOffset code.
      
       int totalLeapYears = 0;
       for(int i = year; i > 1753; i--)
@@ -158,8 +184,20 @@ int computeNumDays(int month, bool isLeapYear, int year)
 **************************************************************/
 int computeOffset(int offset, int numDays, int year, int month, bool isLeapYear, int yearDiff, int totalYearsDays)
 {
-   offset = (computeNumDays(month, isLeapYear, year) + getCommonAndLeapDays(year, yearDiff, isLeapYear) + getPreviousMonthsDays(month, numDays, isLeapYear, year)) % 7;
-
+   //offset = (computeNumDays(month, isLeapYear, year) + getCommonAndLeapDays(year, yearDiff, isLeapYear) + getPreviousMonthsDays(month, numDays, isLeapYear, year)) % 7;
+//is it possible I"m adding too many numbers here?
+   
+   int count = 0;
+   
+   for(int i = 1753; i < year; i++)
+   {
+      count += getJustTheInputYearsDays(year, yearDiff, isLeapYear);//concatenate with the days for the given year? Try it.
+   }
+   for(int j = 1; j < month; j++)
+   {
+      count += computeNumDays(month, isLeapYear, year);
+   }
+   offset = count % 7;
    return offset;
 }
 
@@ -170,6 +208,7 @@ int computeOffset(int offset, int numDays, int year, int month, bool isLeapYear,
       int displayDays = 1;
      std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
       offset = computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays);//this appears to be passing in the value for offset to the next for loop, now. A step in the right direction.
+      //std::cout << offset;
      for(int j = 0; j <= computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays); j++)//the offset tested was set to two, but mousing over the offset return a 0 value
         //but the offset should be 5 for March, 1760.
       
@@ -195,6 +234,7 @@ int computeOffset(int offset, int numDays, int year, int month, bool isLeapYear,
      {
         std::cout << "\n";
      }
+   
   }
 
 /**************************************************************************
