@@ -187,17 +187,21 @@ int computeOffset(int offset, int numDays, int year, int month, bool isLeapYear,
    //offset = (computeNumDays(month, isLeapYear, year) + getCommonAndLeapDays(year, yearDiff, isLeapYear) + getPreviousMonthsDays(month, numDays, isLeapYear, year)) % 7;
 //is it possible I"m adding too many numbers here?
    
+   /*
    int count = 0;
    
    for(int i = 1753; i < year; i++)
    {
-      count += getJustTheInputYearsDays(year, yearDiff, isLeapYear);//concatenate with the days for the given year? Try it.
+      count += getCommonAndLeapDays(year, yearDiff, isLeapYear);//concatenate with the days for the given year? Try it. Otherwise, try it with getCommonAndLeapDays
    }
    for(int j = 1; j < month; j++)
    {
-      count += computeNumDays(month, isLeapYear, year);
+      count += computeNumDays(month, isLeapYear, year) + getPreviousMonthsDays(month, numDays, isLeapYear, year);//Maybe this one needs to loop through and add previous months' days
    }
-   offset = count % 7;
+   offset = count % 7;*/
+   
+   //offset = (((year -1) * 365) + ((year - 1) / 4 ) - ((year - 1) / 100) + ((year) / 400)  + 1) % 7;//supposed to be 0 for jan 1753.//original
+   offset = (((year -1) * 365) + ((year - 1) / 4 ) - ((year - 1) / 100) + ((year) / 400)) % 7;//test to get 0 offset for jan 1753
    return offset;
 }
 
@@ -209,7 +213,7 @@ int computeOffset(int offset, int numDays, int year, int month, bool isLeapYear,
      std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
       offset = computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays);//this appears to be passing in the value for offset to the next for loop, now. A step in the right direction.
       //std::cout << offset;
-     for(int j = 0; j <= computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays); j++)//the offset tested was set to two, but mousing over the offset return a 0 value
+     for(int j = 0; j <= offset; j++)//the offset tested was set to two, but mousing over the offset return a 0 value
         //but the offset should be 5 for March, 1760.
       
      {
@@ -219,7 +223,7 @@ int computeOffset(int offset, int numDays, int year, int month, bool isLeapYear,
          }
          std::cout << "    ";
      }
-      for(int i = computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays) + 1; i <= computeNumDays(month, isLeapYear, year) + computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays); i++, displayDays++)
+      for(int i = offset + 1; i <= computeNumDays(month, isLeapYear, year) + offset; i++, displayDays++)
      {
         std::cout << std::setw(4) << displayDays;
            if(i % 7 == 6)
@@ -227,7 +231,7 @@ int computeOffset(int offset, int numDays, int year, int month, bool isLeapYear,
              std::cout <<  std::endl;
          }
      }
-      if((computeNumDays(month, isLeapYear, year) >= 30 && computeOffset(offset, numDays, year, month, isLeapYear, yearDiff, totalYearsDays) == 4))
+      if((computeNumDays(month, isLeapYear, year) >= 30 && offset == 4))
      {
         std::cout << "";
      } else
