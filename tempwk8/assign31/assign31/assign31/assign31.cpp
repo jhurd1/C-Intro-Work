@@ -5,7 +5,7 @@
 * Author:
 *    Jamie Hurd
 * Summary:
-*    This program incorporates a test on array syntax.
+*    This program incorporates a test on array design.
 *    Estimated:  1.0 hrs
 *    Actual:     1.5 hrs
 *       The most difficult part comprised figuring out where my sigabrt error was happening. Once
@@ -26,7 +26,7 @@ void getGrades2(int grades[10], int i)
       i++;
 
       std::cout << "Grade " << i <<  ": ";
-      std::cin >> grades[j];//this is where the memory malfunction sigabrt was happening! Resolved that. Now we need to actually output the doggone average.
+      std::cin >> grades[j];
    }
 }
 
@@ -37,16 +37,18 @@ int averageGrades(int average, int grades[10], int i)
 {
    int sum = 0;
    bool lessThanZero = false;
+   int total = 9;
    for(int i = 0; i <= sizeof(grades) + 1; i++)//* dereference makes it cycle only five times
    {
       if(grades[i] != -1 && lessThanZero == false)
       {
          sum += grades[i];
-         average = sum / 9;//put the total into a var and decrement it per -1
+         average = sum / total;//put the total into a var and decrement it per -1
       }
       else if(grades[i] == -1)
       {
          lessThanZero = true;
+         total--;
       } else if (grades[i] >= 0)
       {
          lessThanZero = false;
