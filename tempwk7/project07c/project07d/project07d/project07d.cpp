@@ -64,7 +64,6 @@ int numDaysInYear(int year)
 {
    if(isLeapYear(year))
    {
-      std::cout << year << " is a leap year" << std::endl;
       return 366;
    }
    return 365;
@@ -87,7 +86,7 @@ void displayHeader(int year, int month)
 /**********************************************************************
 *header called from here display is parent of the other ones on the chart; use the pseudocode for help
 **********************************************************************/
-void displayTable(int offset, int numDays)
+void displayTable(int offset, int numDays, int month, int year)
 {
    std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
    /*int dow = (offset + 1) % 7;
@@ -117,10 +116,10 @@ void displayTable(int offset, int numDays)
       {
          break;//previously: break;
       }
-       std::cout << "   ";
+       std::cout << "    ";
    }
       int displayDays = 1;
-      for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)
+      for(int i = offset + 1; i <= numDaysInMonth(month, year) + offset; i++, displayDays++)
       {
          std::cout << std::setw(4) << displayDays;
          if(i % 7 == 6)
@@ -141,10 +140,9 @@ void displayTable(int offset, int numDays)
 **********************************************************************/
 void display(int year, int month, int offset)
 {
-   int numDays = 0;
    numDaysInMonth(month, year);
    displayHeader(year, month);
-   displayTable(offset, numDays);
+   //displayTable(offset, numDays);
 }
 /**********************************************************************
 *
@@ -160,8 +158,8 @@ int computeOffset(int month, int year)
    {
       numDays += numDaysInMonth(j, year);
    }
-   //int offset = numDays % 7;
-   return numDays % 7;
+   int offset = numDays % 7;
+   return offset;
 }
 /**********************************************************************
 *
@@ -212,12 +210,14 @@ int main()
    int year = 0;
    int offset = 0;
    int numDays = 0;
+   numDays = numDaysInMonth(month, year);
+
    //std::string months[12] = {};
    month = getMonth();
    year = getYear();
-   numDays = numDaysInMonth(month, year);
    offset = computeOffset(month, year);
    display(year, month, offset);
+   displayTable(offset, numDays, month, year);
    //displayTable(numDays, offset);
    /*displayHeader(year, month);
    computeOffset(month, year);
