@@ -42,7 +42,7 @@ int averageGrades(int average, int grades[10], int i)
       if(grades[i] != -1 && lessThanZero == false)
       {
          sum += grades[i];
-         average = sum / 10;
+         average = sum / 9;//put the total into a var and decrement it per -1
       }
       else if(grades[i] == -1)
       {

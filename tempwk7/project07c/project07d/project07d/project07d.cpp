@@ -23,22 +23,20 @@
 /**********************************************************************
 *
 **********************************************************************/
-bool isLeapYear(int year, bool isLeapYear)
+bool isLeapYear(int year)
 {
    if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
            {
-              isLeapYear = true;
-           } else
-              isLeapYear = false;
-   return isLeapYear;
+              return true;
+           }
+   return false;
 }
 /**********************************************************************
-*
+*gets the previous month's days??
 **********************************************************************/
-int numDaysInMonth(int year, int month, int numDays)
+int numDaysInMonth(int month, int year)
 {
-      numDays = 0;
-      int addFebruarysExtraDay = 1;
+      int numDays = 0;
       if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
       {
          numDays = 31;
@@ -49,31 +47,27 @@ int numDaysInMonth(int year, int month, int numDays)
       }
       if(month == 2)
       {
-         numDays = 28;
-      }
-      if(isLeapYear(year, &isLeapYear) && month == 2)//Why do I need the address of isLeapYear?
-      {
-         numDays += addFebruarysExtraDay;
+         if(isLeapYear(year))
+         {
+            numDays = 29;
+         } else
+         {
+             numDays = 28;
+         }
       }
       return numDays;
 }
 /**********************************************************************
 *
 **********************************************************************/
-int numDaysInYear(int year, int numDays)
+int numDaysInYear(int year)
 {
-   int month = 0;
-   year = year - 1753;
-   int yearsDays = 0;
-   if(isLeapYear(year, &isLeapYear))
+   if(isLeapYear(year))
    {
-      yearsDays = 366;
-   } else
-   {
-      yearsDays = 365;
+      std::cout << year << " is a leap year" << std::endl;
+      return 366;
    }
-   numDays = numDaysInMonth(year, month, numDays) + yearsDays;
-   return numDays;
+   return 365;
 }
 /**********************************************************************
 *
@@ -82,31 +76,54 @@ void displayHeader(int year, int month)
 {
    std::string months[12] = {"January", "February", "March", "April", "May", "June", "July",
       "August", "Septmeber", "October", "November", "December"};
-   for(int i = 0; i <= sizeof(months); i++)
+   for(int i = 0; i <= 12; i++)//sizeof caused a bad access error, so now I use 12
    {
       if(months[i] == months[month])
       {
-          std::cout << months[i];
+         std::cout << months[i - 1] << ", " << year << std::endl;;
       }
    }
 }
 /**********************************************************************
-*
+*header called from here display is parent of the other ones on the chart; use the pseudocode for help
 **********************************************************************/
-void displayTable(int numDays, int offset)
+void displayTable(int offset, int numDays)
 {
    std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
+   /*int dow = (offset + 1) % 7;
+   int dom = numDays;
+   std::cout << "days " << numDays;
+   for(int i = 0; i <= dow; i++)
+   {
+      std::cout << std::setw(4)  << "    ";
+   }
+   for(dom = 1; dom < numDays; dom++)
+   {
+      std::cout << dom;
+      dow++;
+      if(dow % 7 == 0)
+      {
+         std::cout << std::endl;
+      }
+      if(dow % 7 != 0)
+      {
+         std::cout << std::endl;
+      }
+   }*/
+   
    for(int i = 0; i <= offset; i++)
    {
       if(offset == 6)
       {
-         offset -= 1;//previously: break;
+         break;//previously: break;
       }
        std::cout << "   ";
-      for(int displayDays = 1; displayDays <= numDays; displayDays++)
+   }
+      int displayDays = 1;
+      for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)
       {
          std::cout << std::setw(4) << displayDays;
-         if(displayDays == 6)
+         if(i % 7 == 6)
          {
             std::cout << std::endl;
          }
@@ -119,27 +136,39 @@ void displayTable(int numDays, int offset)
         std::cout << "\n";
      }
    }
-}
 /**********************************************************************
 *
 **********************************************************************/
-void display()
+void display(int year, int month, int offset)
 {
-   
+   int numDays = 0;
+   numDaysInMonth(month, year);
+   displayHeader(year, month);
+   displayTable(offset, numDays);
 }
 /**********************************************************************
 *
 **********************************************************************/
 int computeOffset(int month, int year)
 {
-   int offset = (((year -1) * 365) + ((year - 1) / 4 ) - ((year - 1) / 100) + ((year) / 400)) % 7;
-   return offset;
+   int numDays = 0;
+   for(int i = 1753; i < year; i++)
+   {
+      numDays += numDaysInYear(i);
+   }
+   for(int j = 1; j < month; j++)
+   {
+      numDays += numDaysInMonth(j, year);
+   }
+   //int offset = numDays % 7;
+   return numDays % 7;
 }
 /**********************************************************************
 *
 **********************************************************************/
-int getYear(int year)
+int getYear()//don't need to pass in the year for getter
 {
+      int year;
       std::cout << "Enter year: ";
       std::cin >> year;
       while(year < 1753)
@@ -148,16 +177,18 @@ int getYear(int year)
          std::cin.clear();
          std::cin.ignore();
          std::cout << "Year must be 1753 or later." << std::endl;
-         std::cout << "Enter year: ";
+          std::cout << "Enter year: ";
          std::cin >> year;
        }
+      std::cout << std::endl;
      return year;
 }
 /**********************************************************************
 *
 **********************************************************************/
-int getMonth(int month)
+int getMonth()
 {
+   int month;
    std::cout << "Enter a month number: ";
    std::cin >> month;
    while(month < 1 || month > 12)
@@ -182,8 +213,13 @@ int main()
    int offset = 0;
    int numDays = 0;
    //std::string months[12] = {};
-   getMonth(month);
-   getYear(year);
-   displayHeader(year, month);
-   displayTable(numDays, offset);
+   month = getMonth();
+   year = getYear();
+   numDays = numDaysInMonth(month, year);
+   offset = computeOffset(month, year);
+   display(year, month, offset);
+   //displayTable(numDays, offset);
+   /*displayHeader(year, month);
+   computeOffset(month, year);
+   displayTable(numDays, offset);*/
 }
