@@ -181,6 +181,7 @@ int main()
    int year = 0;
    int offset = 0;
    int numDays = 0;
+   //std::string months[12] = {};
    getMonth(month);
    getYear(year);
    displayHeader(year, month);
