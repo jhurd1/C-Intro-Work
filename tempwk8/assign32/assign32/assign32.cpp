@@ -19,21 +19,20 @@
 /************************************************************************
 *count the letters
 *************************************************************************/
-std::string countLetters(std::string input, std::string test)
-{
+char* countLetters(char input[], char test[])//placing a pointer in the signature of this function dissolved the bad access error
+{//but the function is still not counting the matching letters
    int count = 0;
-   int j = 0;
-   for(int i=0; i < test.size(); i++)
-   {
-      if(input[j] == test[j])
+      for(int i=0; test[i]; i++)//this works
       {
-           count++;
-      } else if (input[j] != test[j])
-      {
-         std::cout << "";
+         if(input[0] == test[i])//this does not work
+         {
+              count++;
+         } else if (input[i] != test[i])
+         {
+            std::cout << "";
+         }
       }
-   }
-    std::cout << count << std::endl;
+    std::cout << "Number of " << "\'" << input[0] << "\'s: " << count << std::endl;
       return 0;
 }
 
@@ -42,13 +41,13 @@ std::string countLetters(std::string input, std::string test)
 *************************************************************************/
 int main()
 {
-   std::string input;
+   char input[256];
    std::cout << "Enter a letter: ";
-   std::cin.ignore();
-   std::getline(std::cin, input);//input here is a letter, which we'll use for the comparison
-   std::string test;
+   //std::cin.ignore();
+   std::cin.getline(input, 256);//input here is a letter, which we'll use for the comparison
+   char test[256];
    std::cout << "Enter text: ";
-   std::cin.ignore();
-   std::getline(std::cin, test);
+   //std::cin.ignore();
+   std::cin.getline(test, 256);
    countLetters(input, test);
 }
