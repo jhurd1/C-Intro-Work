@@ -7,7 +7,7 @@
 * Summary:
 *    This program incorporates a calendar program.
 *    Estimated:  1.0 hrs
-*    Actual:     24 hrs
+*    Actual:     32 hrs
 *       The most difficult part comprised getting that pesky displayTable loop to run correctly
 * with this new set of methods and variables. I deleted the class and global variables as ad-
 * vised. I wrestled with the offset and displayTable until midnight. Sorry to say, I just couldn't
@@ -31,34 +31,37 @@ bool isLeapYear(int year)
            }
    return false;
 }
+
 /**********************************************************************
-*gets the previous month's days??
+*gets the month's days
 **********************************************************************/
 int numDaysInMonth(int month, int year)
 {
-      int numDays = 0;
+      //int numDays = 0;
       if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
       {
-         numDays = 31;
+         return 31; //numDays = 31;
       }
       if(month == 4 || month == 6 || month == 9 || month == 11)
       {
-         numDays = 30;
+         return 30; //numDays = 30;
       }
       if(month == 2)
       {
          if(isLeapYear(year))
          {
-            numDays = 29;
+            return 29; //numDays = 29;
          } else
          {
-             numDays = 28;
+            return 28; //numDays = 28;
          }
       }
-      return numDays;
+      //return numDays;
+   return 0;
 }
+
 /**********************************************************************
-*
+*NumDays in the year
 **********************************************************************/
 int numDaysInYear(int year)
 {
@@ -75,51 +78,53 @@ void displayHeader(int year, int month)
 {
    std::string months[12] = {"January", "February", "March", "April", "May", "June", "July",
       "August", "Septmeber", "October", "November", "December"};
-   for(int i = 0; i <= 12; i++)//sizeof caused a bad access error, so now I use 12
+   /*for(int i = 0; i <= 12; i++)//sizeof caused a bad access error, so now I use 12
    {
       if(months[i] == months[month])
       {
-         std::cout << months[i - 1] << ", " << year << std::endl;;
+         //std::cout << months[i - 1] << ", " << year << std::endl; //"\n"
+         
       }
-   }
+   }*/
+   std::cout << months[month - 1] << ", " << year << std::endl;
 }
 /**********************************************************************
 *header called from here display is parent of the other ones on the chart; use the pseudocode for help
 **********************************************************************/
-void displayTable(int offset, int numDays, int month, int year)
+void displayTable(int offset, int month, int year)
 {
    std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
-   /*int dow = (offset + 1) % 7;
-   int dom = numDays;
-   std::cout << "days " << numDays;
-   for(int i = 0; i <= dow; i++)
+   int numDays = numDaysInMonth(month, year);
+   //new code:
+   if(offset != 6)
    {
-      std::cout << std::setw(4)  << "    ";
+      for(int i = 0; i <= offset; i++)
+      {
+         std::cout << "    ";
+      }
    }
-   for(dom = 1; dom < numDays; dom++)
-   {
-      std::cout << dom;
-      dow++;
-      if(dow % 7 == 0)
-      {
-         std::cout << std::endl;
-      }
-      if(dow % 7 != 0)
-      {
-         std::cout << std::endl;
-      }
-   }*/
    
+   for(int i = 1; i <= numDays; i++)
+   {
+      if((offset + i) % 7 == 0 && i > 1)//i > 1 accommodates for offset of 6/Sunday
+      {
+         std::cout << std::endl;
+      }
+     std::cout << std::setw(4) << i;
+   }
+   std::cout << "\n";
+   
+   /*****
    for(int i = 0; i <= offset; i++)
    {
-      if(offset == 6)
+      if(offset != 6)
       {
-         break;//previously: break;
+         break;
       }
        std::cout << "    ";
    }
       int displayDays = 1;
-      for(int i = offset + 1; i <= numDaysInMonth(month, year) + offset; i++, displayDays++)
+      for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)
       {
          std::cout << std::setw(4) << displayDays;
          if(i % 7 == 6)
@@ -127,12 +132,13 @@ void displayTable(int offset, int numDays, int month, int year)
             std::cout << std::endl;
          }
       }
-     if(numDays >= 30 && offset == 4)//this one is not creating the extra line
+     if(numDays >= 30 && offset == 4)
      {
         std::cout << "";
-     } /*else
+     }
+   if (numDays >= 28month == 2 && offset > 4)
      {
-        std::cout << "\n";//this one is creating the unnecessary new line
+        std::cout << "\n";
      }*/
    }
 /**********************************************************************
@@ -217,7 +223,7 @@ int main()
    year = getYear();
    offset = computeOffset(month, year);
    display(year, month, offset);
-   displayTable(offset, numDays, month, year);
+   displayTable(offset, month, year);
    //displayTable(numDays, offset);
    /*displayHeader(year, month);
    computeOffset(month, year);
