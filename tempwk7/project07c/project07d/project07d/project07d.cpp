@@ -127,13 +127,13 @@ void displayTable(int offset, int numDays, int month, int year)
             std::cout << std::endl;
          }
       }
-     if(numDays >= 30 && offset == 4)
+     if(numDays >= 30 && offset == 4)//this one is not creating the extra line
      {
         std::cout << "";
-     } else
+     } /*else
      {
-        std::cout << "\n";
-     }
+        std::cout << "\n";//this one is creating the unnecessary new line
+     }*/
    }
 /**********************************************************************
 *
