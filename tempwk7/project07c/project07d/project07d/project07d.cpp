@@ -8,10 +8,9 @@
 *    This program incorporates a calendar program.
 *    Estimated:  1.0 hrs
 *    Actual:     32 hrs
-*       The most difficult part comprised getting that pesky displayTable loop to run correctly
-* with this new set of methods and variables. I deleted the class and global variables as ad-
-* vised. I wrestled with the offset and displayTable until midnight. Sorry to say, I just couldn't
-* get this one sorted out.
+*       The most difficult part comprised passing testBed 4. Once that array loop was changed
+* along with * including return statements as breakpoints for the numDays function, the program
+* passed.
 ************************************************************************/
 
 #include <stdio.h>
@@ -21,7 +20,7 @@
 #include <iostream>
 
 /**********************************************************************
-*
+* Check if leap year
 **********************************************************************/
 bool isLeapYear(int year)
 {
@@ -72,20 +71,12 @@ int numDaysInYear(int year)
    return 365;
 }
 /**********************************************************************
-*
+* display header
 **********************************************************************/
 void displayHeader(int year, int month)
 {
    std::string months[12] = {"January", "February", "March", "April", "May", "June", "July",
       "August", "Septmeber", "October", "November", "December"};
-   /*for(int i = 0; i <= 12; i++)//sizeof caused a bad access error, so now I use 12
-   {
-      if(months[i] == months[month])
-      {
-         //std::cout << months[i - 1] << ", " << year << std::endl; //"\n"
-         
-      }
-   }*/
    std::cout << months[month - 1] << ", " << year << std::endl;
 }
 /**********************************************************************
@@ -95,7 +86,6 @@ void displayTable(int offset, int month, int year)
 {
    std::cout << "  " << std::setw(4) << "Su  "<< "Mo  "<< "Tu  " << "We  " << "Th  " << "Fr  " << "Sa\n";
    int numDays = numDaysInMonth(month, year);
-   //new code:
    if(offset != 6)
    {
       for(int i = 0; i <= offset; i++)
@@ -113,45 +103,17 @@ void displayTable(int offset, int month, int year)
      std::cout << std::setw(4) << i;
    }
    std::cout << "\n";
-   
-   /*****
-   for(int i = 0; i <= offset; i++)
-   {
-      if(offset != 6)
-      {
-         break;
-      }
-       std::cout << "    ";
-   }
-      int displayDays = 1;
-      for(int i = offset + 1; i <= numDays + offset; i++, displayDays++)
-      {
-         std::cout << std::setw(4) << displayDays;
-         if(i % 7 == 6)
-         {
-            std::cout << std::endl;
-         }
-      }
-     if(numDays >= 30 && offset == 4)
-     {
-        std::cout << "";
-     }
-   if (numDays >= 28month == 2 && offset > 4)
-     {
-        std::cout << "\n";
-     }*/
    }
 /**********************************************************************
-*
+* display calls the other two
 **********************************************************************/
 void display(int year, int month, int offset)
 {
    numDaysInMonth(month, year);
    displayHeader(year, month);
-   //displayTable(offset, numDays);
 }
 /**********************************************************************
-*
+* Gets the offset by deducing and holding the value of numDays between loops
 **********************************************************************/
 int computeOffset(int month, int year)
 {
@@ -168,7 +130,7 @@ int computeOffset(int month, int year)
    return offset;
 }
 /**********************************************************************
-*
+* Get the year
 **********************************************************************/
 int getYear()//don't need to pass in the year for getter
 {
@@ -188,7 +150,7 @@ int getYear()//don't need to pass in the year for getter
      return year;
 }
 /**********************************************************************
-*
+* Get the month
 **********************************************************************/
 int getMonth()
 {
@@ -208,7 +170,7 @@ int getMonth()
 }
 
 /**********************************************************************
-*
+* "Driver"
 **********************************************************************/
 int main()
 {
@@ -217,15 +179,9 @@ int main()
    int offset = 0;
    int numDays = 0;
    numDays = numDaysInMonth(month, year);
-
-   //std::string months[12] = {};
    month = getMonth();
    year = getYear();
    offset = computeOffset(month, year);
    display(year, month, offset);
    displayTable(offset, month, year);
-   //displayTable(numDays, offset);
-   /*displayHeader(year, month);
-   computeOffset(month, year);
-   displayTable(numDays, offset);*/
 }
