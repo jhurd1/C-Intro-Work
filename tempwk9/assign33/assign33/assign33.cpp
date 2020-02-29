@@ -5,10 +5,12 @@
 * Author:
 *    Jamie Hurd
 * Summary:
-*    This program incorporates a
+*    This program incorporates practice with pass by address (pointer) and pass by value.
 *    Estimated:  1.0 hrs
-*    Actual:     32 hrs
-*       The most difficult part comprised
+*    Actual:     3 hrs
+*       The most difficult part comprised figuring out how to pass by value the ice cream, dinner,
+* and movie. Once I deposited those into the total variable as a container, I succeeded in pass-
+* ing them between main, date, and calculate.
 ************************************************************************/
 
 #include <stdio.h>
@@ -19,7 +21,7 @@
 /************************************************************************
 *prompt to fill the accounts
 ************************************************************************/
-float promptSue()//account needs to be here?
+float promptSue()
 {
    float sue;
    std::cout << "What is Sue's balance?  ";
@@ -30,7 +32,7 @@ float promptSue()//account needs to be here?
 /************************************************************************
 *prompt to fill the accounts
 ************************************************************************/
-float promptSam()//account needs to be here?
+float promptSam()
 {
    float sam;
    std::cout << "What is Sam's balance?  ";
@@ -49,35 +51,36 @@ void displayHeader()
 /************************************************************************
 *Reduce the value of the debit card according to the cost of the date
 ************************************************************************/
-/*float date(float dinner,
+float date(float dinner,
 float movie,
 float iceCream)
 {
-   std::cout << "\tDinner:" << std::setw(5) << " ";
+   std::cout << "\tDinner:" << std::setw(4) << " ";
    std::cin >> dinner;
-   std::cout << "\tMovie:" << std::setw(5) << " ";
+   std::cout << "\tMovie:" << std::setw(5) << "  ";
    std::cin >> movie;
-   std::cout << "\tIce Cream:" << std::setw(5) << " ";
+   std::cout << "\tIce Cream:"  << " ";
    std::cin >> iceCream;
-   return 0;
-}*/
+   float total = dinner + movie + iceCream;
+   return total;
+}
 
 /************************************************************************
 *calculate the cost
 ************************************************************************/
-float calculate(float *pAccount, float sam, float sue, float dinner, float movie, float iceCream)
+float calculate(float *pAccount, float sam, float sue,  float total)
 {
    float account = 1;
    pAccount = &account;//pass by reference can be held in memory on the heap//tested with "2" from main; it's successful
    if(sue > sam)
      {
         std::cout << "Sam's balance: " <<  "$" << sam << std::endl;
-        account = sue - (dinner + movie + iceCream);//dinner, movie, and iceCream are not being passed in here
+        account = sue - (total);
         std::cout << "Sue's balance: " <<  "$" << account << std::endl;
      } else
      {
         //account = sam;
-        account = sam - (dinner + movie + iceCream);
+        account = sam - (total);
         std::cout << "Sam's balance: " <<  "$" << account << std::endl;
         std::cout << "Sue's balance: " <<  "$" << sue << std::endl;
      }
@@ -85,30 +88,16 @@ float calculate(float *pAccount, float sam, float sue, float dinner, float movie
 }
 
 /************************************************************************
-*calculate the cost
-************************************************************************/
-float balance(float sam, float sue)
-{
-   
-   return 0;
-}
-
-/************************************************************************
 *main() leverage main to do much of the passing of values by holding them in variables
 ************************************************************************/
 int main()
 {
-   float account, dinner, movie, iceCream;
+   float account, dinner, movie, iceCream, total;
    float *pAccount = &account;
    account = 2;
    float sam = promptSam();
    float sue = promptSue();
    displayHeader();
-   std::cout << "\tDinner:" << std::setw(5) << " ";
-   std::cin >> dinner;
-   std::cout << "\tMovie:" << std::setw(5) << " ";
-   std::cin >> movie;
-   std::cout << "\tIce Cream:" << std::setw(5) << " ";
-   std::cin >> iceCream;
-   calculate(&account, sam, sue, dinner, movie, iceCream);
+   total = date(dinner, movie, iceCream);//encapsulating this in a var and returning the total from it allowed me to pass by value into calculate
+   calculate(&account, sam, sue, total);
 }
