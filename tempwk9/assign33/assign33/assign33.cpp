@@ -25,7 +25,7 @@ float prompt(float sam, float sue)//account needs to be here?
    std::cin >> sam;
    std::cout << "What is Sue's balance?  ";
    std::cin >> sue;
-   return 0;
+   return sue;
 }
 
 /************************************************************************
@@ -39,59 +39,20 @@ void displayHeader()
 /************************************************************************
 *calculate the cost
 ************************************************************************/
-float calculate(float *pAccount)
+float calculate(float *pAccount, float account, float sam, float sue, float dinner, float movie, float iceCream)
 {
-   float account = 0;
-   float dinner = 0;
-   float movie = 0;
-   float iceCream = 0;
    float total;
-   pAccount = &account;
-   float sam = 0;
-   float sue = 0;
+   pAccount = &account;//store account's address in the account pointer
    if(sue > sam)
      {
         account = sue;
         total = (dinner + movie + iceCream) - sue;
-        //set the account to sue
-       //deduct from sue
      } else
      {
         account = sam;
         total = (dinner + movie + iceCream) - sam;
-        //set the account to sam
-        //deduct from sam
      }
    return total;
-     //output the remainder of sam
-     //output the remainder of sue
-}
-
-/************************************************************************
-*Reduce the value of the debit card according to the cost of the date
-************************************************************************/
-//The * symbol refers to both the address-of (when declaring a pointer) and * retrieval ("derefer-
-//ence") from the given address. Therefore, if it's an instantiation of, it's an address-of, otherwise
-//it's a retrieval-from.
-void date(float *pAccount)//Here we declare the pAccount as a master copy or "weblink" of a resume
-//using the address-of symbol
-{
-   
-   float account = 0;
-   pAccount = &account;
-   float dinner = 0;
-   float movie = 0;
-   float iceCream = 0;
-   displayHeader();
-   /*pAccount = &account;//get the address of account with the alias or "address-of" char: &
-   std::cout << *pAccount;//retrieve the data pAccount points to using the "dereference" or retrieval operator.*/
-   std::cout << "\tDinner:" << std::setw(5) << " ";
-   std::cin >> dinner;
-   std::cout << "\tMovie:" << std::setw(5) << " ";
-   std::cin >> movie;
-   std::cout << "\tIce Cream:" << std::setw(5) << " ";
-   std::cin >> iceCream;
-   calculate(pAccount);
 }
 
 float balance(float sam, float sue)
@@ -100,18 +61,30 @@ float balance(float sam, float sue)
    std::cout << "Sue's balance: " <<  "$" << sue << std::endl;
    return 0;
 }
-
+/************************************************************************
+*Reduce the value of the debit card according to the cost of the date
+************************************************************************/
+void date(float *pAccount, float account, float sam, float sue, float dinner, float movie, float iceCream)//Here we declare the pAccount as a master copy or "weblink" of a resume
+//using the address-of symbol
+{
+   pAccount = &account;
+   std::cout << "\tDinner:" << std::setw(5) << " ";
+   std::cin >> dinner;
+   std::cout << "\tMovie:" << std::setw(5) << " ";
+   std::cin >> movie;
+   std::cout << "\tIce Cream:" << std::setw(5) << " ";
+   std::cin >> iceCream;
+   //calculate(pAccount, account, sam, sue, dinner, movie, iceCream);
+   balance(sam, sue);
+}
 
 /************************************************************************
-*main()
+*main() leverage main to do much of the passing of values by holding them in variables
 ************************************************************************/
 int main()
 {
-   float account;
-   float *pAccount;
-   pAccount = &account;
-   float sam, sue;
+   float sam, sue, account, dinner, movie, iceCream, *pAccount;
    prompt(sam, sue);
-   date(pAccount);
-   balance(sam, sue);
+   displayHeader();
+   date(pAccount, account, sam, sue, dinner, movie, iceCream);
 }
