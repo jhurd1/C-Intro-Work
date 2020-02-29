@@ -47,22 +47,37 @@ void displayHeader()
 }
 
 /************************************************************************
+*Reduce the value of the debit card according to the cost of the date
+************************************************************************/
+/*float date(float dinner,
+float movie,
+float iceCream)
+{
+   std::cout << "\tDinner:" << std::setw(5) << " ";
+   std::cin >> dinner;
+   std::cout << "\tMovie:" << std::setw(5) << " ";
+   std::cin >> movie;
+   std::cout << "\tIce Cream:" << std::setw(5) << " ";
+   std::cin >> iceCream;
+   return 0;
+}*/
+
+/************************************************************************
 *calculate the cost
 ************************************************************************/
 float calculate(float *pAccount, float sam, float sue, float dinner, float movie, float iceCream)
 {
-   float account;
-   pAccount = &account;//float account;//to meet this challenge, account needs to go here for total
-   //but the problem is, how do you do math with a pointer against sam and sue which are plain floats?
+   float account = 1;
+   pAccount = &account;//pass by reference can be held in memory on the heap//tested with "2" from main; it's successful
    if(sue > sam)
      {
         std::cout << "Sam's balance: " <<  "$" << sam << std::endl;
-        account = (dinner + movie + iceCream) - sue;
+        account = sue - (dinner + movie + iceCream);//dinner, movie, and iceCream are not being passed in here
         std::cout << "Sue's balance: " <<  "$" << account << std::endl;
      } else
      {
         //account = sam;
-        account = (dinner + movie + iceCream) - sam;
+        account = sam - (dinner + movie + iceCream);
         std::cout << "Sam's balance: " <<  "$" << account << std::endl;
         std::cout << "Sue's balance: " <<  "$" << sue << std::endl;
      }
@@ -77,22 +92,6 @@ float balance(float sam, float sue)
    
    return 0;
 }
-/************************************************************************
-*Reduce the value of the debit card according to the cost of the date
-************************************************************************/
-float date()
-{
-   float dinner;
-   float movie;
-   float iceCream;
-   std::cout << "\tDinner:" << std::setw(5) << " ";
-   std::cin >> dinner;
-   std::cout << "\tMovie:" << std::setw(5) << " ";
-   std::cin >> movie;
-   std::cout << "\tIce Cream:" << std::setw(5) << " ";
-   std::cin >> iceCream;
-   return 0;
-}
 
 /************************************************************************
 *main() leverage main to do much of the passing of values by holding them in variables
@@ -101,9 +100,15 @@ int main()
 {
    float account, dinner, movie, iceCream;
    float *pAccount = &account;
+   account = 2;
    float sam = promptSam();
    float sue = promptSue();
    displayHeader();
-   float temp = date();
-   float calc = calculate(&account, sam, sue, dinner, movie, iceCream);
+   std::cout << "\tDinner:" << std::setw(5) << " ";
+   std::cin >> dinner;
+   std::cout << "\tMovie:" << std::setw(5) << " ";
+   std::cin >> movie;
+   std::cout << "\tIce Cream:" << std::setw(5) << " ";
+   std::cin >> iceCream;
+   calculate(&account, sam, sue, dinner, movie, iceCream);
 }
