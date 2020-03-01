@@ -24,7 +24,7 @@
 float promptSue()
 {
    float sue;
-   std::cout << "What is Sue's balance?  ";
+   std::cout << "What is Sue's balance? ";
    std::cin >> sue;
    return sue;
 }
@@ -35,7 +35,7 @@ float promptSue()
 float promptSam()
 {
    float sam;
-   std::cout << "What is Sam's balance?  ";
+   std::cout << "What is Sam's balance? ";
    std::cin >> sam;
    return sam;
 }
@@ -59,7 +59,7 @@ float iceCream)
    std::cin >> dinner;
    std::cout << "\tMovie:" << std::setw(5) << "  ";
    std::cin >> movie;
-   std::cout << "\tIce Cream:"  << " ";
+   std::cout << "\tIce cream:"  << " ";
    std::cin >> iceCream;
    float total = dinner + movie + iceCream;
    return total;
