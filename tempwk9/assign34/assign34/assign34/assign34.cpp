@@ -8,7 +8,9 @@
 *    This program incorporates an array traversal by address contra array index.
 *    Estimated:  1.0 hrs
 *    Actual:     2 hrs
-*       The most difficult part comprised
+*       The most difficult part comprised the comparison. I learned that the way to compare
+* an index from one array to the pointer of another involves a syntax like that on line
+* 29 and 32.
 ************************************************************************/
 #include <stdio.h>
 #include <stdio.h>
@@ -26,7 +28,7 @@ char* countLetters(char input[], char test[])//arrays are const pointers
       {
          if(input[0] == *p)
          {
-              count++;//we're not even reaching this evaluation
+              count++;
          } else if (input[0] != *p)
          {
             std::cout << "";
