@@ -61,9 +61,14 @@ std::string readFile(std::string fileName)
    int count = 0;
    //int countChar = 0;
    std::ifstream fin(fileName);
+   size_t lineNums = 0;
+   while(getline(fin, fileName))
+   {
+      lineNums++;
+   }//confirmed working with cout
    //std::cin.ignore(std::numeric_limits<std::streamsize>::max());//ignore was faulting the data flow here;
       //perhaps call ignore after getline(), if need be
-   fin.clear();//is this necessary?
+   fin.clear();//clear() resets the error flags in the event of a fail, so this is not needed here.
    for(std::string test; fin >> test; ++count)//cout used to confirm count (of words) is working
    {
       if(count <= 256 && !fin.fail() && getline(fin, fileName))//check for max word count, failure to open file, and getline to count the chars
