@@ -52,67 +52,12 @@ std::string getFileName()//test with cout; working
    std::cin >> fileName;
    return fileName;
 }
-/************************************************************************
-*readFile; error check 1024 chars, 32 lines, 80 chars in each line, 256 words, and 32-char length
-* words.
-************************************************************************/
-std::string readFile(std::string fileName)
-{
-   int count = 0;
-   //int countChar = 0;
-   std::ifstream fin(fileName);
-   size_t lineNums = 0;
-   while(getline(fin, fileName))
-   {
-      lineNums++;
-   }//confirmed working with cout
-   //std::cin.ignore(std::numeric_limits<std::streamsize>::max());//ignore was faulting the data flow here;
-      //perhaps call ignore after getline(), if need be
-   fin.clear();//clear() resets the error flags in the event of a fail, so this is not needed here.
-   for(std::string test; fin >> test; ++count)//cout used to confirm count (of words) is working
-   {
-      if(count <= 256 && !fin.fail() && getline(fin, fileName))//check for max word count, failure to open file, and getline to count the chars
-      {
-            //countChar += fileName.length();
-            /*if(countChar > 1023 || countChar % 80 > 0)//add an OR condition here to check 80 chars per line
-            {
-               fin.fail();
-               fin.clear();
-               fin.ignore();
-               fin.close();
-            }*/
-            std::getline(std::cin, fileName);
-            fin.seekg (0, fin.end);//sets position at file end
-            long length = fin.tellg();
-            fin.seekg (0, fin.beg);//resets position at file begin
-            char* buffer = new char[length];//recall that this is already getting the quantity of chars!
-         if(length > 1023 || length % 80 != 0)
-         {
-            fin.fail();
-            fin.clear();
-            fin.ignore();
-            fin.close();
-         }
-         else
-         {
-            fin.read(buffer,length);
-            std::cout.write(buffer,length);
-         }
-           //instead of writing out the buffer contents, write out the required content for the project
-            fin.close();
-            delete[] buffer;//memory management
-         } else
-         {
-            std::cout << "You done failed.";
-              break;
-         }
-      }
-   return fileName;
-}
+
 /************************************************************************
 *displayStory
+* isolate readFile first, then come back to this
 ************************************************************************/
-std::string displayStory(char aos[10][256])//memory misallocation happening here
+std::string displayStory()//memory misallocation happening here
 {
    std::cout << "\tPlural noun: " << "\n";//getLine()? since it's a file?
    std::cout << "\tPlural noun: " << "\n";
@@ -124,6 +69,52 @@ std::string displayStory(char aos[10][256])//memory misallocation happening here
    std::cout << "\tAnimal: " << std::endl;
    std::cout << "\tAnother animal: " << std::endl;
    return 0;
+}
+
+/************************************************************************
+*readFile; error check 1024 chars, 32 lines, 80 chars in each line, 256 words, and 32-char length
+* words.
+************************************************************************/
+std::string readFile(std::string fileName)//isolate this function first; it's not working
+{
+   int count = 0;
+   std::ifstream fin(fileName);
+   size_t lineNums = 0;
+   while(getline(fin, fileName))
+   {
+      lineNums++;
+      for(std::string test; fin >> test; ++count)//cout used to confirm count (of words) is working
+      {
+         if(count <= 256 && !fin.fail())//check for max word count, failure to open file, and getline to count the chars
+         {
+               std::getline(std::cin, fileName);//need this anymore?
+               fin.seekg (0, fin.end);//sets position at file end
+               long length = fin.tellg();
+               fin.seekg (0, fin.beg);//resets position at file begin
+               char* buffer = new char[length];//recall that this is already getting the quantity of chars!
+            if(length > 1023 || length % 80 != 0)//get your modulus calc right for chars per line
+            {
+               fin.fail();
+               fin.clear();
+               fin.ignore();
+               fin.close();
+            }
+            else
+            {
+               fin.read(buffer,length);
+               //std::cout.write(buffer,length); //instead of writing out the buffer contents, call displayStory()!
+               displayStory();
+            }
+               fin.close();
+               delete[] buffer;//memory management
+            } else
+            {
+               std::cout << "You done failed.";
+                 break;
+            }
+   }//confirmed working with cout
+      }
+   return fileName;
 }
 
 /************************************************************************
