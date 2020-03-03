@@ -11,12 +11,16 @@
 *       The most difficult part comprised
 ************************************************************************/
 
+/******************You must change std::string to char ***************************/
+
 #include <stdio.h>
 #include <stdio.h>
 #include <iomanip>
 #include <iostream>
+#include <cctype>
 #include <cstring>
 #include <fstream>
+
 /************************************************************************
 *bool playAgain()
 ************************************************************************/
@@ -29,7 +33,7 @@ bool playAgain()
 /************************************************************************
 *getCharCount consider another function, but this will read the file a second time
 ************************************************************************/
-std::string getCharCount()
+char getCharCount()
 {
    return 0;
 }
@@ -37,7 +41,7 @@ std::string getCharCount()
 /************************************************************************
 *askQuestions
 ************************************************************************/
-char* askQuestion(char aos[10][256])
+char* askQuestion()
 {
    return 0;
 }
@@ -45,9 +49,9 @@ char* askQuestion(char aos[10][256])
 *getFilelName && displayHeader; this only needs to get the file name, not read it, before passing
 * it on to readFile.
 ************************************************************************/
-std::string getFileName()//test with cout; working
+char getFileName()//test with cout; working
 {
-   std::string fileName;
+   char fileName;
    std::cout << "Please enter the filename of the Mad Lib: ";
    std::cin >> fileName;
    return fileName;
@@ -57,7 +61,7 @@ std::string getFileName()//test with cout; working
 *displayStory
 * isolate readFile first, then come back to this
 ************************************************************************/
-std::string displayStory()//memory misallocation happening here
+char displayStory()//memory misallocation happening here
 {
    std::cout << "\tPlural noun: " << "\n";//getLine()? since it's a file?
    std::cout << "\tPlural noun: " << "\n";
@@ -75,19 +79,18 @@ std::string displayStory()//memory misallocation happening here
 *readFile; error check 1024 chars, 32 lines, 80 chars in each line, 256 words, and 32-char length
 * words.
 ************************************************************************/
-std::string readFile(std::string fileName)//isolate this function first; it's not working
+char readFile(char* fileName)//isolate this function first; it's not working
 {
    int count = 0;
    std::ifstream fin(fileName);
    size_t lineNums = 0;
-   while(getline(fin, fileName))
+   while(fin)
    {
       lineNums++;
       for(std::string test; fin >> test; ++count)//cout used to confirm count (of words) is working
       {
          if(count <= 256 && !fin.fail())//check for max word count, failure to open file, and getline to count the chars
          {
-               std::getline(std::cin, fileName);//need this anymore?
                fin.seekg (0, fin.end);//sets position at file end
                long length = fin.tellg();
                fin.seekg (0, fin.beg);//resets position at file begin
@@ -114,7 +117,7 @@ std::string readFile(std::string fileName)//isolate this function first; it's no
             }
    }//confirmed working with cout
       }
-   return fileName;
+   return *fileName;
 }
 
 /************************************************************************
@@ -122,8 +125,8 @@ std::string readFile(std::string fileName)//isolate this function first; it's no
 ************************************************************************/
 int main()
 {
-   std::string fileName;
+   char *fileName;
    //char aos[10][256];
-   fileName = getFileName();
+   *fileName = getFileName();
    readFile(fileName);
 }
