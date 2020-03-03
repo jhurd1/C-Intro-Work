@@ -27,6 +27,14 @@ bool playAgain()
 }
 
 /************************************************************************
+*getCharCount consider another function, but this will read the file a second time
+************************************************************************/
+std::string getCharCount()
+{
+   return 0;
+}
+
+/************************************************************************
 *askQuestions
 ************************************************************************/
 char* askQuestion(char aos[10][256])
@@ -46,32 +54,54 @@ std::string getFileName()//test with cout; working
 }
 /************************************************************************
 *readFile; error check 1024 chars, 32 lines, 80 chars in each line, 256 words, and 32-char length
-* words
+* words.
 ************************************************************************/
 std::string readFile(std::string fileName)
 {
-   /*int i = 0;
-   char j = ' ';
-   char *aos[10][256];*/
+   int count = 0;
+   //int countChar = 0;
    std::ifstream fin(fileName);
    //std::cin.ignore(std::numeric_limits<std::streamsize>::max());//ignore was faulting the data flow here;
       //perhaps call ignore after getline(), if need be
-   fin.clear();
-   std::getline(std::cin, fileName);
-   fin.seekg(0, std::ios_base::beg);//presumably counts the bytes or chars in a file; may need eof method to help
-   while(!fin.eof())//why is this an infinite loop? It's supposed to stop at file's end!
+   fin.clear();//is this necessary?
+   for(std::string test; fin >> test; ++count)//cout used to confirm count (of words) is working
    {
-      if(!fin.fail())
-        {
-           int count = 0;
-                  count++;
-           std::cout << "Count: " << std::endl;
-        } else
-        {
-           std::cout << "You done failed.";
-             break;
-        }
-   }
+      if(count <= 256 && !fin.fail() && getline(fin, fileName))//check for max word count, failure to open file, and getline to count the chars
+      {
+            //countChar += fileName.length();
+            /*if(countChar > 1023 || countChar % 80 > 0)//add an OR condition here to check 80 chars per line
+            {
+               fin.fail();
+               fin.clear();
+               fin.ignore();
+               fin.close();
+            }*/
+            std::getline(std::cin, fileName);
+            fin.seekg (0, fin.end);//sets position at file end
+            long length = fin.tellg();
+            fin.seekg (0, fin.beg);//resets position at file begin
+            char* buffer = new char[length];//recall that this is already getting the quantity of chars!
+         if(length > 1023 || length % 80 != 0)
+         {
+            fin.fail();
+            fin.clear();
+            fin.ignore();
+            fin.close();
+         }
+         else
+         {
+            fin.read(buffer,length);
+            std::cout.write(buffer,length);
+         }
+           //instead of writing out the buffer contents, write out the required content for the project
+            fin.close();
+            delete[] buffer;//memory management
+         } else
+         {
+            std::cout << "You done failed.";
+              break;
+         }
+      }
    return fileName;
 }
 /************************************************************************
