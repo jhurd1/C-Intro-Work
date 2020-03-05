@@ -11,7 +11,6 @@
 *       The most difficult part comprised
 ************************************************************************/
 #include <stdio.h>
-#include <stdio.h>
 #include <iomanip>
 #include <iostream>
 #include <cctype>
@@ -40,10 +39,15 @@ void askQuestion(char word[])
          std::cout << " ";
       } else
       {
-          std::cout << (char)(tolower(word[i]));//char casts tolower which converts to pure ASCII value
+         std::cout << (char)(tolower(word[i]));//char casts tolower which converts to pure ASCII value
+      }
+      if(word[i] == ' ')//isn't working
+      {
+         std::cout << "\n";
       }
    }
-     std::cout << ": ";
+   //std::cout << "\n";
+   std::cout << ": ";//carriage return before and after 'word' does not work, either
    std::cin >> word;//replaces the input with an answer to hold the answer instead of the question
 }
 /************************************************************************
@@ -63,7 +67,7 @@ void getFileName(char fileName[])//test with cout; working
 ************************************************************************/
 void displayStory()//memory misallocation happening here
 {
-   
+   std::cout << "Thank you for playing.\n";
 }
 
 /************************************************************************
@@ -85,6 +89,10 @@ int readFile(char fileName[], char story[][32])//isolate this function first; it
       }
       count++;
    }
+   if(fin.eof())
+   {
+       std::cout << "Thank you for playing.\n";
+   }
    return count;
 }
 
@@ -97,5 +105,4 @@ int main()
    char story[256][32];
    getFileName(fileName);
    int numWords = readFile(fileName, story);
-   //readFile();
 }
