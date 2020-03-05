@@ -5,10 +5,15 @@
 * Author:
 *    Jamie Hurd
 * Summary:
-*    This program incorporates a
+*    This program incorporates a preparatory MadLib exercise expecting a formatted
+* output including user input.
 *    Estimated:  1.0 hrs
-*    Actual:     3 hrs
-*       The most difficult part comprised
+*    Actual:     8 hrs
+*       The most difficult part comprised an interruption due to an OS and IDE update, which
+* resulted in buggy file access. I had to move my local Git repo to the local drive because
+* Mac's Catalina--even after modifying permissions with chflags and other commands--refused
+* to give XCode file access to my thumb drive, making yesterday an extremely worrisome
+* day.
 ************************************************************************/
 #include <stdio.h>
 #include <iomanip>
@@ -41,14 +46,12 @@ void askQuestion(char word[])
       {
          std::cout << (char)(tolower(word[i]));//char casts tolower which converts to pure ASCII value
       }
-      if(word[i] == ' ')//isn't working
-      {
-         std::cout << "\n";
-      }
    }
    //std::cout << "\n";
    std::cout << ": ";//carriage return before and after 'word' does not work, either
-   std::cin >> word;//replaces the input with an answer to hold the answer instead of the question
+   std::cin.ignore();
+   std::cin.getline(word, 32);//replaces the input with an answer to hold the answer instead of the question
+   //getline instead of cin because some answers will have whitespace, which caused erroneous output.
 }
 /************************************************************************
 *getFilelName && displayHeader; this only needs to get the file name, not read it, before passing
