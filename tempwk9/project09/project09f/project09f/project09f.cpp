@@ -1,6 +1,6 @@
 /***********************************************************************
 * Program:
-*    Project 09f, MAD LIB
+*    Project 09, MAD LIB
 *    Brother Schwieder, CS124
 * Author:
 *    Jamie Hurd
@@ -44,14 +44,12 @@ void askQuestion(char word[])
          std::cout << " ";
       } else
       {
-         std::cout << (char)(tolower(word[i]));//char casts tolower which converts to pure ASCII value
+         std::cout << (char)(tolower(word[i]));
       }
    }
-   //std::cout << "\n";
-   std::cout << ": ";//carriage return before and after 'word' does not work, either
+   std::cout << ": ";
    std::cin.ignore();
-   std::cin.getline(word, 32);//replaces the input with an answer to hold the answer instead of the question
-   //getline instead of cin because some answers will have whitespace, which caused erroneous output.
+   std::cin.getline(word, 32);
 }
 /************************************************************************
 *getFilelName && displayHeader; this only needs to get the file name, not read it, before passing
@@ -59,7 +57,6 @@ void askQuestion(char word[])
 ************************************************************************/
 void getFileName(char fileName[])//test with cout; working
 {
-   //char* fileName;
    std::cout << "Please enter the filename of the Mad Lib: ";
    std::cin >> fileName;
 }
@@ -68,7 +65,7 @@ void getFileName(char fileName[])//test with cout; working
 *displayStory
 * isolate readFile first, then come back to this
 ************************************************************************/
-void displayStory()//memory misallocation happening here
+void displayStory()
 {
    std::cout << "Thank you for playing.\n";
 }
@@ -80,12 +77,9 @@ void displayStory()//memory misallocation happening here
 int readFile(char fileName[], char story[][32])//isolate this function first; it's not working
 {
    int count = 0;
-   //int i;
    std::ifstream fin(fileName);
-   //while(fin)
    while(fin >> story[count])
    {
-      //check for questions
       if(story[count][0] == ':' && isalpha(story[count][1]))
       {
          askQuestion(story[count]);
