@@ -23,12 +23,15 @@
 ************************************************************************/
 std::string computeLetterGrade(std::string grades[], float score)
 {
+   for(int i =0; grades; i++)
+   {
    switch((int)score)
    {
       case 1:
          if(score <= 100 && score >= 90)
          {
-            std::cout << grades[0];
+            std::cout << grades[0];//need a for loop to designate the indices of the array because
+            //right now the program doesn't know how to reference these index numbers
          }
          break;
       case 2:
@@ -55,6 +58,7 @@ std::string computeLetterGrade(std::string grades[], float score)
                     std::cout << grades[4];
                  }
          break;
+   }
    }
    return *grades;
 }
@@ -87,4 +91,7 @@ int main()
    std::string grades[6] = {
       "A", "B", "C", "D", "F"
    };
+   std::cout << "Enter number grade: ";
+   std::cin >> score;
+   std::cout << score << " is " << computeLetterGrade(grades, score) /*<< computeGradeSign(grades, score)*/ << std::endl;
 }
