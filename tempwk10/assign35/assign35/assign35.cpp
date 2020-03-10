@@ -23,44 +23,46 @@
 ************************************************************************/
 std::string computeLetterGrade(std::string grades[], float score)
 {
-   for(int i =0; grades; i++)
-   {
+   //for(int i =0; grades; i++)
+   //{
    switch((int)score)
    {
-      case 1:
-         if(score <= 100 && score >= 90)
-         {
+      case 90 ... 100:
+         //if(score <= 100 && score >= 90)
+         //{
             std::cout << grades[0];//need a for loop to designate the indices of the array because
             //right now the program doesn't know how to reference these index numbers
-         }
+         //}
          break;
-      case 2:
-         if(score <= 89 && score >= 80)
-         {
+      case 80 ... 89:
+         //if(score <= 89 && score >= 80)
+         //{
             std::cout << grades[1];
-         }
+         //}
          break;
-      case 3:
-         if(score <= 79 && score >= 70)
-         {
+      case 70 ... 79:
+         //if(score <= 79 && score >= 70)
+         //{
             std::cout << grades[2];
-         }
+         //}
          break;
-      case 4:
-         if(score <= 69 && score >= 60)
-                 {
+      case 60 ... 69:
+         //if(score <= 69 && score >= 60)
+                 //{
                     std::cout << grades[3];
-                 }
+                 //}
          break;
-      case 5:
-        if(score <= 59)
-                 {
+      case 0 ... 59:
+        //if(score <= 59)
+           //      {
                     std::cout << grades[4];
-                 }
+              //   }
          break;
+      default:
+         std::cout << "Invalid.";
    }
-   }
-   return *grades;
+   //}
+   return "";
 }
 /************************************************************************
 *and computeGradeSign()
@@ -79,7 +81,7 @@ std::string computeGradeSign(std::string grades[], float score)
       std::cout << "-";
    }
    }
-   return *grades;
+   return "";
 }
 
 /************************************************************************
@@ -93,5 +95,5 @@ int main()
    };
    std::cout << "Enter number grade: ";
    std::cin >> score;
-   std::cout << score << " is " << computeLetterGrade(grades, score) /*<< computeGradeSign(grades, score)*/ << std::endl;
+   std::cout << score << " is " << computeLetterGrade(grades, score) << computeGradeSign(grades, score) << std::endl;
 }
