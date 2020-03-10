@@ -8,8 +8,13 @@
 *    This program incorporates an opportunity to practice switch-case and conditional operators.
 * output including user input.
 *    Estimated:  1.0 hrs
-*    Actual:     8 hrs
-*       The most difficult part comprised
+*    Actual:     2 hrs
+*       The most difficult part comprised figuring out how to use float/int as my case scenarios. I
+* finally figured out I could use ranges and this is what worked. For the computeGradeSign,
+* I saw that neither of my if conditions were evaluated, so I encapsulated those in a do-while
+* loop and voila, the thing works! One other problem I'm having is a segFault or memory probl-
+* em. I can't seem to figure out why the program won't exit with code 0, but it has something to
+* do with computeGradeSign.
 ************************************************************************/
 
 #include <stdio.h>
@@ -23,45 +28,26 @@
 ************************************************************************/
 std::string computeLetterGrade(std::string grades[], float score)
 {
-   //for(int i =0; grades; i++)
-   //{
    switch((int)score)
    {
       case 90 ... 100:
-         //if(score <= 100 && score >= 90)
-         //{
-            std::cout << grades[0];//need a for loop to designate the indices of the array because
-            //right now the program doesn't know how to reference these index numbers
-         //}
+            std::cout << grades[0];
          break;
       case 80 ... 89:
-         //if(score <= 89 && score >= 80)
-         //{
             std::cout << grades[1];
-         //}
          break;
       case 70 ... 79:
-         //if(score <= 79 && score >= 70)
-         //{
             std::cout << grades[2];
-         //}
          break;
       case 60 ... 69:
-         //if(score <= 69 && score >= 60)
-                 //{
                     std::cout << grades[3];
-                 //}
          break;
       case 0 ... 59:
-        //if(score <= 59)
-           //      {
                     std::cout << grades[4];
-              //   }
          break;
       default:
          std::cout << "Invalid.";
    }
-   //}
    return "";
 }
 /************************************************************************
@@ -71,17 +57,28 @@ std::string computeLetterGrade(std::string grades[], float score)
 ************************************************************************/
 std::string computeGradeSign(std::string grades[], float score)
 {
-   if((score / 10 >= 6 && score / 10 <= 8))//isolates the tens digit
+   int i = 0;
+   char plus = '+';
+   char neg = '-';
+   do
+   {
+      i++;
+   if((score / 10 >= 0 && score / 10 <= 9) && score > 59)//isolates the tens digit
    {
       if((int)score % 10 == 9 || (int)score % 10 == 8 || (int)score % 10 == 7)//isolates the ones digit for +
       {
-         std::cout << "+";
+         std::cout << plus;
    } else if ((int)score % 10 == 0 || (int)score % 10 == 1 || (int)score % 10 == 2)//ones digit for -
    {
-      std::cout << "-";
+      std::cout << neg;
    }
+   } else
+   {
+      std::cout << "";
    }
-   return "";
+}
+   while(i < 1);
+   return "\n";
 }
 
 /************************************************************************
@@ -95,5 +92,5 @@ int main()
    };
    std::cout << "Enter number grade: ";
    std::cin >> score;
-   std::cout << score << " is " << computeLetterGrade(grades, score) << computeGradeSign(grades, score) << std::endl;
+   std::cout << score <<  "%" << " is " <<computeLetterGrade(grades, score) << computeGradeSign(grades, score);
 }
