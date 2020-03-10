@@ -55,7 +55,7 @@ std::string computeLetterGrade(std::string grades[], float score)
  Additionally, a minus (-) will be added when the last digit is a 0, 1, or 2 for all grades except F's.
  A plus (+) will be added when the last digit is a 7, 8, or 9 for all grades except A's and F's.
 ************************************************************************/
-std::string computeGradeSign(std::string grades[], float score)
+std::string computeGradeSign(float score)
 {
    int i = 0;
    char plus = '+';
@@ -92,5 +92,5 @@ int main()
    };
    std::cout << "Enter number grade: ";
    std::cin >> score;
-   std::cout << score <<  "%" << " is " <<computeLetterGrade(grades, score) << computeGradeSign(grades, score);
+   std::cout << score <<  "%" << " is " <<computeLetterGrade(grades, score) << computeGradeSign(score);
 }
