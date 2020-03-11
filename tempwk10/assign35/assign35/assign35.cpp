@@ -14,7 +14,8 @@
 * I saw that neither of my if conditions were evaluated, so I encapsulated those in a do-while
 * loop and voila, the thing works! One other problem I'm having is a segFault or memory probl-
 * em. I can't seem to figure out why the program won't exit with code 0, but it has something to
-* do with computeGradeSign.
+* do with computeGradeSign. I found it! It was the non-essential grades[] parameter being
+* passed into computeGradeSign.
 ************************************************************************/
 
 #include <stdio.h>
