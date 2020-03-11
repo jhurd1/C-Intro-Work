@@ -20,15 +20,14 @@
 /************************************************************************
 *bool playAgain()
 ************************************************************************/
-bool playAgain()
+bool playAgain(bool play)
 {
-   char temp = 'n';
-   bool play = true;
+   char temp;
    do
    {
    std::cout << "Do you want to play again (y/n)?";
    std::cin >> temp;
-   if(temp == 'n' || temp != 'y')
+   if(temp == 'n' || (temp != 'y' && temp != 'n'))
    {
       play = false;
    }
@@ -72,9 +71,14 @@ void getFileName(char fileName[])//test with cout; working
 *displayStory
 * isolate readFile first, then come back to this
 ************************************************************************/
-void displayStory()
+void displayStory(char word[])
 {
-   std::cout << "Thank you for playing.\n";
+   //std::cout << "Thank you for playing.\n";
+   for(int i = 0; i <= *word; i++)
+   {
+      std::cout << word;
+   }
+      std::cout << "Thank you for playing.\n";
 }
 
 /************************************************************************
@@ -93,10 +97,6 @@ int readFile(char fileName[], char story[][32])//isolate this function first; it
       }
       count++;
    }
-   if(fin.eof())
-   {
-       std::cout << "Thank you for playing.\n";
-   }
    return count;
 }
 
@@ -107,12 +107,16 @@ int readFile(char fileName[], char story[][32])//isolate this function first; it
 int main()
 {
    bool play = true;
-   while(play == true)
+   char word[256];//This is going to get passed into other functions not expecting it here
+   //Evaluate whether this entails single words because you need the story for display, not a word.
+   while(play)
    {
       char fileName[256];
       char story[256][32];
       getFileName(fileName);
-      int numWords = readFile(fileName, story);
-      playAgain();
+      /*int numWords =*/
+      readFile(fileName, story);
+      displayStory(word);
+      playAgain(play);
    }
 }
