@@ -66,21 +66,73 @@ void getFileName(char fileName[])//tested with cout; working
 }
 
 /************************************************************************
+*Manage the tokens.
+************************************************************************/
+void tokenManager(char antecedent[], char temp[], char next[])//don't think I need antecedent or next here
+{
+   switch(temp[1])
+   {
+      case '!':
+         std::cout << std::endl;
+         break;
+      case '<':
+         std::cout << ' ' << '"';
+         break;
+      case '>':
+         std::cout << '"';
+         break;
+      case '.':
+         std::cout << '.';
+         break;
+      case ',':
+         std::cout << ',';
+         break;
+   }
+}
+
+/************************************************************************
+*Manage spacing
+************************************************************************/
+void spaceManager(char antecedent[], char temp[], char next[])
+{
+   switch(antecedent[1])
+   {
+      case '!':
+         std::cout << temp;
+         break;
+      case '<':
+         std::cout << temp;
+         break;
+      case '>':
+         std::cout << temp;
+         break;
+      case '.':
+         std::cout << " "  << temp;
+         break;
+      case ',':
+         std::cout << " " << temp;
+         break;
+      default:
+         std::cout << " " << temp;
+         break;
+   }
+}
+
+/************************************************************************
 *displayStory
-* isolate readFile first, then come back to this
-  if(word[i] == '"' || word[i] == '.' || word[i] == ',' || word[i] == (char)13)
 ************************************************************************/
 void displayStory(int count, char story[][32])
 {
    for(int i = 0; i < count; i++)//count is the story array's size
    {
-      //if conditions using flag var
-      if(*story[i] == ':')//example; decide whether it justifies a space or not
+      if(story[i][0] == ':')
       {
-         
+         tokenManager(story[i - 1], story[i], story[i + 1]);
+      } else
+      {
+         spaceManager(story[i - 1], story[i], story[i + 1]);
       }
-      std::cout << story[i];
-   }
+}
    std::cout << "Thank you for playing.\n";
 }
 
@@ -110,7 +162,6 @@ int readFile(char fileName[], char story[][32])
 int main()
 {
    bool play = true;
-   char word[256];
    int count = 0;
    while(play)
    {
