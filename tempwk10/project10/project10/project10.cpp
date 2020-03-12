@@ -70,17 +70,16 @@ void getFileName(char fileName[])//tested with cout; working
 * isolate readFile first, then come back to this
   if(word[i] == '"' || word[i] == '.' || word[i] == ',' || word[i] == (char)13)
 ************************************************************************/
-void displayStory(char fileName[256], char story[][32], char word[256])
+void displayStory(int count, char story[][32])
 {
-   std::ifstream fin(fileName);//need line break and whitespace between words
-   int i = 0;
-   while(fin >> word)
+   for(int i = 0; i < count; i++)//count is the story array's size
    {
-      if(word[i] == '"' || word[i] == '.' || word[i] == ',' || word[i] == (char)13 || isspace(word[i]))
+      //if conditions using flag var
+      if(*story[i] == ':')//example; decide whether it justifies a space or not
       {
-         std::cout << " ";
+         
       }
-      std::cout << word;
+      std::cout << story[i];
    }
    std::cout << "Thank you for playing.\n";
 }
@@ -112,14 +111,15 @@ int main()
 {
    bool play = true;
    char word[256];
+   int count = 0;
    while(play)
    {
       char fileName[256];
       char story[256][32];
       getFileName(fileName);
       /*int numWords =*/
-      readFile(fileName, story);
-      displayStory(fileName, story, word);
+      count = readFile(fileName, story);
+      displayStory(count, story);
       play = playAgain();
    }
 }
