@@ -99,6 +99,7 @@ void spaceManager(char antecedent[], char temp[], char next[])
    {
       case '!':
          std::cout << temp;
+         //std::cout << "\n";
          break;
       case '<':
          std::cout << temp;
@@ -112,8 +113,10 @@ void spaceManager(char antecedent[], char temp[], char next[])
       case ',':
          std::cout << " " << temp;
          break;
+         //need one more case here for the dissolving spaces at the beginning of the story.
+         //std::cin >> std::ws does almost the same as std::cin.ignore(256, '\n');
       default:
-         std::cout << " " << temp;
+            std::cout << " " << temp;
          break;
    }
 }
@@ -123,6 +126,7 @@ void spaceManager(char antecedent[], char temp[], char next[])
 ************************************************************************/
 void displayStory(int count, char story[][32])
 {
+   std::cout << "\n";
    for(int i = 0; i < count; i++)//count is the story array's size
    {
       if(story[i][0] == ':')
