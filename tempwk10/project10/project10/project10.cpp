@@ -96,11 +96,16 @@ void tokenManager(char antecedent[], char temp[], char next[])//don't think I ne
 ************************************************************************/
 void spaceManager(char antecedent[], char temp[], char next[])
 {
-   
+   int i = 0;
+   if(!isspace(antecedent[i]))
+   {
+      std::cout << " ";
+   }
    switch(antecedent[1])
    {
       case 0://target the first element of the array
          std::cout << "";//it worked!
+         break;
       case '!':
          std::cout << temp;
          //std::cout << "\n";
