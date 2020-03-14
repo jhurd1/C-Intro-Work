@@ -23,11 +23,12 @@
 bool playAgain()
 {
    char answer;
-   std::cout << "Do you want to play again (y/n)?";
+   std::cout << "Do you want to play again (y/n)? ";
    std::cin >> answer;
    answer = tolower(answer);
    if(answer == 'n')
    {
+       std::cout << "Thank you for playing.\n";
       return false;
    } else
    return true;
@@ -40,7 +41,7 @@ bool playAgain()
 ************************************************************************/
 void askQuestion(char word[])
 {
-   std::cout << "\t" << (char)(toupper(word[1]));//char casts toupper which converts to pure ASCII value
+      std::cout << "\t" << (char)(toupper(word[1]));//char casts toupper which converts to pure ASCII value
    for(int i = 2; word[i]; i++)
    {
      if(word[i] == '_')
@@ -95,8 +96,11 @@ void tokenManager(char antecedent[], char temp[], char next[])//don't think I ne
 ************************************************************************/
 void spaceManager(char antecedent[], char temp[], char next[])
 {
+   
    switch(antecedent[1])
    {
+      case 0://target the first element of the array
+         std::cout << "";//it worked!
       case '!':
          std::cout << temp;
          //std::cout << "\n";
@@ -113,8 +117,6 @@ void spaceManager(char antecedent[], char temp[], char next[])
       case ',':
          std::cout << " " << temp;
          break;
-         //need one more case here for the dissolving spaces at the beginning of the story.
-         //std::cin >> std::ws does almost the same as std::cin.ignore(256, '\n');
       default:
             std::cout << " " << temp;
          break;
@@ -137,7 +139,7 @@ void displayStory(int count, char story[][32])
          spaceManager(story[i - 1], story[i], story[i + 1]);
       }
 }
-   std::cout << "Thank you for playing.\n";
+    std::cout << "\n";
 }
 
 /************************************************************************
