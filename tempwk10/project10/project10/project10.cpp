@@ -97,7 +97,7 @@ void tokenManager(char antecedent[], char temp[], char next[])//don't think I ne
 void spaceManager(char antecedent[], char temp[], char next[])
 {
    int i = 0;
-   if(!isspace(antecedent[i]))
+   if(antecedent[i] == 'a' || antecedent[i] == 'A')
    {
       std::cout << " ";
    }
