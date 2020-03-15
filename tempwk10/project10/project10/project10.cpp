@@ -77,7 +77,7 @@ void tokenManager(char antecedent[], char temp[], char next[])
          std::cout << std::endl;
          break;
       case '<':
-         std::cout << ' ' << '"';//This is not causing the anamalous space on the first line preceding the first char
+         std::cout << '"';//This is not causing the anamalous space on the first line preceding the first char
          break;
       case '>':
          std::cout << '"';
@@ -100,7 +100,6 @@ void spaceManager(int count, char antecedent[], char temp[], char next[])//repre
    {
       case '!':
          std::cout << temp;
-         //std::cout << "\n";
          break;
       case '<':
          std::cout << temp;
@@ -115,7 +114,6 @@ void spaceManager(int count, char antecedent[], char temp[], char next[])//repre
          std::cout << " " << temp;
          break;
       default:
-         //flag(count, temp);
             std::cout << " " << temp;//Removing the default case only leaves a new line on the first line from somewhere and stops printing every subsequent word
          break;
    }
@@ -214,6 +212,7 @@ int main()
       /*int numWords =*/
       count = readFile(fileName, story);
       displayStory(count, story);
+      std::cout << "\n";
       play = playAgain();
    }
 }
