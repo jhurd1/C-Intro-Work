@@ -5,10 +5,13 @@
 * Author:
 *    Jamie Hurd
 * Summary:
-*    This program incorporates
+*    This program incorporates the final madLib assignment, taking in user input and replacing
+* substitute bits with the user input and translating less friendly tokens with more human
+* readable text.
 *    Estimated:  1.0 hrs
-*    Actual:     8 hrs
-*       The most difficult part comprised
+*    Actual:     10 hrs
+*       The most difficult part comprised getting rid of the initial space. I have not yet resolved
+* the line with doudle quotes, but due to circumstances, I'm pressing forward with what I have.
 ************************************************************************/
 #include <stdio.h>
 #include <iomanip>
@@ -39,14 +42,14 @@ bool playAgain()
 * The only conditions when a space is not inserted is when the preceding character is an open
 * quote or a newline, or when the following character is a closed quote, period, or comma.
 ************************************************************************/
-void askQuestion(char word[])//This function, remember, outputs the list of replacement words and its prompts
+void askQuestion(char word[])
 {
-      std::cout << "\t" << (char)(toupper(word[1]));//char casts toupper which converts to pure ASCII value
+      std::cout << "\t" << (char)(toupper(word[1]));
    for(int i = 2; word[i]; i++)
    {
      if(word[i] == '_')
       {
-         std::cout << " "; //This is not the culprit of the extra space preceding the first char, either.
+         std::cout << " ";
       } else
       {
          std::cout << (char)(tolower(word[i]));
@@ -59,9 +62,9 @@ void askQuestion(char word[])//This function, remember, outputs the list of repl
 *getFilelName && displayHeader; this only needs to get the file name, not read it, before passing
 * it on to readFile.
 ************************************************************************/
-void getFileName(char fileName[])//tested with cout; working
+void getFileName(char fileName[])
 {
-   std::cout << "Please enter the filename of the Mad Lib: ";//This space didn't cause the extra space ont he line below.
+   std::cout << "Please enter the filename of the Mad Lib: ";
    std::cin >> fileName;
    std::cin.ignore(256, '\n');
 }
@@ -77,7 +80,7 @@ void tokenManager(char antecedent[], char temp[], char next[])
          std::cout << std::endl;
          break;
       case '<':
-         std::cout << '"';//This is not causing the anamalous space on the first line preceding the first char
+         std::cout << '"';
          break;
       case '>':
          std::cout << '"';
@@ -94,7 +97,7 @@ void tokenManager(char antecedent[], char temp[], char next[])
 /************************************************************************
 *Manage spacing
 ************************************************************************/
-void spaceManager(int count, char antecedent[], char temp[], char next[])//represents the first three words
+void spaceManager(int count, char antecedent[], char temp[], char next[])
 {
    switch(antecedent[1])
    {
@@ -114,7 +117,7 @@ void spaceManager(int count, char antecedent[], char temp[], char next[])//repre
          std::cout << " " << temp;
          break;
       default:
-            std::cout << " " << temp;//Removing the default case only leaves a new line on the first line from somewhere and stops printing every subsequent word
+            std::cout << " " << temp;
          break;
    }
 }
@@ -124,13 +127,13 @@ void spaceManager(int count, char antecedent[], char temp[], char next[])//repre
 ************************************************************************/
 void displayStory(int count, char story[][32])
 {
-   std::cout << "\n";//removing this caused the program to time out
-   for(int i = 0; i < count; i++)//count is the story array's size
+   std::cout << "\n";
+   for(int i = 0; i < count; i++)
    {
-       if (i == 0) {
+       if (i == 0) {// || i == '<' did nothing for the line with two quotes
            std::cout << story[i]; //print first word without space
        } else {
-           if(story[i][0] == ':') { //TOKEN
+           if(story[i][0] == ':') {
                switch(story[i][1])
                {
                   case '!':
@@ -149,8 +152,8 @@ void displayStory(int count, char story[][32])
                      std::cout << ',';
                      break;
                }
-           } else { //WORD
-               if(story[i-1][0] == ':') { //PRIOR WORD WAS TOKEN
+           } else {
+               if(story[i-1][0] == ':') {
                    switch(story[i-1][1])
                    {
                       case '!':
@@ -169,7 +172,7 @@ void displayStory(int count, char story[][32])
                          std::cout << " " << story[i];
                          break;
                    }
-               } else { //PRIOR WORD WAS WORD
+               } else {
                    std::cout << " " << story[i]; //default space before word
                }
            }
@@ -209,7 +212,6 @@ int main()
       char fileName[256];
       char story[256][32];
       getFileName(fileName);
-      /*int numWords =*/
       count = readFile(fileName, story);
       displayStory(count, story);
       std::cout << "\n";
