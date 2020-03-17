@@ -15,64 +15,74 @@
 #include <iostream>
 #include <cctype>
 #include <cstring>
+#include <string>
 #include <fstream>
 
 /************************************************************************
 * getFileName
 ************************************************************************/
-std::string getFileName()
+void getFileName(char fileName[])
 {
-   std::string fileName;
    std::cout << "Enter source file name: ";
    std::cin >> fileName;
-   return fileName;
+   std::cin.ignore(256, '\n');
 }
 
 /************************************************************************
 * getWriteFileName
 ************************************************************************/
-std::string getWriteFileName()
+void getWriteFileName(char writeFileName[])
 {
-   std::string writeFileName;
    std::cout << "Enter destination filename: ";
    std::cin >> writeFileName;
-   return writeFileName;
+   std::cin.ignore(256, '\n');
 }
 
 /************************************************************************
 * writeToFile "stores" or writes to a file the tic tac toe results.
 ************************************************************************/
-
+void writeToFile(char writeFileName[], char tic[][32])
+{
+   std::ofstream fout(writeFileName);
+   int count = 32;
+   fout.open(writeFileName);
+   for(int i = 0; i < count; i++)
+   {
+      fout << tic;
+      fout.close();
+   }
+   std::cout << "File written.";
+}
 
 /************************************************************************
 * readFile
 ************************************************************************/
-std::string readFile(std::string fileName)
+int readFile(char fileName[], char tic[][32])
 {
+   int count = 0;
+   int i = 0;
    std::ifstream fin(fileName);
-   std::string line;
-   //fin.open(fileName);//opening the file here broke the loop below so it never evaluated
-   while(std::getline(fin, line))//loop not evaluating
+   for(i = 0; i < 32; i++)
    {
-      if(fin.fail())
-      {
-         return 0;
-      } else
-      {
-         fin >> line;
-         std::cout << "Line: " << line;
-         fin.close();
-      }
+      fin >> tic[i][count];
+      count++;
    }
-   return line;
+   return count;
 }
 
 /************************************************************************
 * display
 ************************************************************************/
-void display(std::string ticTacToe[][25])
+void display(char fileName[], char tic[][32])
 {
-   
+   int count = 0;
+   int i = 0;
+   std::ifstream fin(fileName);
+   while(fin.eof() == 0)
+   {
+      fin >> tic[i][count];
+      std::cout << tic;
+   }
 }
 
 /************************************************************************
@@ -80,11 +90,11 @@ void display(std::string ticTacToe[][25])
 ************************************************************************/
 int main()
 {
-   std::string fileName;
-   std::string writeFileName;
-   std::string temp;
-   std::string ticTacToe[25][25];
-   temp = getFileName();
-   readFile(temp);
-   //getWriteFileName();
+   char fileName[256];
+   char tic[256][32];
+   char writeFileName[256];
+   getFileName(fileName);
+   getWriteFileName(writeFileName);
+   writeToFile(writeFileName, tic);
+   readFile(fileName, tic);
 }
