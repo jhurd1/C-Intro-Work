@@ -46,7 +46,7 @@ void writeToFile(char writeFileName[], char tic[][32])
    std::ofstream fout(writeFileName);
    int count = 32;
    fout.open(writeFileName);
-   for(int i = 0; i < count; i++)
+   for(int i = 0; i < count; i++)//needs two for loops
    {
       fout << tic;
       fout.close();
