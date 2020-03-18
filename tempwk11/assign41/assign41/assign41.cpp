@@ -5,10 +5,11 @@
 * Author:
 *    Jamie Hurd
 * Summary:
-*    This program incorporates
+*    This program incorporates an allocation problem.
 *    Estimated:  1.0 hrs
 *    Actual:     10 hrs
-*       The most difficult part comprised
+*       The most difficult part comprised outputting to a certain index. I had this passing 3/4 tests
+* but when I made changes, I now cannot get it to pass any of the tests. Very disappointing.
 ************************************************************************/
 #include <stdio.h>
 #include <iomanip>
@@ -17,13 +18,6 @@
 #include <cstring>
 #include <fstream>
 #include <vector>
-/************************************************************************
-*storeStringInVec
-************************************************************************/
-void storeStringInVec(std::string test, std::string test2, std::vector<std::string> vecStrings)
-{
-   
-}
 
 /************************************************************************
 *prompt
@@ -32,11 +26,7 @@ std::vector<std::string>* prompt(std::string test, std::string test2, std::vecto
 {
    std::cout << "Number of characters: ";
    std::getline(std::cin, test);
-   //if(vecStrings.size() <= 0)
    int j = std::atoi(test.c_str());
-   //int i = 0;
-   //for(int i = 0; i <= j; i++)
-   //{
       if(j < 0)
       {
          std::cout << "Allocation failure!\n";
@@ -44,20 +34,11 @@ std::vector<std::string>* prompt(std::string test, std::string test2, std::vecto
       {
          std::cout << "Enter Text: ";
          std::getline(std::cin, test2);
-         //vecStrings.push_back(test);
          vecStrings.push_back(test2);
       }
-   /*for(std::string::reverse_iterator strIt = test2.rbegin(); strIt != test2.rend(); ++strIt)//strIt == string iterator
-         {*/
-   //while(j > vecStrings.size())
-   //{
-   std::cout << "Text: ";
-   for(int i = j; i <= vecStrings.size(); i++)
-      //for(std::string::iterator strIt = test2.begin(); strIt < j; ++strIt)
-      {
-          //std::cout << "Text: " << vecStrings[j] << std::endl;
-         std::cout << vecStrings[i];
-         //j--;
+   for(auto it = vecStrings.cbegin(); it != vecStrings.cend(); it++)
+   {
+      std::cout << "Text: " << *it << ' ';
       }
    std::cout << "\n";
    return 0;
