@@ -32,17 +32,24 @@ std::vector<std::string>* prompt(std::string test, std::string test2, std::vecto
 {
    std::cout << "Number of characters: ";
    std::getline(std::cin, test);
-   if(sizeof(vecStrings) < 0)
-   {
-      std::cout << "Allocation failure!\n";
-   } else
-   {
-      std::cout << "Enter Text: ";
-      std::getline(std::cin, test2);
-      vecStrings.push_back(test);
-      vecStrings.push_back(test2);
+   //if(vecStrings.size() <= 0)
+   int j = std::atoi(test.c_str());
+   for(int i = 0; i <= j; i++){
+      if(j < 0)
+      {
+         std::cout << "Allocation failure!\n";
+      } else if(j > 0)
+      {
+         std::cout << "Enter Text: ";
+         std::getline(std::cin, test2);
+         //vecStrings.push_back(test);
+         vecStrings.push_back(test2);
+         while(j < vecStrings.size())
+         {
+             std::cout << "Text: " << test2 << std::endl;
+         }
+      }
    }
-   std::cout << "Text: " << test2 << std::endl;
    return 0;
 }
 /************************************************************************
