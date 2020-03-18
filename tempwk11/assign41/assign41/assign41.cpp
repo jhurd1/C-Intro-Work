@@ -30,18 +30,19 @@ void storeStringInVec(std::string test, std::string test2, std::vector<std::stri
 ************************************************************************/
 std::vector<std::string>* prompt(std::string test, std::string test2, std::vector<std::string> vecStrings)
 {
-   std::cout << "Number of characters.";
+   std::cout << "Number of characters: ";
    std::getline(std::cin, test);
-   std::cout << "Enter text: ";
-   std::getline(std::cin, test2);
-   int i = 0;
-   //std::cout << test << " " << test2; Success!
-   //for(i = 0; i < sizeof(vecStrings);i++)
-   //{
+   if(sizeof(vecStrings) < 0)
+   {
+      std::cout << "Allocation failure!\n";
+   } else
+   {
+      std::cout << "Enter Text: ";
+      std::getline(std::cin, test2);
       vecStrings.push_back(test);
       vecStrings.push_back(test2);
-//}
-   //std::cout << vecStrings[i] << " " << " " << test2;
+   }
+   std::cout << "Text: " << test2 << std::endl;
    return 0;
 }
 /************************************************************************
@@ -51,7 +52,11 @@ int main()
 {
    std::string test = "";
    std::string test2 = "";
-    std::vector<std::string> vecStrings;
-   prompt(test, test2, vecStrings);
-   //storeStringInVec(test, test2, vecStrings);
+   try{
+      std::vector<std::string> vecStrings;
+      prompt(test, test2, vecStrings);
+   } catch(std::bad_alloc& bad)
+   {
+      std::cerr << "Allocation failure!" << "\n";
+   }
 }
