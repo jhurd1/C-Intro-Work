@@ -34,22 +34,22 @@ std::vector<std::string>* prompt(std::string test, std::string test2, std::vecto
    std::getline(std::cin, test);
    //if(vecStrings.size() <= 0)
    int j = std::atoi(test.c_str());
-   for(int i = 0; i <= j; i++){
+   //int i = 0;
+   //for(int i = 0; i <= j; i++)
+   //{
       if(j < 0)
       {
          std::cout << "Allocation failure!\n";
-      } else if(j > 0)
+      } else if (j > 0)
       {
          std::cout << "Enter Text: ";
          std::getline(std::cin, test2);
          //vecStrings.push_back(test);
          vecStrings.push_back(test2);
-         while(j < vecStrings.size())
-         {
-             std::cout << "Text: " << test2 << std::endl;
-         }
       }
-   }
+   /*for(std::string::reverse_iterator strIt = test2.rbegin(); strIt != test2.rend(); ++strIt)//strIt == string iterator
+         {*/
+       std::cout << "Text: " << vecStrings[j] << std::endl;
    return 0;
 }
 /************************************************************************
