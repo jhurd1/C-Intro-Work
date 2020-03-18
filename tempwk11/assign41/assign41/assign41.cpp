@@ -49,9 +49,19 @@ std::vector<std::string>* prompt(std::string test, std::string test2, std::vecto
       }
    /*for(std::string::reverse_iterator strIt = test2.rbegin(); strIt != test2.rend(); ++strIt)//strIt == string iterator
          {*/
-       std::cout << "Text: " << vecStrings[j] << std::endl;
+   //while(j > vecStrings.size())
+   //{
+   std::cout << "Text: ";
+   for(int i = j; i <= vecStrings.size(); i++)
+      //for(std::string::iterator strIt = test2.begin(); strIt < j; ++strIt)
+      {
+          //std::cout << "Text: " << vecStrings[j] << std::endl;
+         std::cout << vecStrings[i];
+         //j--;
+      }
+   std::cout << "\n";
    return 0;
-}
+   }
 /************************************************************************
 *main
 ************************************************************************/
