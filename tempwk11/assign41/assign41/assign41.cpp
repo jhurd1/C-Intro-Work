@@ -37,10 +37,18 @@ std::vector<std::string>* prompt(std::string test, std::string test2, std::vecto
          vecStrings.push_back(test2);
       }
    for(auto it = vecStrings.cbegin(); it != vecStrings.cend(); it++)
-   {
-      std::cout << "Text: " << *it << ' ';
+   {//possibly a nested for loop here would control iteration to "j"
+      for(int i = 0; i <= j; i++)
+      {
+         if(j >= vecStrings.size())
+         {
+            break;
+         } else
+         {
+             std::cout << "Text: " << *it << "\n";
+         }
       }
-   std::cout << "\n";
+      }
    return 0;
    }
 /************************************************************************
