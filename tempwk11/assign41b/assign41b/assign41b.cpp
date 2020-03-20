@@ -20,40 +20,48 @@
 #include <vector>
 
 /************************************************************************
-*prompt
+*allocate memory
 ************************************************************************/
-std::vector<std::string>* prompt(std::string test, std::string test2, std::vector<std::string> vecStrings)
+int getNumChars()
 {
+   int numberOfChars = 0;
    std::cout << "Number of characters: ";
-   std::getline(std::cin, test);
-   int j = std::atoi(test.c_str());
-      if(j < 0)
-      {
-         std::cout << "Allocation failure!\n";
-      } else if (j > 0)
-      {
-         std::cout << "Enter Text: ";
-         std::getline(std::cin, test2);
-         vecStrings.push_back(test2);
-      }
-   for(auto it = vecStrings.cbegin(); it != vecStrings.cend(); it++)
-   {//possibly a nested for loop here would control iteration to "j"
-             std::cout << "Text: " << *it << "\n";
-         }
-   return 0;
+   std::cin >> numberOfChars;
+   std::cin.ignore();
+   return numberOfChars;
+}
+
+void getText(char * &pText, int testNum)
+{
+   std::cout << "Enter Text: ";
+   std::cin.getline(pText, testNum);
+}
+
+void display(char * pText)
+{
+   std::cout << "Text: ";
+   for(char * p = pText; *p; p++)
+   {
+      std::cout << *p;
    }
+   std::cout << std::endl;
+}
+
 /************************************************************************
 *main
 ************************************************************************/
 int main()
 {
-   std::string test = "";
-   std::string test2 = "";
-   try{
-      std::vector<std::string> vecStrings;
-      prompt(test, test2, vecStrings);
-   } catch(std::bad_alloc& bad)
-   {
-      std::cerr << "Allocation failure!" << "\n";
+   int testNum = getNumChars() + 1;
+   char * pText;
+   try {
+      pText = new char[testNum];
+   } catch (std::bad_alloc& bad) {
+      std::cout << "Allocation failure!" << std::endl;
+      return 0;
    }
+   getText(pText, testNum);
+   //delete [] testNum;
+   display(pText);
+   delete [] pText;
 }
