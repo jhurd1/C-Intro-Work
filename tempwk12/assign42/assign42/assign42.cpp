@@ -25,6 +25,10 @@
 #include <fstream>
 
 /********************************************************************
+* introduction
+********************************************************************/
+
+/********************************************************************
 * clause one
 ********************************************************************/
 std::string clauseOne(std::string clause1)
@@ -38,7 +42,7 @@ std::string clauseOne(std::string clause1)
 ********************************************************************/
 std::string clauseTwo(std::string clause2)
 {
-   clause2 = "connected to the ";
+   clause2 = "connected to the";
    return clause2;
 }
 
@@ -56,7 +60,7 @@ std::string getDangler(std::string dangler)
  * complete song "Dem Bones."  Note that the list of bones is provided
  * by the parameter list
  ********************************************************************/
-std::string generateSong(std::string list[], int num, std::string clause1, std::string clause2,
+std::string generateSong(std::string list[], int num, std::string clause2,
                          std::string dangler)
 {
    std::string output;
@@ -64,7 +68,7 @@ std::string generateSong(std::string list[], int num, std::string clause1, std::
    // your code goes here
    for(int i = 0; list; i++)
    {
-      std::cout << clause1 << " " << list[i] << " " << clause2 << " " << dangler;
+      std::cout << " " << list[i] << dangler << " " << clause2 << " " << list[i + 1] << dangler << std::endl;
    }
    return output;
 }
@@ -77,6 +81,7 @@ std::string generateSong(std::string list[], int num, std::string clause1, std::
  ***********************************************************************/
 int main()
 {
+   
    std::string clause1 = "";
    std::string clause2 = "";
    std::string dangler = "";
@@ -97,7 +102,7 @@ int main()
    };
 
    // generate the song
-   std::string song = generateSong(list, 9, getDatClause, getDatClause2, getDatDangler);
+   std::string song = generateSong(list, 9, getDatClause2, getDatDangler);
 
    // display the results
    std::cout << song;
