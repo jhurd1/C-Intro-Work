@@ -24,17 +24,33 @@
 * 1 foot = 0.3048 meters
 * use the library function atof() to convert a string into a float
 ********************************************************************/
-std::string convert()
+void convert(float array[])
 {
-   std::string feet = "";
-   float meters = 0.0;
-   meters = strtof((feet).c_str(), 0);
-   return feet;
+   //std::string feet = "";
+   //float foot = std::stof((feet).c_str(), 0) * .3048;
+   for(int i = 0; array; i++)
+   {
+      std::cout << array[i] << "feet is" << array[i] * 3.048 << "meters" << std::endl;
+   }
+   //return foot;
 }
+
+/********************************************************************
+* display
+********************************************************************/
+/*void display(float foot, float array[])
+{
+   std::cout << foot << "feet is " << convert(array) << "meters" << std::endl;
+   std::cout << convert(array)  << std::endl;
+}*/
 /********************************************************************
 * main
 ********************************************************************/
 int main()
 {
-   
+   float array[] = {
+      1.0, 2.0, 3.0, 4.0, 5.0
+   };
+   float foot = 0.0;
+   convert(array);
 }
