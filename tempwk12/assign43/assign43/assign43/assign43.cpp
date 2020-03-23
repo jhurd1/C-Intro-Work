@@ -5,10 +5,12 @@
 * Author:
 *    your name
 * Summary:
-*    This program will
+*    This program takes command line input and outputs meter conversions, supposing the input
+* represents feet.
 *    Estimated:  1.5 hrs
 *    Actual:     1.5 hrs
-*      The most difficult part comprised
+*      The most difficult part comprised the loop as an iterator, array range, and other options did
+* prove elegant. I initially used stof() to do the conversion, but found it easier not to use it at all.
 ************************************************************************/
 
 #include <stdio.h>
@@ -26,32 +28,19 @@
 ********************************************************************/
 void convert(float array[])
 {
-   //std::string feet = "";
-   //float foot = std::stof((feet).c_str(), 0) * .3048;
-   for(int i = 0; i < (int)*array; i++)
+   for(int i = 0; i < 5; i++)
    {
-      if(array[i] != '\0')
-      {
-            std::cout << std::fixed;
-            std::cout << std::setprecision(1);
-            std::cout << array[i] << " feet is " << array[i] * .3048 << " meters" << std::endl;
-      } else
+      if(array[i] == '\0')
       {
          std::cout << "";
-         break;
+      } else
+      {
+         std::cout << std::fixed;
+         std::cout << std::setprecision(1);
+         std::cout << array[i] << " feet is " << array[i] * .3048 << " meters" << std::endl;
       }
    }
-   //return foot;
 }
-
-/********************************************************************
-* display
-********************************************************************/
-/*void display(float foot, float array[])
-{
-   std::cout << foot << "feet is " << convert(array) << "meters" << std::endl;
-   std::cout << convert(array)  << std::endl;
-}*/
 /********************************************************************
 * main
 ********************************************************************/
@@ -60,6 +49,5 @@ int main()
    float array[] = {
       1.0, 2.0, 3.0, 5.9, 100.0
    };
-   float foot = 0.0;
    convert(array);
 }
