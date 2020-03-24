@@ -10,7 +10,9 @@
 *
 *    Estimated:  1.0 hrs
 *    Actual:     2.0 hrs
-*      Please describe briefly what was the most difficult part
+*      Please describe briefly what was the most difficult part: The most difficult part of this
+* program is that someone else wrote the initial code, making it difficult to engineer around
+* including how to average the count of several runs of a single method, like averageLinear.
 ************************************************************************/
 
 #include <iostream>
@@ -107,10 +109,25 @@ float computeAverageLinear(int list[], int num)
 float computeAverageBinary(int list[], int num)
 {
    float averageBinary = 0.0;
-
+   int i = 0;
+   int iLast = list[i - 1];
+   int iFirst = list[0];
+   int iMiddle = list[i];
+   iFirst = list[i];
+   int count = 0;
    // put your code here, probably including a collections of
    // calls to binary()
-   
+  while(iFirst <= iLast)
+  {
+     if(list[i + 1] < list[iMiddle] && list[iLast])
+     {
+        count++;
+     } else
+     {
+        break;
+     }
+  }
+   averageBinary = count/num;
    return averageBinary;
 }
 
