@@ -3,7 +3,7 @@
 *    Assignment 43, Command Line
 *    Brother Schwieder, CS124
 * Author:
-*    your name
+*    Jamie Hurd
 * Summary:
 *    This program takes command line input and outputs meter conversions, supposing the input
 * represents feet.
@@ -30,15 +30,9 @@ void convert(float array[])
 {
    for(int i = 0; i < 5; i++)
    {
-      if(array[i] == '\0')
-      {
-         std::cout << "";
-      } else
-      {
          std::cout << std::fixed;
          std::cout << std::setprecision(1);
          std::cout << array[i] << " feet is " << array[i] * .3048 << " meters" << std::endl;
-      }
    }
 }
 /********************************************************************
