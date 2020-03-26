@@ -47,7 +47,6 @@ int readNumbers(int list[], int max)
    // get the filename
    std::cout << "Enter filename of list: ";
    std::cin  >> fileName;
-
    // open the file
    std::ifstream fin(fileName);
    if (fin.fail())
@@ -55,11 +54,9 @@ int readNumbers(int list[], int max)
       std::cout << "Unable to open file " << fileName << std::endl;
       return 0;
    }
-
    // read the file
    while (num < max && fin >> list[num])
       num++;
-
    // make like a tree
    fin.close();
    return num;
@@ -78,22 +75,15 @@ float computeAverageLinear(int list[], int num)
 {
    float averageLinear = 0.0;
    int count = 0;
+   int search = 0;
    // put your code here, probably including a collections of
    // calls to linear()
    for(int i = 0; list; i++)
    {
-      count++;//gives us the count of elements in the array without breaking
-      //out of the loop when the
-      //desired element is found. Presumably another function will
-      //break us out of the loop
-      //when it's found.
+      linear(list, num, search);
+      count++;
    }
-   averageLinear = count/num;//I'm guessing that num represents the quantity
-   //of elements traversed during the search
-   //dividing count from num should give us the average?
-   //How does one get the average of search counts?
-   //One would have to hold the counts in separate variables for each run
-   //of this method!
+   averageLinear = count/num;
    return averageLinear;
 }
 
@@ -115,12 +105,16 @@ float computeAverageBinary(int list[], int num)
    int iMiddle = list[i];
    iFirst = list[i];
    int count = 0;
+   int search = 0;
    // put your code here, probably including a collections of
    // calls to binary()
   while(iFirst <= iLast)
   {
-     if(list[i + 1] < list[iMiddle] && list[iLast])
+     if(list[i + 1] < list[iMiddle] && list[iLast])//pull first value, pass it to linear, then
+        //linear will count accesses/comparisons
+        //in essence, just calling binary
      {
+        binary(list, num, search);
         count++;
      } else
      {
@@ -147,9 +141,11 @@ int linear(int list[], int num, int search)
    int  compares = 0;  // you will need to compute this
 
    for (int i = 0; i < num && ! found; i++)
+   {
+      compares++;//linear is just like binary for counting compares
       if (search == list[i])
          found = true;
-
+   }
    return compares;
 }
 
@@ -175,17 +171,19 @@ int binary(int list[], int num, int search)
    // continue until found or the search size is not zero
    while (iLast >= iFirst && !found)
    {
-      int iMiddle = (iLast + iFirst) / 2;
-
+      compares++;//we want to count every loop, not just every
+              //correct comparison
+      int iMiddle = (iLast + iFirst) / 2;//splits the search range
       // note that both the == and > count as one comparison
       if (list[iMiddle] == search)
+      {
          found = true;
+      }
       else if (list[iMiddle] > search)
          iLast = iMiddle - 1;
       else
          iFirst = iMiddle + 1;
    }
-
    return compares;
 }
 
