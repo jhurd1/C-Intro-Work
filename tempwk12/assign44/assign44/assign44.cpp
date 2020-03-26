@@ -11,8 +11,7 @@
 *    Estimated:  1.0 hrs
 *    Actual:     2.0 hrs
 *      Please describe briefly what was the most difficult part: The most difficult part of this
-* program is that someone else wrote the initial code, making it difficult to engineer around
-* including how to average the count of several runs of a single method, like averageLinear.
+* program was getting the average right. Specifically, I needed to change some ints to floats.
 ************************************************************************/
 
 #include <iostream>
@@ -74,16 +73,14 @@ int readNumbers(int list[], int max)
 float computeAverageLinear(int list[], int num)
 {
    float averageLinear = 0.0;
-   int count = 0;
-   int search = 0;
+   float totalComparisons = 0;
    // put your code here, probably including a collections of
    // calls to linear()
-   for(int i = 0; list; i++)
+   for(int i = 0; i < num; i++)
    {
-      linear(list, num, search);
-      count++;
+      totalComparisons += linear(list, num, list[i]);
    }
-   averageLinear = count/num;
+   averageLinear = totalComparisons/num;
    return averageLinear;
 }
 
@@ -99,29 +96,18 @@ float computeAverageLinear(int list[], int num)
 float computeAverageBinary(int list[], int num)
 {
    float averageBinary = 0.0;
-   int i = 0;
-   int iLast = list[i - 1];
-   int iFirst = list[0];
-   int iMiddle = list[i];
-   iFirst = list[i];
-   int count = 0;
-   int search = 0;
+
    // put your code here, probably including a collections of
    // calls to binary()
-  while(iFirst <= iLast)
-  {
-     if(list[i + 1] < list[iMiddle] && list[iLast])//pull first value, pass it to linear, then
-        //linear will count accesses/comparisons
-        //in essence, just calling binary
-     {
-        binary(list, num, search);
-        count++;
-     } else
-     {
-        break;
-     }
-  }
-   averageBinary = count/num;
+   float totalComparisons = 0;
+   // put your code here, probably including a collections of
+   // calls to linear()
+   for(int i = 0; i < num; i++)
+   {
+      totalComparisons += binary(list, num, list[i]);
+   }
+   averageBinary = totalComparisons/num;
+
    return averageBinary;
 }
 
@@ -200,11 +186,10 @@ int main()
    // read the numbers
    if (!(num = readNumbers(list, MAX)))
       return 1;
-
+  
    // determine how long it takes for a linear search
    float averageLinear;
    averageLinear = computeAverageLinear(list, num);
-
    // determine how long it takes for a binary search
    float averageBinary;
    averageBinary = computeAverageBinary(list, num);
@@ -213,7 +198,7 @@ int main()
    std::cout.setf(std::ios::fixed);
    std::cout.setf(std::ios::showpoint);
    std::cout.precision(1);
-   std::cout << "Linear search: " << std::setw(10) << averageLinear << std::endl;
+   std::cout << "Linear search: " << std::setw(10) << averageLinear << std::endl;//getw()???
    std::cout << "Binary search: " << std::setw(10) << averageBinary << std::endl;
 
    return 0;
