@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FD288C62242A5C3F00216554 /* assign44.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD288C61242A5C3F00216554 /* assign44.cpp */; };
-		FD82B0F4242D01BA00D31AE0 /* project12.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD82B0F3242D01BA00D31AE0 /* project12.cpp */; };
+		FD82B109242D022900D31AE0 /* project12.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FD82B108242D022900D31AE0 /* project12.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FD288C55242A5C2100216554 /* CopyFiles */ = {
+		FD82B0FC242D021300D31AE0 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -24,13 +23,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FD288C57242A5C2100216554 /* assign44 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = assign44; sourceTree = BUILT_PRODUCTS_DIR; };
-		FD288C61242A5C3F00216554 /* assign44.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = assign44.cpp; sourceTree = "<group>"; };
-		FD82B0F3242D01BA00D31AE0 /* project12.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = project12.cpp; path = ../project12.cpp; sourceTree = "<group>"; };
+		FD82B0FE242D021300D31AE0 /* project12 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = project12; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD82B108242D022900D31AE0 /* project12.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = project12.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		FD288C54242A5C2100216554 /* Frameworks */ = {
+		FD82B0FB242D021300D31AE0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -40,66 +38,65 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FD288C4E242A5C2100216554 = {
+		FD82B0F5242D021300D31AE0 = {
 			isa = PBXGroup;
 			children = (
-				FD82B0F3242D01BA00D31AE0 /* project12.cpp */,
-				FD288C59242A5C2100216554 /* assign44 */,
-				FD288C58242A5C2100216554 /* Products */,
+				FD82B100242D021300D31AE0 /* project12 */,
+				FD82B0FF242D021300D31AE0 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		FD288C58242A5C2100216554 /* Products */ = {
+		FD82B0FF242D021300D31AE0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FD288C57242A5C2100216554 /* assign44 */,
+				FD82B0FE242D021300D31AE0 /* project12 */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FD288C59242A5C2100216554 /* assign44 */ = {
+		FD82B100242D021300D31AE0 /* project12 */ = {
 			isa = PBXGroup;
 			children = (
-				FD288C61242A5C3F00216554 /* assign44.cpp */,
+				FD82B108242D022900D31AE0 /* project12.cpp */,
 			);
-			path = assign44;
+			path = project12;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FD288C56242A5C2100216554 /* assign44 */ = {
+		FD82B0FD242D021300D31AE0 /* project12 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FD288C5E242A5C2100216554 /* Build configuration list for PBXNativeTarget "assign44" */;
+			buildConfigurationList = FD82B105242D021300D31AE0 /* Build configuration list for PBXNativeTarget "project12" */;
 			buildPhases = (
-				FD288C53242A5C2100216554 /* Sources */,
-				FD288C54242A5C2100216554 /* Frameworks */,
-				FD288C55242A5C2100216554 /* CopyFiles */,
+				FD82B0FA242D021300D31AE0 /* Sources */,
+				FD82B0FB242D021300D31AE0 /* Frameworks */,
+				FD82B0FC242D021300D31AE0 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = assign44;
-			productName = assign44;
-			productReference = FD288C57242A5C2100216554 /* assign44 */;
+			name = project12;
+			productName = project12;
+			productReference = FD82B0FE242D021300D31AE0 /* project12 */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		FD288C4F242A5C2100216554 /* Project object */ = {
+		FD82B0F6242D021300D31AE0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Jamie  Hurd";
 				TargetAttributes = {
-					FD288C56242A5C2100216554 = {
+					FD82B0FD242D021300D31AE0 = {
 						CreatedOnToolsVersion = 11.4;
 					};
 				};
 			};
-			buildConfigurationList = FD288C52242A5C2100216554 /* Build configuration list for PBXProject "assign44" */;
+			buildConfigurationList = FD82B0F9242D021300D31AE0 /* Build configuration list for PBXProject "project12" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -107,30 +104,29 @@
 				en,
 				Base,
 			);
-			mainGroup = FD288C4E242A5C2100216554;
-			productRefGroup = FD288C58242A5C2100216554 /* Products */;
+			mainGroup = FD82B0F5242D021300D31AE0;
+			productRefGroup = FD82B0FF242D021300D31AE0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FD288C56242A5C2100216554 /* assign44 */,
+				FD82B0FD242D021300D31AE0 /* project12 */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		FD288C53242A5C2100216554 /* Sources */ = {
+		FD82B0FA242D021300D31AE0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD82B0F4242D01BA00D31AE0 /* project12.cpp in Sources */,
-				FD288C62242A5C3F00216554 /* assign44.cpp in Sources */,
+				FD82B109242D022900D31AE0 /* project12.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		FD288C5C242A5C2100216554 /* Debug */ = {
+		FD82B103242D021300D31AE0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -188,7 +184,7 @@
 			};
 			name = Debug;
 		};
-		FD288C5D242A5C2100216554 /* Release */ = {
+		FD82B104242D021300D31AE0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -239,7 +235,7 @@
 			};
 			name = Release;
 		};
-		FD288C5F242A5C2100216554 /* Debug */ = {
+		FD82B106242D021300D31AE0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -249,7 +245,7 @@
 			};
 			name = Debug;
 		};
-		FD288C60242A5C2100216554 /* Release */ = {
+		FD82B107242D021300D31AE0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -262,25 +258,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FD288C52242A5C2100216554 /* Build configuration list for PBXProject "assign44" */ = {
+		FD82B0F9242D021300D31AE0 /* Build configuration list for PBXProject "project12" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FD288C5C242A5C2100216554 /* Debug */,
-				FD288C5D242A5C2100216554 /* Release */,
+				FD82B103242D021300D31AE0 /* Debug */,
+				FD82B104242D021300D31AE0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FD288C5E242A5C2100216554 /* Build configuration list for PBXNativeTarget "assign44" */ = {
+		FD82B105242D021300D31AE0 /* Build configuration list for PBXNativeTarget "project12" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FD288C5F242A5C2100216554 /* Debug */,
-				FD288C60242A5C2100216554 /* Release */,
+				FD82B106242D021300D31AE0 /* Debug */,
+				FD82B107242D021300D31AE0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = FD288C4F242A5C2100216554 /* Project object */;
+	rootObject = FD82B0F6242D021300D31AE0 /* Project object */;
 }
