@@ -32,31 +32,40 @@
 /***********************************************************************
 * read
 ************************************************************************/
-void read(std::string fileName, int board[9][9])
+void read(std::string fileName, int board[9][9], int row, int column)
 {
-   std::cout << "Where is your board located?";
+   std::string temp = "";
+   std::cout << "Where is your board located? ";
    std::cin >> fileName;
    std::ifstream fin(fileName);
    fin.open(fileName);
-   do
+   for(int i = 0; i < row; i++)
    {
-      if(fin.fail())
+      for(int j = 0; j < column; j++)
       {
-         std::cerr << "failed read.";
-          fin.close();
-         break;
-      } else
-      {
-         std::cout << board;
+         //fscanf(fin, "%d", &board[i][j]);
+         printf("%d", board[i][j]);
       }
-   }while(fin >> board[9][9]);
-}
+   }
+      /* while(countIntegers < board && fin >> tempInt)
+         {
+            std::getline(fin, fileName);
+            fin >> temp;
+            std::cout << temp;
+         }*/
+      std::cout << std::endl;
+      fin.close();
+      }
+  
+   
 /***********************************************************************
 * main
 ************************************************************************/
 int main()
 {
    std::string fileName = "";
-   int board[9][9];
-   read(fileName, board);
+   int row = 9;
+   int column = 9;
+   int board[row][column];
+   read(fileName, *board[9], row, column);
 }
