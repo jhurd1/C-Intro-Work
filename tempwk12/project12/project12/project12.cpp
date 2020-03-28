@@ -22,10 +22,34 @@
 #include <cstdlib>
 #define ROW 9
 #define COLUMN 9;
+
+/***********************************************************************
+* prompt
+************************************************************************/
+std::string prompt(std::string &fileName)
+{
+   std::cout << "Where is your board located? ";
+   std::cin >> fileName;
+   return fileName;
+}
+/***********************************************************************
+* displayOptions
+************************************************************************/
+void displayOptions()
+{
+   std::cout << "Options:" << std::endl;
+   std::cout << "   " << "? " << std::setw(4) << " Show these instructions" << std::endl;//tab works in
+   //this program and IDE but fails testBed strangely
+   //So I replaced "\t" with spaces
+   std::cout << "   D " << std::setw(4) << " Display the board" << std::endl;
+   std::cout << "   E " << std::setw(4) << " Edit one square" << std::endl;
+   std::cout << "   S " << std::setw(4) << " Show the possible values for a square" << std::endl;
+   std::cout << "   Q " << std::setw(4) << " Save and Quit" << std::endl << "\n";
+}
 /***********************************************************************
 * displayHeader
 ************************************************************************/
- void displayHeader()
+ void displayHeader()//and then display the margin line numbers, too
 {
    std::cout << "A B C D E F G H I" << std::endl;
 }
@@ -33,49 +57,14 @@
 /***********************************************************************
 * read (and write) test
 ************************************************************************/
-int read(std::string &fileName, int board[][9])//had to pass by reference to get the value into this function
-//and the write()
+int read(std::string &fileName, int board[][9])
 {
-   int row = 9;
-   int column = 9;
-   std::cout << "Where is your board located? ";
-   std::cin >> fileName;
- /*  std::ifstream fin(fileName.c_str());
-   fin.open(fileName);
-   std::ofstream fout("/volumes/jaoshu2/byu-i/test.txt");//remove the file addend here for testBed,
-   //but keep it for local testing
-   fout.open("/volumes/jaoshu2/byu-i/test.txt");
-   while(fin.is_open())
-   {
-      for(int i = 0; i < row; i++)
-      {
-         for(int j = 0; j < column; j++)
-         {
-            fin >> board[i][j];//instead of getline(fileName, 9);
-            fout << " " << board[i][j];//put a space between the integers
-         }
-      }
-      if(!fin.is_open())
-      {
-         std::cerr << "Fail." << std::endl;
-      }
-   }
-   fin.close();
-   fout.close();*/
    std::ifstream fin(fileName);
    if(fin.is_open())
    {
       while(std::getline(fin, fileName))
       {
-         for(int i = 0; i < row; i++)
-         {
-            for(int j = 0; j < column; j++)
-            {
-               //fin >> fileName;//this line repeated the effect of getline (above)
-               std::cout << fileName << "\n";//it's now formatted right but not printing
-               //the right lines in the right order
-            }
-         }
+               std::cout << fileName << "\n";
       }
    }
    fin.close();
@@ -87,23 +76,12 @@ int read(std::string &fileName, int board[][9])//had to pass by reference to get
 ************************************************************************/
   void write(std::string &fileName, int board[][9])
 {
-   //int row = 9;
-   //int column = 9;
    //Brother Schwieder: No file name declared here [for testBed]
-   std::ofstream fout;//deleted parameter containing the local path
-   //("/volumes/jaoshu2/byu-i/test.txt")
+   std::ofstream fout;
    fout.open("/volumes/jaoshu2/byu-i/test.txt");
-   
-   /*for(int i = 0; i < row; i++)
-   {
-      for(int j = 0; j < column; j++)
-      {
-   fout << board[i][j];//test.txt appears now in the drive, but nothing was written to it.
-      }*/
    fout << board;
    fout.close();
-   }
-//}
+}
    
 /***********************************************************************
 * main
@@ -112,6 +90,8 @@ int main()
 {
    std::string fileName;
    int board[9][9];
+   prompt(fileName);
+   displayOptions();
    read(fileName, board);
-   //write(board);
+   //write(board);//this is one of the last things to happen in the program
 }
