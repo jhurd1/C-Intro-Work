@@ -20,7 +20,8 @@
 #include <cstring>
 #include <fstream>
 #include <cstdlib>
-
+#define ROW 9
+#define COLUMN 9;
 /***********************************************************************
 * displayHeader
 ************************************************************************/
@@ -32,31 +33,49 @@
 /***********************************************************************
 * read
 ************************************************************************/
-void read(std::string fileName, int board[9][9], int row, int column)
+void read(std::string fileName, int board[9][9])
 {
+   int row = 9;
+   int column = 9;
    std::string temp = "";
    std::cout << "Where is your board located? ";
    std::cin >> fileName;
-   std::ifstream fin(fileName);
+   std::ifstream fin(fileName.c_str());
    fin.open(fileName);
-   for(int i = 0; i < row; i++)
+   while(fin)//still can't get this method to work. Moving on in the interest of time.
    {
-      for(int j = 0; j < column; j++)
+      for(int i = 0; i < row; i++)
       {
-         //fscanf(fin, "%d", &board[i][j]);
-         printf("%d", board[i][j]);
-      }
-   }
-      /* while(countIntegers < board && fin >> tempInt)
+         for(int j = 0; j < column; j++)
          {
-            std::getline(fin, fileName);
-            fin >> temp;
-            std::cout << temp;
-         }*/
-      std::cout << std::endl;
-      fin.close();
+            fin >> board[i][j];//instead of getline(fileName, 9);
+            printf("%d", board[i][j]);
+         }
       }
-  
+      if(!fin.is_open())
+      {
+         std::cerr << "Fail." << std::endl;
+      }
+      fin.close();
+   }
+}
+   
+/***********************************************************************
+* write
+************************************************************************/
+  void write(std::string fileName)
+{
+   int temp = 0;
+   std::ofstream fout(fileName);//tested using local file path; file created successfully but it's
+   //empty
+   /*if(fout.fail())
+   {
+      std::cerr << "failed.";
+   }*/
+   fout.open(fileName);
+   fout << temp;//test.txt appears now in the drive, but nothing was written to it.
+   fout.close();
+}
    
 /***********************************************************************
 * main
@@ -64,8 +83,9 @@ void read(std::string fileName, int board[9][9], int row, int column)
 int main()
 {
    std::string fileName = "";
-   int row = 9;
-   int column = 9;
-   int board[row][column];
-   read(fileName, *board[9], row, column);
+   //int row = 9;
+   //int column = 9;
+   int board[9][9];
+   read(fileName, board);
+   write(fileName);
 }
