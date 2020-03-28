@@ -31,25 +31,27 @@
 }
 
 /***********************************************************************
-* read
+* read (and write) test
 ************************************************************************/
-void read(std::string fileName, int board[9][9])
+int read(std::string &fileName, int board[9][9])//had to pass by reference to get the value into this function
+//and the write()
 {
    int row = 9;
    int column = 9;
-   std::string temp = "";
    std::cout << "Where is your board located? ";
    std::cin >> fileName;
    std::ifstream fin(fileName.c_str());
    fin.open(fileName);
-   while(fin)//still can't get this method to work. Moving on in the interest of time.
+   std::ofstream fout("/volumes/jaoshu2/byu-i/test.txt");
+   fout.open("/volumes/jaoshu2/byu-i/test.txt");
+   while(fin.is_open())
    {
       for(int i = 0; i < row; i++)
       {
          for(int j = 0; j < column; j++)
          {
             fin >> board[i][j];//instead of getline(fileName, 9);
-            printf("%d", board[i][j]);
+            fout << board[i][j];
          }
       }
       if(!fin.is_open())
@@ -57,24 +59,29 @@ void read(std::string fileName, int board[9][9])
          std::cerr << "Fail." << std::endl;
       }
       fin.close();
+      fout.close();
    }
+   return board[8][8];
 }
    
 /***********************************************************************
 * write
 ************************************************************************/
-  void write(std::string fileName)
+  void write(int board[9][9])
 {
-   int temp = 0;
-   std::ofstream fout(fileName);//tested using local file path; file created successfully but it's
+   int row = 9;
+   int column = 9;
+   std::ofstream fout("/volumes/jaoshu2/byu-i/test.txt");//tested using local file path; file created successfully but it's
    //empty
-   /*if(fout.fail())
+   fout.open("/volumes/jaoshu2/byu-i/test.txt");
+   for(int i = 0; i < row; i++)
    {
-      std::cerr << "failed.";
-   }*/
-   fout.open(fileName);
-   fout << temp;//test.txt appears now in the drive, but nothing was written to it.
+      for(int j = 0; j < column; j++)
+      {
+   fout << board[i][j];//test.txt appears now in the drive, but nothing was written to it.
+      }
    fout.close();
+   }
 }
    
 /***********************************************************************
@@ -82,10 +89,8 @@ void read(std::string fileName, int board[9][9])
 ************************************************************************/
 int main()
 {
-   std::string fileName = "";
-   //int row = 9;
-   //int column = 9;
+   std::string fileName;
    int board[9][9];
    read(fileName, board);
-   write(fileName);
+   //write(board);
 }
