@@ -52,17 +52,40 @@ void displayOptions()
  void displayBoard(int board[][9])//and then display the margin line numbers, too
 {
    std::cout << "   A B C D E F G H I" << std::endl;
-   /*int line = 1;
    int row = 9;
    int column = 9;
    for(int i = 0; i < row; i++)
    {
+    //std::cout << i + 1 << "  ";//display 1
       for(int j = 0; j < column; j++)
       {
-          std::cout << line << "  " << board[i][j] << std::endl;
+         //? is a condition operator
+         //syntax: "condition ? result_if_true : result_if_false"
+          //std::cout <<  "   " << board[i][j] << (board[i][j] == 5 ? '|' : board[i][j]) << " " << (column % 10 == 9 ? '\n' : board[i][j]);
+         switch(column)
+         {
+            case 5:
+               std::cout << "|";
+               break;
+            case 8:
+               std::cout << "|";
+               break;
+            default:
+               std::cout << board[i][j];
+         }
+         switch(row)
+         {
+            case 4:
+               std::cout << "   -----+-----+-----\n";
+               break;
+            case 8:
+               std::cout << "   -----+-----+-----\n";
+               break;
+            default:
+               std::cout << board[i][j];
+         }
       }
-      line++;*/
-   //}
+   }
 }
 
 /***********************************************************************
@@ -77,17 +100,7 @@ int read(std::string &fileName, int board[][9])
    {
       while(std::getline(fin, fileName))
       {
-         std::cout << 1 << "  " << strLine << "|" << "   " << "|" << "    " << "\n";
-         std::cout << 2 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
-         std::cout << 3 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
-         std::cout <<  "   -----+-----+-----\n";
-         std::cout << 4 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
-         std::cout << 5 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
-         std::cout << 6 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
-         std::cout <<  "   -----+-----+-----\n";
-         std::cout << 7 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
-         std::cout << 8 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
-         std::cout << 9 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
+         std::cout << fileName << "\n";
       }
    }
    fin.close();
