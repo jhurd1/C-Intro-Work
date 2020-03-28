@@ -49,9 +49,15 @@ void displayOptions()
 /***********************************************************************
 * displayHeader
 ************************************************************************/
- void displayHeader()//and then display the margin line numbers, too
+ void displayBoard(int board[][9])//and then display the margin line numbers, too
 {
-   std::cout << "A B C D E F G H I" << std::endl;
+   std::cout << "   A B C D E F G H I" << std::endl;
+   int line = 1;
+   for(int i = 0; i < 9; i++)
+   {
+      std::cout << line << "  " << board << std::endl;
+      line++;
+   }
 }
 
 /***********************************************************************
@@ -92,6 +98,7 @@ int main()
    int board[9][9];
    prompt(fileName);
    displayOptions();
+   displayBoard(fileName);
    read(fileName, board);
    //write(board);//this is one of the last things to happen in the program
 }
