@@ -33,11 +33,9 @@
 /***********************************************************************
 * read (and write) test
 ************************************************************************/
-int read(std::string &fileName, int board[9][9])//had to pass by reference to get the value into this function
+int read(std::string &fileName, int board[][9])//had to pass by reference to get the value into this function
 //and the write()
 {
-   //int row = 9;
-   //int column = 9;
    std::cout << "Where is your board located? ";
    std::cin >> fileName;
  /*  std::ifstream fin(fileName.c_str());
@@ -67,31 +65,37 @@ int read(std::string &fileName, int board[9][9])//had to pass by reference to ge
    {
       while(std::getline(fin, fileName))
       {
-         std::cout << fileName << "\n";//works!
+         fin >> fileName;//the above line to read board won't work
+         //because board is empty
+         std::cout << fileName << "\n";//works
       }
    }
-   return board[8][8];
+   fin.close();
+    return board[8][8];
 }
    
 /***********************************************************************
 * write
 ************************************************************************/
-  void write(int board[9][9])
+  void write(std::string &fileName, int board[][9])
 {
-   int row = 9;
-   int column = 9;
-   std::ofstream fout("/volumes/jaoshu2/byu-i/test.txt");//tested using local file path; file created successfully but it's
-   //empty
+   //int row = 9;
+   //int column = 9;
+   //Brother Schwieder: No file name declared here [for testBed]
+   std::ofstream fout;//deleted parameter containing the local path
+   //("/volumes/jaoshu2/byu-i/test.txt")
    fout.open("/volumes/jaoshu2/byu-i/test.txt");
-   for(int i = 0; i < row; i++)
+   
+   /*for(int i = 0; i < row; i++)
    {
       for(int j = 0; j < column; j++)
       {
    fout << board[i][j];//test.txt appears now in the drive, but nothing was written to it.
-      }
+      }*/
+   fout << board;
    fout.close();
    }
-}
+//}
    
 /***********************************************************************
 * main
