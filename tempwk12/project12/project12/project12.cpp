@@ -52,12 +52,17 @@ void displayOptions()
  void displayBoard(int board[][9])//and then display the margin line numbers, too
 {
    std::cout << "   A B C D E F G H I" << std::endl;
-   int line = 1;
-   for(int i = 0; i < 9; i++)
+   /*int line = 1;
+   int row = 9;
+   int column = 9;
+   for(int i = 0; i < row; i++)
    {
-      std::cout << line << "  " << board << std::endl;
-      line++;
-   }
+      for(int j = 0; j < column; j++)
+      {
+          std::cout << line << "  " << board[i][j] << std::endl;
+      }
+      line++;*/
+   //}
 }
 
 /***********************************************************************
@@ -65,12 +70,24 @@ void displayOptions()
 ************************************************************************/
 int read(std::string &fileName, int board[][9])
 {
+    //int line = 1;
    std::ifstream fin(fileName);
+   std::string strLine;
    if(fin.is_open())
    {
       while(std::getline(fin, fileName))
       {
-               std::cout << fileName << "\n";
+         std::cout << 1 << "  " << strLine << "|" << "   " << "|" << "    " << "\n";
+         std::cout << 2 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
+         std::cout << 3 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
+         std::cout <<  "   -----+-----+-----\n";
+         std::cout << 4 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
+         std::cout << 5 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
+         std::cout << 6 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
+         std::cout <<  "   -----+-----+-----\n";
+         std::cout << 7 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
+         std::cout << 8 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
+         std::cout << 9 << "  " << strLine << "|" << "   " << "|" << "     " << "\n";
       }
    }
    fin.close();
@@ -98,7 +115,7 @@ int main()
    int board[9][9];
    prompt(fileName);
    displayOptions();
-   displayBoard(fileName);
+   displayBoard(board);
    read(fileName, board);
    //write(board);//this is one of the last things to happen in the program
 }
