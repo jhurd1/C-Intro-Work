@@ -42,7 +42,8 @@ int read(std::string &fileName, int board[9][9])//had to pass by reference to ge
    std::cin >> fileName;
    std::ifstream fin(fileName.c_str());
    fin.open(fileName);
-   std::ofstream fout("/volumes/jaoshu2/byu-i/test.txt");
+   std::ofstream fout("/volumes/jaoshu2/byu-i/test.txt");//remove the file addend here for testBed,
+   //but keep it for local testing
    fout.open("/volumes/jaoshu2/byu-i/test.txt");
    while(fin.is_open())
    {
@@ -51,16 +52,16 @@ int read(std::string &fileName, int board[9][9])//had to pass by reference to ge
          for(int j = 0; j < column; j++)
          {
             fin >> board[i][j];//instead of getline(fileName, 9);
-            fout << board[i][j];
+            fout << " " << board[i][j];//put a space between the integers
          }
       }
       if(!fin.is_open())
       {
          std::cerr << "Fail." << std::endl;
       }
-      fin.close();
-      fout.close();
    }
+   fin.close();
+   fout.close();
    return board[8][8];
 }
    
