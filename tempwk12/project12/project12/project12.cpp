@@ -36,6 +36,8 @@
 int read(std::string &fileName, int board[][9])//had to pass by reference to get the value into this function
 //and the write()
 {
+   int row = 9;
+   int column = 9;
    std::cout << "Where is your board located? ";
    std::cin >> fileName;
  /*  std::ifstream fin(fileName.c_str());
@@ -65,13 +67,19 @@ int read(std::string &fileName, int board[][9])//had to pass by reference to get
    {
       while(std::getline(fin, fileName))
       {
-         fin >> fileName;//the above line to read board won't work
-         //because board is empty
-         std::cout << fileName << "\n";//works
+         for(int i = 0; i < row; i++)
+         {
+            for(int j = 0; j < column; j++)
+            {
+               //fin >> fileName;//this line repeated the effect of getline (above)
+               std::cout << fileName << "\n";//it's now formatted right but not printing
+               //the right lines in the right order
+            }
+         }
       }
    }
    fin.close();
-    return board[8][8];
+   return board[8][8];
 }
    
 /***********************************************************************
