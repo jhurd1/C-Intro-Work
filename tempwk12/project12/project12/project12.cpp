@@ -36,11 +36,11 @@
 int read(std::string &fileName, int board[9][9])//had to pass by reference to get the value into this function
 //and the write()
 {
-   int row = 9;
-   int column = 9;
+   //int row = 9;
+   //int column = 9;
    std::cout << "Where is your board located? ";
    std::cin >> fileName;
-   std::ifstream fin(fileName.c_str());
+ /*  std::ifstream fin(fileName.c_str());
    fin.open(fileName);
    std::ofstream fout("/volumes/jaoshu2/byu-i/test.txt");//remove the file addend here for testBed,
    //but keep it for local testing
@@ -61,7 +61,15 @@ int read(std::string &fileName, int board[9][9])//had to pass by reference to ge
       }
    }
    fin.close();
-   fout.close();
+   fout.close();*/
+   std::ifstream fin(fileName);
+   if(fin.is_open())
+   {
+      while(std::getline(fin, fileName))
+      {
+         std::cout << fileName << "\n";//works!
+      }
+   }
    return board[8][8];
 }
    
