@@ -52,12 +52,10 @@ void displayOptions()
  void displayBoard(int board[][9])//and then display the margin line numbers, too
 {
    std::cout << "   A B C D E F G H I" << std::endl;
-   int row = 9;
-   int column = 9;
-   for(int i = 0; i < row; i++)
+   for(int row = 0; row < 10; row++)
    {
     //std::cout << i + 1 << "  ";//display 1
-      for(int j = 0; j < column; j++)
+      for(int column = 0; column < 10; column++)
       {
          //? is a condition operator
          //syntax: "condition ? result_if_true : result_if_false"
@@ -71,7 +69,7 @@ void displayOptions()
                std::cout << "|";
                break;
             default:
-               std::cout << board[i][j];
+               std::cout << &board[row][column];//all the garbage being displayed is coming from this guy right here (and the following one)
          }
          switch(row)
          {
@@ -82,30 +80,38 @@ void displayOptions()
                std::cout << "   -----+-----+-----\n";
                break;
             default:
-               std::cout << board[i][j];
+               std::cout << board[row][column];
          }
       }
    }
 }
 
 /***********************************************************************
-* read (and write) test
+* read test
 ************************************************************************/
-int read(std::string &fileName, int board[][9])
+void read(int board[9][9])
 {
-    //int line = 1;
-   std::ifstream fin(fileName);
-   std::string strLine;
-   if(fin.is_open())
-   {
-      while(std::getline(fin, fileName))
-      {
-         std::cout << fileName << "\n";
-      }
-   }
-   fin.close();
-   return board[8][8];
+    std::string fileName;
+    std::string line;
+    int x=0, y=0;
+     
+    std::cout << "Where is your board located? ";
+    std::cin >> fileName;
+    std::ifstream fin(fileName);
+    while(getline(fin, line)) {
+        for (int i=0; i < line.length(); i++) {
+            if (isdigit(line[i])) {
+                board[x][y] = int(line[i])-48; // converts char number to its int equivalent
+                y++;
+            }
+        }
+        x++;
+        y=0;
+    }
+     
+    fin.close();
 }
+         
    
 /***********************************************************************
 * write
