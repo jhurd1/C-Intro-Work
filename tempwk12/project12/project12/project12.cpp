@@ -24,15 +24,6 @@
 #define COLUMN 9;
 
 /***********************************************************************
-* prompt
-************************************************************************/
-std::string prompt(std::string &fileName)
-{
-   std::cout << "Where is your board located? ";
-   std::cin >> fileName;
-   return fileName;
-}
-/***********************************************************************
 * displayOptions
 ************************************************************************/
 void displayOptions()
@@ -52,44 +43,38 @@ void displayOptions()
  void displayBoard(int board[][9])//and then display the margin line numbers, too
 {
    std::cout << "   A B C D E F G H I" << std::endl;
+   int line = 1;
    for(int row = 0; row < 9; row++)
    {
-      int i = 0;
-      std::cout << i + 1 << "  ";//display line numbers??
       for(int column = 0; column < 9; column++)
       {
+         if(row > 9)//stop at row 9; not working
+         {
+            break;
+         } else
+         {
+         if(row % 10 == 4 || row % 10 == 8)//not working
+         {
+            std::cout << "   -----+-----+-----\n";
+         } else
+         std::cout << line << "  " << board[row];//display line numbers??
+         line++;
          if(column == 0)
          {
-            //print row number and spaces
             std::cout << board[row][column];
          }
-         if(column == 2 || column == 5)
+         if(column == 3 || column == 6)//not working
          {
-            //print a bar
             std::cout << "|";
          } else if (column != 8)
          {
-            //print a space
             std::cout << " ";
          }
-        /* if(row % 10 == 4 || row % 10 == 8)
-         {
-            std::cout << "   ----+----+----" << std::endl;
-         }
-         //Maybe try '?' again later: syntax: "condition ? result_if_true : result_if_false"
-         if(column % 10 == 12)
-         {
-            std::cout << std::endl;
-         } else if(column % 10 == 5 || column % 10 == 9)
-         {
-            std::cout << "|";
-         } else
-         {*/
          std::cout << std::endl;
          }
       }
    }
-
+}
 
 /***********************************************************************
 * read test
@@ -121,25 +106,30 @@ void read(int board[9][9])
 /***********************************************************************
 * write
 ************************************************************************/
-  void write(std::string &fileName, int board[][9])
-{
-   //Brother Schwieder: No file name declared here [for testBed]
-   std::ofstream fout;
-   fout.open("/volumes/jaoshu2/byu-i/test.txt");
-   fout << board;
-   fout.close();
-}
+  void write(int board[9][9])
+  {
+      std::string fileName;
+      std::cout << "What file would you like to write your board to: ";
+      std::cin >> fileName;
+      std::ofstream fout(fileName);
+      
+      for (int x=0; x < 9; x++) {
+          for (int y=0; y < 9; y++) {
+              fout << board[x][y]; // writes board char by char to output file
+          }
+          fout << std::endl; //writes new line at end of each row
+      }
+      fout.close();
+  }
    
 /***********************************************************************
 * main
 ************************************************************************/
 int main()
 {
-   std::string fileName;
    int board[9][9];
-   prompt(fileName);
    displayOptions();
    displayBoard(board);
    read(board);
-   //write(board);//this is one of the last things to happen in the program
+   write(board);//this is one of the last things to happen in the program
 }
