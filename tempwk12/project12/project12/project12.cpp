@@ -44,36 +44,24 @@ void displayOptions()
 {
    std::cout << "   A B C D E F G H I" << std::endl;
    int line = 1;
-   for(int row = 0; row < 9; row++)
-   {
-      for(int column = 0; column < 9; column++)
-      {
-         if(row > 9)//stop at row 9; not working
-         {
-            break;
-         } else
-         {
-         if(row % 10 == 4 || row % 10 == 8)//not working
-         {
-            std::cout << "   -----+-----+-----\n";
-         } else
-         std::cout << line << "  " << board[row];//display line numbers??
-         line++;
-         if(column == 0)
-         {
-            std::cout << board[row][column];
-         }
-         if(column == 3 || column == 6)//not working
-         {
-            std::cout << "|";
-         } else if (column != 8)
-         {
-            std::cout << " ";
-         }
-         std::cout << std::endl;
-         }
-      }
-   }
+         for (int x=0; x < 9; x++) {//rows = x
+            if(x == 1)//intersection line at rows 4 and 7
+            {
+               std::cout << "   -----+-----+-----" << std::endl;
+            } else
+            {
+               std::cout << line << " " << board[x];
+            }
+             for (int y=0; y < 9; y++) {//columns = y
+                if(y == 2 || y == 3)//vertical bar at columns 5 and 9
+                {
+                   std::cout << "|";
+                }
+                      std::cout << line << "  " << board[y];
+                }
+                  line++;
+             }
+             std::cout << std::endl;
 }
 
 /***********************************************************************
@@ -128,8 +116,8 @@ void read(int board[9][9])
 int main()
 {
    int board[9][9];
+   read(board);
    displayOptions();
    displayBoard(board);
-   read(board);
    write(board);//this is one of the last things to happen in the program
 }
