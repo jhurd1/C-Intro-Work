@@ -52,39 +52,44 @@ void displayOptions()
  void displayBoard(int board[][9])//and then display the margin line numbers, too
 {
    std::cout << "   A B C D E F G H I" << std::endl;
-   for(int row = 0; row < 10; row++)
+   for(int row = 0; row < 9; row++)
    {
-    //std::cout << i + 1 << "  ";//display 1
-      for(int column = 0; column < 10; column++)
+      int i = 0;
+      std::cout << i + 1 << "  ";//display line numbers??
+      for(int column = 0; column < 9; column++)
       {
-         //? is a condition operator
-         //syntax: "condition ? result_if_true : result_if_false"
-          //std::cout <<  "   " << board[i][j] << (board[i][j] == 5 ? '|' : board[i][j]) << " " << (column % 10 == 9 ? '\n' : board[i][j]);
-         switch(column)
+         if(column == 0)
          {
-            case 5:
-               std::cout << "|";
-               break;
-            case 8:
-               std::cout << "|";
-               break;
-            default:
-               std::cout << &board[row][column];//all the garbage being displayed is coming from this guy right here (and the following one)
+            //print row number and spaces
+            std::cout << board[row][column];
          }
-         switch(row)
+         if(column == 2 || column == 5)
          {
-            case 4:
-               std::cout << "   -----+-----+-----\n";
-               break;
-            case 8:
-               std::cout << "   -----+-----+-----\n";
-               break;
-            default:
-               std::cout << board[row][column];
+            //print a bar
+            std::cout << "|";
+         } else if (column != 8)
+         {
+            //print a space
+            std::cout << " ";
+         }
+        /* if(row % 10 == 4 || row % 10 == 8)
+         {
+            std::cout << "   ----+----+----" << std::endl;
+         }
+         //Maybe try '?' again later: syntax: "condition ? result_if_true : result_if_false"
+         if(column % 10 == 12)
+         {
+            std::cout << std::endl;
+         } else if(column % 10 == 5 || column % 10 == 9)
+         {
+            std::cout << "|";
+         } else
+         {*/
+         std::cout << std::endl;
          }
       }
    }
-}
+
 
 /***********************************************************************
 * read test
@@ -135,6 +140,6 @@ int main()
    prompt(fileName);
    displayOptions();
    displayBoard(board);
-   read(fileName, board);
+   read(board);
    //write(board);//this is one of the last things to happen in the program
 }
