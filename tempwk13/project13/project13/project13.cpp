@@ -1,6 +1,6 @@
 /***********************************************************************
 * Program:
-*    Project 12, Sudoku First Draft
+*    Project 13, Sudoku
 *    Brother Schwieder, CS124
 * Author:
 *    Jamie Hurd
@@ -24,10 +24,103 @@
 #define COLUMN 9;
 
 /***********************************************************************
+* sudokuSquareEditor
+************************************************************************/
+int editSquare(int board[][9])
+{
+   int x = 0;
+   int y = 0;
+   std::cout << "What are the coordinates of the square: ";
+   std::cin >> board[x][y];
+  
+   for(x = 0; x < 9; x++)
+   {
+      for(y = 0; y < 9; y++)
+      {
+         //if the coordinate is invalid:
+         if(x > 9 || y > 9)
+         {
+             std::cout << "ERROR: Square " << board[x][y] << " is invalid";
+         } else
+         {
+           switch(x)
+           {
+              case 1: //margin number
+                 return 0; //array index value
+                 break;
+              case 2:
+                 return 1;
+                 break;
+              case 3:
+                 return 2;
+                 break;
+              case 4:
+                 return 3;
+                 break;
+              case 5:
+                 return 4;
+                 break;
+              case 6:
+                 return 5;
+                 break;
+              case 7:
+                 return 6;
+                 break;
+              case 8:
+                 return 7;
+                 break;
+              case 9:
+                 return 8;
+                 break;
+              default:
+                 std::cout << "ERROR: Square " << board[x][y] << " is invalid";
+                 break;
+           }
+           switch(y)
+           {
+              case 'A':
+                 return 0;
+                 break;
+              case 'B':
+                 return 1;
+                 break;
+              case 'C':
+                 return 2;
+                 break;
+              case 'D':
+                 return 3;
+                 break;
+              case 'E':
+                 return 4;
+                 break;
+              case 'F':
+                 return 5;
+                 break;
+              case 'G':
+                 return 6;
+                 break;
+              case 'H':
+                 return 7;
+                 break;
+              case 'I':
+                 return 8;
+                 break;
+              default:
+                 std::cout << "ERROR: Square " << board[x][y] << " is invalid";
+                 break;
+           }
+         }
+      }
+}
+    std::cout << "What is the value at " << "''" << board[x][y] << "'' : " << board[x][y];
+    return board[x][y];
+}
+/***********************************************************************
 * displayHeader
 ************************************************************************/
  void displayBoard(int board[][9])//and then display the margin line numbers, too
 {
+     std::cout << "   A B C D E F G H I" << std::endl;
    std::string grid = "   -----+-----+-----";
    int lineNumber = 1;
    for(int x = 0; x < 9; x++)
@@ -85,29 +178,30 @@ void displayOptions(int board[][9])
    std::cout << "Options:" << std::endl;
    std::cout << "   " << "? " << std::setw(4) << " Show these instructions" << std::endl;
    std::cout << "   D " << std::setw(4) << " Display the board" << std::endl;
-   //std::cin >> option;
    std::cout << "   E " << std::setw(4) << " Edit one square" << std::endl;
-   //std::cin >> option;
    std::cout << "   S " << std::setw(4) << " Show the possible values for a square" << std::endl;
-   //std::cin >> option;
    std::cout << "   Q " << std::setw(4) << " Save and Quit" << std::endl << "\n";
-   //std::cin >> option;
+   std::cout << "> ";
+   std::cin >> option;
    if(option == 'D' || option == 'd')
    {
-      std::cin >> option;
       displayBoard(board);
    } else if (option == 'E' || option == 'e')
    {
-      std::cin >> option;
+      editSquare(board);
    } else if (option == 'S' || option == 's')
    {
-      std::cin >> option;
+      
    } else if(option == 'Q' || option == 'q')
    {
-      std::cin >> option;
       write(board);
+   } else if(option == '?')
+   {
+      displayOptions(board);
+   } else
+   {
+      std::cout << "ERROR: Invalid command";
    }
-    std::cout << "   A B C D E F G H I" << std::endl;
 }
 
 /***********************************************************************
@@ -134,7 +228,7 @@ void read(int board[][9])
     }
     fin.close();
 }
-   
+
 /***********************************************************************
 * main
 ************************************************************************/
