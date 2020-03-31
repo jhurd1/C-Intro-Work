@@ -23,21 +23,43 @@
 #define ROW 9
 #define COLUMN 9;
 
+/************************************************************************
+* possibleValues **needs synthesizing**
+************************************************************************/
+int possibleValues(int board[][9])
+{
+   int value = 0;
+   /*See which squares are filled.
+    See what number is in those squares.
+    Give the options as the unused remaining numbers.*/
+   
+   //consider using switch case here to test for values or a range of values
+   for(int x = 0; x < 9; x++)
+   {
+      for(int y = 0; y < 9; y++)
+      {
+         if(board[x][y] == 0)
+         {
+            //output 1-9
+         } else if (board[x][y] != 0)
+         {
+            
+         }
+      }
+   }
+   return value;
+}
+
 /***********************************************************************
-* sudokuSquareEditor
+* sudokuSquareEditor  **needs fixing**
 ************************************************************************/
 int editSquare(int board[][9])
 {
    int x = 0;
    int y = 0;
    std::cout << "What are the coordinates of the square: ";
-   std::cin >> board[x][y];
-  
-   for(x = 0; x < 9; x++)
-   {
-      for(y = 0; y < 9; y++)
-      {
-         //if the coordinate is invalid:
+   std::cin >> board[x][y];//isn't filling the user input here for some reason
+   std::cout << x << " " << y;//a test cout also shows these values as 0 in spite of user input otherwise
          if(x > 9 || y > 9)
          {
              std::cout << "ERROR: Square " << board[x][y] << " is invalid";
@@ -76,7 +98,7 @@ int editSquare(int board[][9])
                  std::cout << "ERROR: Square " << board[x][y] << " is invalid";
                  break;
            }
-           switch(y)
+           switch(y)//take an alpha and turn it into an int
            {
               case 'A':
                  return 0;
@@ -110,13 +132,11 @@ int editSquare(int board[][9])
                  break;
            }
          }
-      }
-}
     std::cout << "What is the value at " << "''" << board[x][y] << "'' : " << board[x][y];
     return board[x][y];
 }
 /***********************************************************************
-* displayHeader
+* displayHeader **needs fixing**
 ************************************************************************/
  void displayBoard(int board[][9])//and then display the margin line numbers, too
 {
