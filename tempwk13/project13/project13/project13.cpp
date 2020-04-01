@@ -55,29 +55,39 @@ void editSquare(char& charColumn, char& charRow, int & rowIndex, int & columnInd
 }
 
 /************************************************************************
+* translateValues
+************************************************************************/
+void translateValues(int board[][9], int x, int y, int valuesInt[9])
+{
+   
+}
+
+/************************************************************************
 * possibleValues
 * put the string inside the pop_back()
 * call editSquare()
 ************************************************************************/
 int possibleValues(int board[][9], char& charColumn, char& charRow, int& rowIndex, int& columnIndex)
 {
-   int x = 0;
-   int y = 0;
+   //int x = 0;
+   //int y = 0;
    int valuesInt[9];
-   char coordinate[3];
+   //char coordinate[3];
    editSquare(charColumn, charRow, rowIndex, columnIndex);
    
-   //computeValues(board, x, y, valuesInt); call here
+   //translateValues(board, x, y, valuesInt); call here
    std::string values = "";
    for(int i = 0; i < 9; i++)
    {
       if(valuesInt[i] != 0)
       {
-         values += valuesInt[i] + ', ';
+         values += valuesInt[i] + ',';
+         values.pop_back();
       }
-      std::cout << "The possible values for '" << "" << "' are: '" << values;
+      
+      std::cout << "The possible values for '" << charColumn << " and " << charRow << "' are: '" << values;
    }
-   return 0;
+   return valuesInt[8];
 }
 
 /***********************************************************************
