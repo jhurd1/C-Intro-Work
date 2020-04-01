@@ -58,8 +58,9 @@ int editSquare(int board[][9])
    int x = 0;
    int y = 0;
    std::cout << "What are the coordinates of the square: ";
-   std::cin >> board[x][y];//isn't filling the user input here for some reason
-   std::cout << x << " " << y;//a test cout also shows these values as 0 in spite of user input otherwise
+   std::cin >> x >> y;
+   //std::cin >> board[x][y];//isn't filling the user input here for some reason
+   //std::cout << x << " " << y;//a test cout also shows these values as 0 in spite of user input otherwise
          if(x > 9 || y > 9)
          {
              std::cout << "ERROR: Square " << board[x][y] << " is invalid";
@@ -140,34 +141,22 @@ int editSquare(int board[][9])
 ************************************************************************/
  void displayBoard(int board[][9])//and then display the margin line numbers, too
 {
-     std::cout << "   A B C D E F G H I" << std::endl;
+   std::cout << "   A B C D E F G H I" << std::endl;
    std::string grid = "   -----+-----+-----";
    int lineNumber = 1;
    for(int x = 0; x < 9; x++)
    {
+      std::cout << x + 1 << "  ";
       for(int y = 0; y < 9; y++)
       {
-         if(x == 4 || x == 8)
-         {
-            std::cout << grid;
-         }
-         if(y == 5 || y == 9)
-         {
-            std::cout << "|";
-         }
-         if(y % 10 == 9)
-         {
-            std::cout << std::endl;
-         }
-         if(x > 11)
-         {
-            break;//stop print lines after the eleventh one
-         }
+         std::cout << (board[x][y] == 0 ? ' ' : (char)(board[x][y] + 48));
+         std::cout << (y == 2 || y == 5 ? '|' : (y == 8 ? '\n' : ' '));
          std::cout << lineNumber << "  " << board[x][y] - 48;
          lineNumber++;
       }
+      std::cout << std::endl;
+      std::cout << (x == 2 || x == 5 ? grid + "\n" : " ");
    }
-             std::cout << std::endl;
 }
 
 /***********************************************************************
