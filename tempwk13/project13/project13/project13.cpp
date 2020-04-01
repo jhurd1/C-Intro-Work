@@ -91,25 +91,28 @@ int possibleValues(int board[][9], char& charColumn, char& charRow, int& rowInde
 }
 
 /***********************************************************************
-* displayHeader **needs fixing**
+* displayHeader
 ************************************************************************/
- void displayBoard(int board[][9])//and then display the margin line numbers, too
+ void displayBoard(int board[][9])//shows garbage output
 {
    std::cout << "   A B C D E F G H I" << std::endl;
    std::string grid = "   -----+-----+-----";
    int lineNumber = 1;
    for(int x = 0; x < 9; x++)
    {
-      std::cout << x + 1 << "  ";
+      std::cout << x + 1 << "  ";//this gets the first row number correct
       for(int y = 0; y < 9; y++)
       {
-         std::cout << (board[x][y] == 0 ? ' ' : (char)(board[x][y] + 48));
+         std::cout << (board[x][y] == 0 ? ' ' : (char)(board[x][y] + 48));//this gets the first digit in the table correct
          std::cout << (y == 2 || y == 5 ? '|' : (y == 8 ? '\n' : ' '));
-         std::cout << lineNumber << "  " << board[x][y] - 48;
-         lineNumber++;
+         //std::cout << lineNumber << "  " << board[x][y] - 48;//this gets the second digit in the table wrong
+         //literally returning 41, the answer of 48 - 7.
+         //lineNumber++;
+         //not sure what lines 108 and 110 were supposed to do, but they were responsible for the  garbage
+         //output
       }
-      std::cout << std::endl;
-      std::cout << (x == 2 || x == 5 ? grid + "\n" : " ");
+      //std::cout << std::endl;//added an unnecessary carriage return
+      std::cout << (x == 2 || x == 5 ? grid + "\n" : "");
    }
 }
 
@@ -145,7 +148,6 @@ void displayOptions(int board[][9], char& charColumn, char& charRow, int & rowIn
    std::cout << "   E " << std::setw(4) << " Edit one square" << std::endl;
    std::cout << "   S " << std::setw(4) << " Show the possible values for a square" << std::endl;
    std::cout << "   Q " << std::setw(4) << " Save and Quit" << std::endl << "\n";
-   std::cout << "> ";
    //std::cin >> option;
 }
 
@@ -184,9 +186,6 @@ void interactions(int board[][9], char& charColumn, char& charRow, int & rowInde
 void read(int board[][9])
 {
     std::string fileName;
-    //std::string line;
-    //int x=0, y=0;
-     
     std::cout << "Where is your board located? ";
     std::cin >> fileName;
    std::ifstream fin(fileName.c_str());
@@ -196,27 +195,19 @@ void read(int board[][9])
       fin.close();
       return;
    }
-    /*while(getline(fin, line)) {
-        for (int i=0; i < line.length(); i++) {
-            if (isdigit(line[i])) {
-                board[x][y] = int(line[i])-48; // converts char number to its int equivalent
-                y++;
-            }
-        }*/
-   for(int row = 0; row < 9; row++)
+  for(int row = 0; row < 9; row++)
    {
       for(int column = 0; column < 9; column++)
       {
          
          fin >> board[row][column];
-         //std::cout << board[row][column];
+         //std::cout << board[row][column];//confirms that the program is opening
+         //and reading the file successfully
       }
-        /*x++;
-        y=0;
-    }*/
-}
+    }
     fin.close();
 }
+   
 
 /***********************************************************************
 * main
@@ -231,5 +222,5 @@ int main()
    read(board);
    displayOptions(board, charColumn, charRow, rowIndex, columnIndex);
    displayBoard(board);
-   interactions(board, charColumn, charRow, rowIndex, columnIndex);
+   //interactions(board, charColumn, charRow, rowIndex, columnIndex);
 }
