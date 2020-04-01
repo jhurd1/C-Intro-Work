@@ -23,35 +23,8 @@
 #define ROW 9
 #define COLUMN 9;
 
-/************************************************************************
-* possibleValues **needs synthesizing**
-************************************************************************/
-int possibleValues(int board[][9])
-{
-   int value = 0;
-   /*See which squares are filled.
-    See what number is in those squares.
-    Give the options as the unused remaining numbers.*/
-   
-   //consider using switch case here to test for values or a range of values
-   for(int x = 0; x < 9; x++)
-   {
-      for(int y = 0; y < 9; y++)
-      {
-         if(board[x][y] == 0)
-         {
-            //output 1-9
-         } else if (board[x][y] != 0)
-         {
-            
-         }
-      }
-   }
-   return value;
-}
-
 /***********************************************************************
-* sudokuSquareEditor  **needs fixing**
+* sudokuSquareEditor
 ************************************************************************/
 void editSquare(char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
 {
@@ -72,6 +45,7 @@ void editSquare(char& charColumn, char& charRow, int & rowIndex, int & columnInd
    rowIndex = int(charRow);//make the rowIndex hold the char of the row cast as an int
    columnIndex = int(charColumn);//similarly
    
+   //handle inappropriate input
    if(rowIndex < 0 || rowIndex > 8 || columnIndex < 0 || columnIndex > 8)
    {
       std::cout << "Error" << "\n";
@@ -79,6 +53,33 @@ void editSquare(char& charColumn, char& charRow, int & rowIndex, int & columnInd
    }
    return;
 }
+
+/************************************************************************
+* possibleValues
+* put the string inside the pop_back()
+* call editSquare()
+************************************************************************/
+int possibleValues(int board[][9], char& charColumn, char& charRow, int& rowIndex, int& columnIndex)
+{
+   int x = 0;
+   int y = 0;
+   int valuesInt[9];
+   char coordinate[3];
+   editSquare(charColumn, charRow, rowIndex, columnIndex);
+   
+   //computeValues(board, x, y, valuesInt); call here
+   std::string values = "";
+   for(int i = 0; i < 9; i++)
+   {
+      if(valuesInt[i] != 0)
+      {
+         values += valuesInt[i] + ', ';
+      }
+      std::cout << "The possible values for '" << "" << "' are: '" << values;
+   }
+   return 0;
+}
+
 /***********************************************************************
 * displayHeader **needs fixing**
 ************************************************************************/
