@@ -138,13 +138,23 @@ int possibleValues(int board[][9], char& charColumn, char& charRow, int& rowInde
 ************************************************************************/
 void displayOptions(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
 {
-   char option = ' ';
+   //char option = ' ';
    std::cout << "Options:" << std::endl;
    std::cout << "   " << "? " << std::setw(4) << " Show these instructions" << std::endl;
    std::cout << "   D " << std::setw(4) << " Display the board" << std::endl;
    std::cout << "   E " << std::setw(4) << " Edit one square" << std::endl;
    std::cout << "   S " << std::setw(4) << " Show the possible values for a square" << std::endl;
    std::cout << "   Q " << std::setw(4) << " Save and Quit" << std::endl << "\n";
+   std::cout << "> ";
+   //std::cin >> option;
+}
+
+/************************************************************************
+* interactions
+************************************************************************/
+void interactions(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
+{
+   char option = ' ';
    std::cout << "> ";
    std::cin >> option;
    if(option == 'D' || option == 'd')
@@ -155,7 +165,7 @@ void displayOptions(int board[][9], char& charColumn, char& charRow, int & rowIn
       editSquare(charColumn, charRow, rowIndex, columnIndex);
    } else if (option == 'S' || option == 's')
    {
-      
+      possibleValues(board, charColumn, charRow, rowIndex, columnIndex);
    } else if(option == 'Q' || option == 'q')
    {
       write(board);
@@ -174,22 +184,37 @@ void displayOptions(int board[][9], char& charColumn, char& charRow, int & rowIn
 void read(int board[][9])
 {
     std::string fileName;
-    std::string line;
-    int x=0, y=0;
+    //std::string line;
+    //int x=0, y=0;
      
     std::cout << "Where is your board located? ";
     std::cin >> fileName;
-    std::ifstream fin(fileName);
-    while(getline(fin, line)) {
+   std::ifstream fin(fileName.c_str());
+   if(fin.fail())
+   {
+      std::cout << "Error opening.";
+      fin.close();
+      return;
+   }
+    /*while(getline(fin, line)) {
         for (int i=0; i < line.length(); i++) {
             if (isdigit(line[i])) {
                 board[x][y] = int(line[i])-48; // converts char number to its int equivalent
                 y++;
             }
-        }
-        x++;
+        }*/
+   for(int row = 0; row < 9; row++)
+   {
+      for(int column = 0; column < 9; column++)
+      {
+         
+         fin >> board[row][column];
+         //std::cout << board[row][column];
+      }
+        /*x++;
         y=0;
-    }
+    }*/
+}
     fin.close();
 }
 
@@ -205,4 +230,6 @@ int main()
    int board[9][9];
    read(board);
    displayOptions(board, charColumn, charRow, rowIndex, columnIndex);
+   displayBoard(board);
+   interactions(board, charColumn, charRow, rowIndex, columnIndex);
 }
