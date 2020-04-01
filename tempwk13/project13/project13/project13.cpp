@@ -53,88 +53,31 @@ int possibleValues(int board[][9])
 /***********************************************************************
 * sudokuSquareEditor  **needs fixing**
 ************************************************************************/
-int editSquare(int board[][9])
+void editSquare(char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
 {
-   int x = 0;
-   int y = 0;
-   std::cout << "What are the coordinates of the square: ";
-   std::cin >> x >> y;
-   //std::cin >> board[x][y];//isn't filling the user input here for some reason
-   //std::cout << x << " " << y;//a test cout also shows these values as 0 in spite of user input otherwise
-         if(x > 9 || y > 9)
-         {
-             std::cout << "ERROR: Square " << board[x][y] << " is invalid";
-         } else
-         {
-           switch(x)
-           {
-              case 1: //margin number
-                 return 0; //array index value
-                 break;
-              case 2:
-                 return 1;
-                 break;
-              case 3:
-                 return 2;
-                 break;
-              case 4:
-                 return 3;
-                 break;
-              case 5:
-                 return 4;
-                 break;
-              case 6:
-                 return 5;
-                 break;
-              case 7:
-                 return 6;
-                 break;
-              case 8:
-                 return 7;
-                 break;
-              case 9:
-                 return 8;
-                 break;
-              default:
-                 std::cout << "ERROR: Square " << board[x][y] << " is invalid";
-                 break;
-           }
-           switch(y)//take an alpha and turn it into an int
-           {
-              case 'A':
-                 return 0;
-                 break;
-              case 'B':
-                 return 1;
-                 break;
-              case 'C':
-                 return 2;
-                 break;
-              case 'D':
-                 return 3;
-                 break;
-              case 'E':
-                 return 4;
-                 break;
-              case 'F':
-                 return 5;
-                 break;
-              case 'G':
-                 return 6;
-                 break;
-              case 'H':
-                 return 7;
-                 break;
-              case 'I':
-                 return 8;
-                 break;
-              default:
-                 std::cout << "ERROR: Square " << board[x][y] << " is invalid";
-                 break;
-           }
-         }
-    std::cout << "What is the value at " << "''" << board[x][y] << "'' : " << board[x][y];
-    return board[x][y];
+   std::string square;
+   std::cout << "What are the coordinates of the square: " << std::endl;
+   std::cin >> square;
+   
+   if(isalpha(square[0]))//compensate for user char misplacement
+   {
+      charColumn = toupper(square[0]);
+      charRow = toupper(square[1]);
+   } else
+   {
+      charColumn = toupper(square[1]);
+      charRow = toupper(square[0]);
+   }
+   
+   rowIndex = int(charRow);//make the rowIndex hold the char of the row cast as an int
+   columnIndex = int(charColumn);//similarly
+   
+   if(rowIndex < 0 || rowIndex > 8 || columnIndex < 0 || columnIndex > 8)
+   {
+      std::cout << "Error" << "\n";
+      editSquare(charColumn, charRow, rowIndex, columnIndex);
+   }
+   return;
 }
 /***********************************************************************
 * displayHeader **needs fixing**
@@ -180,8 +123,9 @@ int editSquare(int board[][9])
 
 /***********************************************************************
 * displayOptions
+* pass those values as reference to make them changeable
 ************************************************************************/
-void displayOptions(int board[][9])
+void displayOptions(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
 {
    char option = ' ';
    std::cout << "Options:" << std::endl;
@@ -197,7 +141,7 @@ void displayOptions(int board[][9])
       displayBoard(board);
    } else if (option == 'E' || option == 'e')
    {
-      editSquare(board);
+      editSquare(charColumn, charRow, rowIndex, columnIndex);
    } else if (option == 'S' || option == 's')
    {
       
@@ -206,7 +150,7 @@ void displayOptions(int board[][9])
       write(board);
    } else if(option == '?')
    {
-      displayOptions(board);
+      displayOptions(board, charColumn, charRow, rowIndex, columnIndex);
    } else
    {
       std::cout << "ERROR: Invalid command";
@@ -243,7 +187,11 @@ void read(int board[][9])
 ************************************************************************/
 int main()
 {
+   char charColumn = ' ';
+   char charRow = ' ';
+   int rowIndex = 0;
+   int  columnIndex = 0;
    int board[9][9];
    read(board);
-   displayOptions(board);
+   displayOptions(board, charColumn, charRow, rowIndex, columnIndex);
 }
