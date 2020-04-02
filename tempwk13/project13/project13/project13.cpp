@@ -32,7 +32,7 @@ class Sudoku{
 ************************************************************************/
 public:
    
-   std::string editSquare(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
+   void editSquare(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
 {
    std::string square;
    std::cout << "What are the coordinates of the square: ";
@@ -60,20 +60,33 @@ public:
       editSquare(board, charColumn, charRow, rowIndex, columnIndex);
    }
    //I first attempted to use std::stoi(square) != 0 but this resulted in an unhandled exception
-      if(rowIndex != 0 || columnIndex != 0)
+      if(board[rowIndex][columnIndex] != 0)
       {
          std::cout << "ERROR: " << "Square " << "'" << square << "'" << " is filled" << std::endl;
          std::cout << std::endl;
+         return;
       }
-   return square;
    }
 
 /************************************************************************
 * translateValues
+* call it from editSquare and possibleValues
 ************************************************************************/
 void translateValues(int board[][9], int x, int y, int valuesInt[9])
-{
+{/*
+   int column = 0;
+   //check the column in the row
+   for(col)
+   {
+      if(item != 0)
+      {
+         //find which # it is
+         //convert it into a 0
+      }
+   }
+   // check the column
    
+   //and check the 3 x 3 square*/
 }
 
 /************************************************************************
@@ -82,7 +95,7 @@ void translateValues(int board[][9], int x, int y, int valuesInt[9])
 * call editSquare()
 ************************************************************************/
  int possibleValues(int board[][9], char& charColumn, char& charRow, int& rowIndex, int& columnIndex,
-                    std::string square)
+                    std::string square)//must copy code from editSquare into here instead of passing in square
 {
    //int x = 0;
    //int y = 0;
