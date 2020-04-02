@@ -7,17 +7,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "128C8F65-B4ED-4507-A306-FBB1E1C6854F"
+            uuid = "DD656A28-7CCA-4A32-9CC9-E91E3565CCBC"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "project13/project13.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
-            landmarkName = "displayBoard()"
-            landmarkType = "9">
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "editSquare(, charColumn, charRow, rowIndex, columnIndex)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

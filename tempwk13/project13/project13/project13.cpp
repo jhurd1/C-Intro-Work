@@ -23,13 +23,19 @@
 #define ROW 9
 #define COLUMN 9;
 
+/**********************************************************************
+* I had to encapsulate all functions in a class to keep recursive function calls.
+**********************************************************************/
+class Sudoku{
 /***********************************************************************
 * sudokuSquareEditor
 ************************************************************************/
-void editSquare(char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
+public:
+   
+   std::string editSquare(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
 {
    std::string square;
-   std::cout << "What are the coordinates of the square: " << std::endl;
+   std::cout << "What are the coordinates of the square: ";
    std::cin >> square;
    
    if(isalpha(square[0]))//compensate for user char misplacement
@@ -42,17 +48,21 @@ void editSquare(char& charColumn, char& charRow, int & rowIndex, int & columnInd
       charRow = toupper(square[0]);
    }
    
-   rowIndex = int(charRow);//make the rowIndex hold the char of the row cast as an int
-   columnIndex = int(charColumn);//similarly
+   rowIndex = int(charRow) - 48;//make the rowIndex hold the char of the row cast as an int
+   columnIndex = int(charColumn) + 48;//similarly
    
    //handle inappropriate input
-   if(rowIndex < 0 || rowIndex > 8 || columnIndex < 0 || columnIndex > 8)
+   if(rowIndex < 0 || rowIndex > 8 || columnIndex < 0 || columnIndex > 8)//it's saying
+      //the value is 50+ and likely needs to be ascii code compensated
    {
-      std::cout << "Error" << "\n";
-      editSquare(charColumn, charRow, rowIndex, columnIndex);
+      std::cout << "ERROR: " << "Square " << "'" << square << "'" << " is filled" << std::endl;
+      std::cout << std::endl;
+      //editSquare(charColumn, charRow, rowIndex, columnIndex);
+      interactions(board, charColumn, charRow, rowIndex, columnIndex, square);
    }
-   return;
+   return square;
 }
+
 
 /************************************************************************
 * translateValues
@@ -67,14 +77,15 @@ void translateValues(int board[][9], int x, int y, int valuesInt[9])
 * put the string inside the pop_back()
 * call editSquare()
 ************************************************************************/
-int possibleValues(int board[][9], char& charColumn, char& charRow, int& rowIndex, int& columnIndex)
+ int possibleValues(int board[][9], char& charColumn, char& charRow, int& rowIndex, int& columnIndex,
+                    std::string square)
 {
    //int x = 0;
    //int y = 0;
    int valuesInt[9];
    //char coordinate[3];
-   editSquare(charColumn, charRow, rowIndex, columnIndex);
-   
+   editSquare(board, charColumn, charRow, rowIndex, columnIndex);
+   std::cout << "What is the value at " << "'" << square << "'" << ":";
    //translateValues(board, x, y, valuesInt); call here
    std::string values = "";
    for(int i = 0; i < 9; i++)
@@ -97,7 +108,7 @@ int possibleValues(int board[][9], char& charColumn, char& charRow, int& rowInde
 {
    std::cout << "   A B C D E F G H I" << std::endl;
    std::string grid = "   -----+-----+-----";
-   int lineNumber = 1;
+   //int lineNumber = 1;
    for(int x = 0; x < 9; x++)
    {
       std::cout << x + 1 << "  ";//this gets the first row number correct
@@ -111,15 +122,15 @@ int possibleValues(int board[][9], char& charColumn, char& charRow, int& rowInde
          //not sure what lines 108 and 110 were supposed to do, but they were responsible for the  garbage
          //output
       }
-      //std::cout << std::endl;//added an unnecessary carriage return
       std::cout << (x == 2 || x == 5 ? grid + "\n" : "");
    }
+   std::cout << std::endl;
 }
 
 /***********************************************************************
 * write
 ************************************************************************/
-  void write(int board[][9])
+void write(int board[][9])
   {
       std::string fileName;
       std::cout << "What file would you like to write your board to: ";
@@ -139,7 +150,7 @@ int possibleValues(int board[][9], char& charColumn, char& charRow, int& rowInde
 * displayOptions
 * pass those values as reference to make them changeable
 ************************************************************************/
-void displayOptions(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
+   void displayOptions(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
 {
    //char option = ' ';
    std::cout << "Options:" << std::endl;
@@ -149,35 +160,6 @@ void displayOptions(int board[][9], char& charColumn, char& charRow, int & rowIn
    std::cout << "   S " << std::setw(4) << " Show the possible values for a square" << std::endl;
    std::cout << "   Q " << std::setw(4) << " Save and Quit" << std::endl << "\n";
    //std::cin >> option;
-}
-
-/************************************************************************
-* interactions
-************************************************************************/
-void interactions(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
-{
-   char option = ' ';
-   std::cout << "> ";
-   std::cin >> option;
-   if(option == 'D' || option == 'd')
-   {
-      displayBoard(board);
-   } else if (option == 'E' || option == 'e')
-   {
-      editSquare(charColumn, charRow, rowIndex, columnIndex);
-   } else if (option == 'S' || option == 's')
-   {
-      possibleValues(board, charColumn, charRow, rowIndex, columnIndex);
-   } else if(option == 'Q' || option == 'q')
-   {
-      write(board);
-   } else if(option == '?')
-   {
-      displayOptions(board, charColumn, charRow, rowIndex, columnIndex);
-   } else
-   {
-      std::cout << "ERROR: Invalid command";
-   }
 }
 
 /***********************************************************************
@@ -207,8 +189,37 @@ void read(int board[][9])
     }
     fin.close();
 }
-   
 
+/************************************************************************
+* interactions
+************************************************************************/
+ void interactions(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex,
+                   std::string square)
+{
+   char option = ' ';
+   std::cout << "> ";
+   std::cin >> option;
+   if(option == 'D' || option == 'd')
+   {
+      displayBoard(board);
+   } else if (option == 'E' || option == 'e')
+   {
+      editSquare(board, charColumn, charRow, rowIndex, columnIndex);
+   } else if (option == 'S' || option == 's')
+   {
+      possibleValues(board, charColumn, charRow, rowIndex, columnIndex, square);
+   } else if(option == 'Q' || option == 'q')
+   {
+      write(board);
+   } else if(option == '?')
+   {
+      displayOptions(board, charColumn, charRow, rowIndex, columnIndex);
+   } else
+   {
+      std::cout << "ERROR: Invalid command";
+   }
+}
+};
 /***********************************************************************
 * main
 ************************************************************************/
@@ -219,8 +230,11 @@ int main()
    int rowIndex = 0;
    int  columnIndex = 0;
    int board[9][9];
-   read(board);
-   displayOptions(board, charColumn, charRow, rowIndex, columnIndex);
-   displayBoard(board);
-   //interactions(board, charColumn, charRow, rowIndex, columnIndex);
+   std::string square;
+   Sudoku temp;
+   temp.read(board);
+   temp.displayOptions(board, charColumn, charRow, rowIndex, columnIndex);
+   temp.displayBoard(board);
+   temp.interactions(board, charColumn, charRow, rowIndex, columnIndex, square);
+   temp.possibleValues(board, charColumn, charRow, rowIndex, columnIndex, square);
 }
