@@ -36,7 +36,7 @@ public:
 {
    std::string square;
    std::cout << "What are the coordinates of the square: ";
-   std::cin >> square;
+   std::cin >> square;//program stops here on (B2) second iteration after error on A1 input
    
    if(isalpha(square[0]))//compensate for user char misplacement
    {
@@ -51,6 +51,13 @@ public:
    rowIndex = int(charRow) - 49;//make the rowIndex hold the char of the row cast as an int
    columnIndex = int(charColumn) - 65;//66 is 'B', for example
    
+   //I first attempted to use std::stoi(square) != 0 but this resulted in an unhandled exception
+   if(board[rowIndex][columnIndex] != 0)
+   {
+      std::cout << "ERROR: " << "Square " << "'" << square << "'" << " is filled" << std::endl;
+      std::cout << std::endl;
+      //return;
+   }
    //handle inappropriate input
    if(rowIndex < 0 || rowIndex > 8 || columnIndex < 0 || columnIndex > 8)
    {
@@ -58,14 +65,14 @@ public:
       std::cout << "ERROR: Square " << "'" << square << "'" << "is invalid" << std::endl;
       //write an if condition to see if the square already has a value
       editSquare(board, charColumn, charRow, rowIndex, columnIndex);
-   }
-   //I first attempted to use std::stoi(square) != 0 but this resulted in an unhandled exception
-      if(board[rowIndex][columnIndex] != 0)
-      {
-         std::cout << "ERROR: " << "Square " << "'" << square << "'" << " is filled" << std::endl;
-         std::cout << std::endl;
-         return;
+   } else
+   {
+      //else caused the function to break out of subsequent evaluations,
+      //skipping the subsequent if evaluation below
+      //call possible values if the square input is valid
+      possibleValues(board, charColumn, charRow, rowIndex, columnIndex, square);
       }
+   return;
    }
 
 /************************************************************************
@@ -97,25 +104,21 @@ void translateValues(int board[][9], int x, int y, int valuesInt[9])
  int possibleValues(int board[][9], char& charColumn, char& charRow, int& rowIndex, int& columnIndex,
                     std::string square)//must copy code from editSquare into here instead of passing in square
 {
-   //int x = 0;
-   //int y = 0;
-   int valuesInt[9];
-   //char coordinate[3];
-   editSquare(board, charColumn, charRow, rowIndex, columnIndex);
-   std::cout << "What is the value at " << "'" << square << "'" << ":";
-   //translateValues(board, x, y, valuesInt); call here
-   std::string values = "";
-   for(int i = 0; i < 9; i++)
+   int value = 0;
+   int possibleValues[9];
+   std::cout << "What is the value at " << "'" << square << "'" << ": ";
+   std::cin >> value;
+   //std::string values = "";
+   for(int i = 0; i < 9; i++)//presumably iterates across the nondrant (ninth part of a "quadrant").
    {
-      if(valuesInt[i] != 0)
+      if(possibleValues[i] != 0)
       {
-         values += valuesInt[i] + ',';
-         values.pop_back();
+         value += possibleValues[i] + ',';//concatenate string values with possibleValues item
+         //value.pop_back();
       }
-      
-      std::cout << "The possible values for '" << charColumn << " and " << charRow << "' are: '" << values;
    }
-   return valuesInt[8];
+   std::cout << "The possible values for '" << charColumn << " and " << charRow << "' are: '" << value;
+   return possibleValues[8];
 }
 
 /***********************************************************************
