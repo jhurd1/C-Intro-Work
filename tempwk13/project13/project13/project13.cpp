@@ -47,9 +47,9 @@ public:
       charColumn = toupper(square[1]);
       charRow = toupper(square[0]);
    }
-   
+   //need ascii conversion, probably
    rowIndex = int(charRow) - 48;//make the rowIndex hold the char of the row cast as an int
-   columnIndex = int(charColumn) + 48;//similarly
+   columnIndex = int(charColumn) - 42;//66 is 'B', for example
    
    //handle inappropriate input
    if(rowIndex < 0 || rowIndex > 8 || columnIndex < 0 || columnIndex > 8)//it's saying
