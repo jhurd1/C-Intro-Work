@@ -48,21 +48,25 @@ public:
       charRow = toupper(square[0]);
    }
    //need ascii conversion, probably
-   rowIndex = int(charRow) - 48;//make the rowIndex hold the char of the row cast as an int
-   columnIndex = int(charColumn) - 42;//66 is 'B', for example
+   rowIndex = int(charRow) - 49;//make the rowIndex hold the char of the row cast as an int
+   columnIndex = int(charColumn) - 65;//66 is 'B', for example
    
    //handle inappropriate input
-   if(rowIndex < 0 || rowIndex > 8 || columnIndex < 0 || columnIndex > 8)//it's saying
-      //the value is 50+ and likely needs to be ascii code compensated
+   if(rowIndex < 0 || rowIndex > 8 || columnIndex < 0 || columnIndex > 8)
    {
-      std::cout << "ERROR: " << "Square " << "'" << square << "'" << " is filled" << std::endl;
-      std::cout << std::endl;
-      //editSquare(charColumn, charRow, rowIndex, columnIndex);
-      interactions(board, charColumn, charRow, rowIndex, columnIndex, square);
+      //ERROR: Value '2' in square 'B2' is invalid
+      std::cout << "ERROR: Square " << "'" << square << "'" << "is invalid" << std::endl;
+      //write an if condition to see if the square already has a value
+      editSquare(board, charColumn, charRow, rowIndex, columnIndex);
    }
+   //I first attempted to use std::stoi(square) != 0 but this resulted in an unhandled exception
+      if(rowIndex != 0 || columnIndex != 0)
+      {
+         std::cout << "ERROR: " << "Square " << "'" << square << "'" << " is filled" << std::endl;
+         std::cout << std::endl;
+      }
    return square;
-}
-
+   }
 
 /************************************************************************
 * translateValues
@@ -192,6 +196,7 @@ void read(int board[][9])
 
 /************************************************************************
 * interactions
+* recursive call or a indefinite loop until Q is entered; or a do/while loop or for-each loop
 ************************************************************************/
  void interactions(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex,
                    std::string square)
@@ -211,6 +216,7 @@ void read(int board[][9])
    } else if(option == 'Q' || option == 'q')
    {
       write(board);
+      return;//exits the loop back to interactions
    } else if(option == '?')
    {
       displayOptions(board, charColumn, charRow, rowIndex, columnIndex);
@@ -218,8 +224,9 @@ void read(int board[][9])
    {
       std::cout << "ERROR: Invalid command";
    }
+   interactions(board, charColumn, charRow, rowIndex, columnIndex, square);
 }
-};
+};//end of class
 /***********************************************************************
 * main
 ************************************************************************/
