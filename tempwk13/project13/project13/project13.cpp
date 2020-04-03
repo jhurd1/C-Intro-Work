@@ -109,15 +109,16 @@ void translateValues(int board[][9], int x, int y, int valuesInt[9])
    std::cout << "What is the value at " << "'" << square << "'" << ": ";
    std::cin >> value;
    //std::string values = "";
-   for(int i = 0; i < 9; i++)//presumably iterates across the nondrant (ninth part of a "quadrant").
+   std::cout << "The possible values for '" << square <<  "' are: ";
+   for(int i = 0; i < 9; i++)//iterates across the nondrant (ninth part of a "quadrant").
    {
       if(possibleValues[i] != 0)
       {
-         value += possibleValues[i] + ',';//concatenate string values with possibleValues item
-         //value.pop_back();
+         //switch case won't work here because cases work only with the possibility of a single outcome
+         //due to break statements
+          std::cout << (value += possibleValues[i]) << ", ";//concatenate string values with possibleValues item
       }
    }
-   std::cout << "The possible values for '" << charColumn << " and " << charRow << "' are: '" << value;
    return possibleValues[8];
 }
 
