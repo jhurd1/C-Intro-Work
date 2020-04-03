@@ -56,7 +56,7 @@ public:
    {
       std::cout << "ERROR: " << "Square " << "'" << square << "'" << " is filled" << std::endl;
       std::cout << std::endl;
-      //return;
+      return;
    }
    //handle inappropriate input
    if(rowIndex < 0 || rowIndex > 8 || columnIndex < 0 || columnIndex > 8)
@@ -80,20 +80,33 @@ public:
 * call it from editSquare and possibleValues
 ************************************************************************/
 void translateValues(int board[][9], int x, int y, int valuesInt[9])
-{/*
-   int column = 0;
+{
+   y = 9;//column
+   x = 9;//row
    //check the column in the row
-   for(col)
+   for(int i = 0; i < y; i++)
    {
-      if(item != 0)
+      //if the value doesn't equal anything in the column
+      if(valuesInt[i] != y)
       {
+         std::cout << valuesInt[i];
          //find which # it is
          //convert it into a 0
-      }
+      } for(int j = 0; j < x; j++)
+      {
+         if(valuesInt[i] != x)
+         {
+            std::cout << valuesInt[i];
+         }
+         //and check the 3 x 3 square
+      } for(int k = 0; k < 9; k++)
+      {
+         if(valuesInt[x] != 0 && valuesInt[y] != 0 && valuesInt[k] != 0)
+         {
+            std::cout << valuesInt[k];
+         }
    }
-   // check the column
-   
-   //and check the 3 x 3 square*/
+   }
 }
 
 /************************************************************************
@@ -105,18 +118,18 @@ void translateValues(int board[][9], int x, int y, int valuesInt[9])
                     std::string square)//must copy code from editSquare into here instead of passing in square
 {
    int value = 0;
+   int x, y, valuesInt[9];
    int possibleValues[9];
    std::cout << "What is the value at " << "'" << square << "'" << ": ";
-   std::cin >> value;
+   std::cin >> possibleValues[value];
    //std::string values = "";
    std::cout << "The possible values for '" << square <<  "' are: ";
    for(int i = 0; i < 9; i++)//iterates across the nondrant (ninth part of a "quadrant").
    {
       if(possibleValues[i] != 0)
       {
-         //switch case won't work here because cases work only with the possibility of a single outcome
-         //due to break statements
-          std::cout << (value += possibleValues[i]) << ", ";//concatenate string values with possibleValues item
+            translateValues(board, x, y, valuesInt);
+            std::cout << (value += possibleValues[i]) << ", ";//concatenate string values with possibleValues item
       }
    }
    return possibleValues[8];
