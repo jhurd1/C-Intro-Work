@@ -87,8 +87,10 @@ public:
 ************************************************************************/
 int translateValues(int board[][9], int possibleValues[8], int x, int y)
 {
-   bool isFound = true;
    int i = 0;
+   int totalPossible[10] = {
+      1, 2, 3, 4, 5, 6, 7, 8, 9
+   };
    //check row for input value from possibleValues()
    for(int i = 0; i < board[x][y]; i++)
    {
@@ -100,19 +102,16 @@ int translateValues(int board[][9], int possibleValues[8], int x, int y)
            {
               for(int j = 0; j < 3; j++)
               {
-                 //if the elements don't match
-                 if(board[x][y] != *possibleValues)//this logic is incorrect
+                 //compare existing board numbers, user's desired input, and totalPossible values
+                 if((board[x][y] != *possibleValues) || (board[x][y] != *totalPossible))
                   {
-                     //return them
-                     isFound = false;
+                     //don't output zeroes as possible values
+                     if(board[x][y] != 0)
+                        {
+                           //how does one know which variable to use here for outputting those possible values?
+                           std::cout  << *totalPossible << ", ";
+                     }
                   }
-                 if(isFound == false)
-                 {
-                    std::cout << *possibleValues << ", ";
-                 } else
-                 {
-                    std::cout << "";
-                 }
               }
            }
       }
