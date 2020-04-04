@@ -85,65 +85,38 @@ public:
 * should compare that value with those in row, column, and nondrant
 * returns available options for the value
 ************************************************************************/
-int translateValues(int board[][9], int possibleValues[8])
+int translateValues(int board[][9], int possibleValues[8], int x, int y)
 {
-   bool isFound = false;
-   int i = 9;
-   int j = 9;
-   
+   bool isFound = true;
+   int i = 0;
    //check row for input value from possibleValues()
-   for(int x = 0; x < board[i][j]; x++)
+   for(int i = 0; i < board[x][y]; i++)
    {
-      //if the elements don't match in the row
-      if(board[i][j] != *possibleValues)
+      //check column for input value from possibleValues()
+      for(int j = 0; j < board[x][y]; j++)
       {
-         //return them
-         isFound = false;
+         //second nested for loops checks nondrant rows x 3
+         for(int i = 0; i < 3; i++)
+           {
+              for(int j = 0; j < 3; j++)
+              {
+                 //if the elements don't match
+                 if(board[x][y] != *possibleValues)//this logic is incorrect
+                  {
+                     //return them
+                     isFound = false;
+                  }
+                 if(isFound == false)
+                 {
+                    std::cout << *possibleValues << ", ";
+                 } else
+                 {
+                    std::cout << "";
+                 }
+              }
+           }
       }
    }
-   
-   //check column for input value from possibleValues()
-   for(int y = 0; y < board[i][j]; y++)
-   {
-      if(board[i][j] != *possibleValues)
-      {
-         //return them
-         isFound = false;
-      }
-   }
-   
-   //check nondrant for input value from possibleValues()
-   for(int x = 0; x < 3; x++)
-   {
-      for(int y = 0; y < 3; y++)
-      {
-         if(board[i][j] != *possibleValues)
-         {
-            isFound = false;
-         }
-      }
-   }
-   /*
-   for(x = 0; x < 9; x++)//iterate across the row
-   {
-      for(y = 0; y < 9; y++)//iterate across the column
-      {
-                  if(possibleValues[i] == board[x][y])
-                          {
-                             isFound = true;
-                          } else
-                          {
-                             i++;
-                          }
-                          if(!isFound)
-                          {
-                             std::cout << *possibleValues << ", ";
-                          } else
-                          {
-                             std::cout << "";
-                          }
-                       }
-                    }*/
    return possibleValues[i];
 }
 
@@ -155,6 +128,7 @@ int translateValues(int board[][9], int possibleValues[8])
  int possibleValues(int board[][9], char& charColumn, char& charRow, int& rowIndex, int& columnIndex,
                     std::string square)//must copy code from editSquare into here instead of passing in square
 {
+   int x = 0, y = 0;
    int value = 0;
    //int x, y ;//valuesInt[9];
    int possibleValues[9];
@@ -165,7 +139,7 @@ int translateValues(int board[][9], int possibleValues[8])
    {
       if(possibleValues[i] != 0)
       {
-            translateValues(board, possibleValues);
+            translateValues(board, possibleValues, x, y);
             std::cout << (value += possibleValues[i]) << ", ";//concatenate string values with possibleValues item
       }
    }
@@ -231,8 +205,10 @@ void write(int board[][9])
 /***********************************************************************
 * read test
 ************************************************************************/
-void read(int board[][9])
+int read(int board[][9])
 {
+   int x = 0;
+   int y = 0;
     std::string fileName;
     std::cout << "Where is your board located? ";
     std::cin >> fileName;
@@ -241,19 +217,20 @@ void read(int board[][9])
    {
       std::cout << "Error opening.";
       fin.close();
-      return;
+      //return;
    }
-  for(int row = 0; row < 9; row++)
+  for(int x = 0; x < 9; x++)
    {
-      for(int column = 0; column < 9; column++)
+      for(int y = 0; y < 9; y++)
       {
          
-         fin >> board[row][column];
+         fin >> board[x][y];
          //std::cout << board[row][column];//confirms that the program is opening
          //and reading the file successfully
       }
     }
     fin.close();
+   return board[x][y];
 }
 
 /************************************************************************
