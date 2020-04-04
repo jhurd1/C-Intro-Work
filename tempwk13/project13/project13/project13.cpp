@@ -80,76 +80,48 @@ public:
 /************************************************************************
 * translateValues
 * call it from editSquare and possibleValues
+* should know what existing values are from the read() of board
+* should scan row, column, and nondrant for a match of the value input from possibleValues
+* should compare that value with those in row, column, and nondrant
+* returns available options for the value
 ************************************************************************/
-int translateValues(int board[][9])
+int translateValues(int board[][9], int possibleValues[8])
 {
+   std::cout << *possibleValues;
    int x = 0;
    int y = 0;
    bool isFound = false;
-   int possibleValues[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
    int i = 0;
    
    for(x = 0; x < 9; x++)//iterate across the row
    {
       for(y = 0; y < 9; y++)//iterate across the column
       {
-         if(possibleValues[i] == x || possibleValues[i] == y)
+      /*   for(int z = 0; z < 3; z++)//nondrant first row
          {
-            isFound = true;
-         } else
-         {
-            i++;
-         }
-         if(isFound)
-         {
-            return possibleValues[i];
-         } else
-         {
-            return - 1;
-         }
-      }
-   }
-   /*
-   //row search
-   for(valuesInt[i] = 0; valuesInt[i] < 9; valuesInt[i]++)
-   {
-      //if the value equals something in the column
-      if(valuesInt[i] == 1 || valuesInt[i] == 2 || valuesInt[i] == 3 ||
-         valuesInt[i] == 4 || valuesInt[i] == 5 || valuesInt[i] == 6 ||
-         valuesInt[i] == 7 || valuesInt[i] == 8 || valuesInt[i] == 9)
-      {
-         isFound = true;
-      } else
-      {
-         i++;
-      }
-      if(isFound)
-      {
-         return valuesInt[i];
-      } else
-      {
-         return -1;
-         */
-         
-     /*
-      } for(int j = 0; j < x; j++)
-      {
-         if(valuesInt[i] != x)
-         {
-            std::cout << valuesInt[i];
-         }
-         //and check the 3 x 3 square
-      } for(int k = 0; k < 9; k++)
-      {
-         if(valuesInt[x] != 0 && valuesInt[y] != 0 && valuesInt[k] != 0)
-         {
-            std::cout << valuesInt[k];
-         }
-      }
-   }*/
+            for(int a = 0; a < 3; a++)//nondrant second row
+            {
+               for(int b = 0; b < 3; b++)//nondrant third row
+               {*/
+         std::cout << *possibleValues;
+                  if(possibleValues[i] == board[x][y])
+                          {
+                             isFound = true;
+                          } else
+                          {
+                             i++;
+                          }
+                          if(!isFound)
+                          {
+                             std::cout << *possibleValues << ", ";
+                          } else
+                          {
+                             std::cout << "";
+                          }
+                       }
+                    }
+   return possibleValues[i];
 }
-   //}
-//}
 
 /************************************************************************
 * possibleValues
@@ -160,17 +132,16 @@ int translateValues(int board[][9])
                     std::string square)//must copy code from editSquare into here instead of passing in square
 {
    int value = 0;
-   int x, y, valuesInt[9];
+   //int x, y ;//valuesInt[9];
    int possibleValues[9];
    std::cout << "What is the value at " << "'" << square << "'" << ": ";
    std::cin >> possibleValues[value];
-   //std::string values = "";
    std::cout << "The possible values for '" << square <<  "' are: ";
    for(int i = 0; i < 9; i++)//iterates across the nondrant (ninth part of a "quadrant").
    {
       if(possibleValues[i] != 0)
       {
-            translateValues(board);
+            translateValues(board, possibleValues);
             std::cout << (value += possibleValues[i]) << ", ";//concatenate string values with possibleValues item
       }
    }
