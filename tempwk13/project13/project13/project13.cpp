@@ -20,6 +20,8 @@
 #include <cstring>
 #include <fstream>
 #include <cstdlib>
+#include <algorithm>
+#include<iterator>
 #define ROW 9
 #define COLUMN 9;
 
@@ -79,19 +81,57 @@ public:
 * translateValues
 * call it from editSquare and possibleValues
 ************************************************************************/
-void translateValues(int board[][9], int x, int y, int valuesInt[9])
+int translateValues(int board[][9])
 {
-   y = 9;//column
-   x = 9;//row
-   //check the column in the row
-   for(int i = 0; i < y; i++)
+   int x = 0;
+   int y = 0;
+   bool isFound = false;
+   int possibleValues[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+   int i = 0;
+   
+   for(x = 0; x < 9; x++)//iterate across the row
    {
-      //if the value doesn't equal anything in the column
-      if(valuesInt[i] != y)
+      for(y = 0; y < 9; y++)//iterate across the column
       {
-         std::cout << valuesInt[i];
-         //find which # it is
-         //convert it into a 0
+         if(possibleValues[i] == x || possibleValues[i] == y)
+         {
+            isFound = true;
+         } else
+         {
+            i++;
+         }
+         if(isFound)
+         {
+            return possibleValues[i];
+         } else
+         {
+            return - 1;
+         }
+      }
+   }
+   /*
+   //row search
+   for(valuesInt[i] = 0; valuesInt[i] < 9; valuesInt[i]++)
+   {
+      //if the value equals something in the column
+      if(valuesInt[i] == 1 || valuesInt[i] == 2 || valuesInt[i] == 3 ||
+         valuesInt[i] == 4 || valuesInt[i] == 5 || valuesInt[i] == 6 ||
+         valuesInt[i] == 7 || valuesInt[i] == 8 || valuesInt[i] == 9)
+      {
+         isFound = true;
+      } else
+      {
+         i++;
+      }
+      if(isFound)
+      {
+         return valuesInt[i];
+      } else
+      {
+         return -1;
+         */
+         
+     /*
       } for(int j = 0; j < x; j++)
       {
          if(valuesInt[i] != x)
@@ -105,9 +145,11 @@ void translateValues(int board[][9], int x, int y, int valuesInt[9])
          {
             std::cout << valuesInt[k];
          }
-   }
-   }
+      }
+   }*/
 }
+   //}
+//}
 
 /************************************************************************
 * possibleValues
@@ -128,7 +170,7 @@ void translateValues(int board[][9], int x, int y, int valuesInt[9])
    {
       if(possibleValues[i] != 0)
       {
-            translateValues(board, x, y, valuesInt);
+            translateValues(board);
             std::cout << (value += possibleValues[i]) << ", ";//concatenate string values with possibleValues item
       }
    }
@@ -150,11 +192,6 @@ void translateValues(int board[][9], int x, int y, int valuesInt[9])
       {
          std::cout << (board[x][y] == 0 ? ' ' : (char)(board[x][y] + 48));//this gets the first digit in the table correct
          std::cout << (y == 2 || y == 5 ? '|' : (y == 8 ? '\n' : ' '));
-         //std::cout << lineNumber << "  " << board[x][y] - 48;//this gets the second digit in the table wrong
-         //literally returning 41, the answer of 48 - 7.
-         //lineNumber++;
-         //not sure what lines 108 and 110 were supposed to do, but they were responsible for the  garbage
-         //output
       }
       std::cout << (x == 2 || x == 5 ? grid + "\n" : "");
    }
