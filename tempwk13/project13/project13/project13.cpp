@@ -49,9 +49,8 @@ public:
       charColumn = toupper(square[1]);
       charRow = toupper(square[0]);
    }
-   //need ascii conversion, probably
    rowIndex = int(charRow) - 49;//make the rowIndex hold the char of the row cast as an int
-   columnIndex = int(charColumn) - 65;//66 is 'B', for example
+   columnIndex = int(charColumn) - 65;
    
    //I first attempted to use std::stoi(square) != 0 but this resulted in an unhandled exception
    if(board[rowIndex][columnIndex] != 0)
@@ -64,14 +63,11 @@ public:
    if(rowIndex < 0 || rowIndex > 8 || columnIndex < 0 || columnIndex > 8)
    {
       //ERROR: Value '2' in square 'B2' is invalid
-      std::cout << "ERROR: Square " << "'" << square << "'" << "is invalid" << std::endl;
+      std::cout << "ERROR: Value " << "'" << square << "'" << "is invalid" << std::endl;
       //write an if condition to see if the square already has a value
       editSquare(board, charColumn, charRow, rowIndex, columnIndex);
    } else
    {
-      //else caused the function to break out of subsequent evaluations,
-      //skipping the subsequent if evaluation below
-      //call possible values if the square input is valid
       possibleValues(board, charColumn, charRow, rowIndex, columnIndex, square);
       }
    return;
@@ -85,17 +81,25 @@ public:
 * should compare that value with those in row, column, and nondrant
 * returns available options for the value
 ************************************************************************/
-int translateValues(int board[][9], int possibleValues[8], int x, int y)
+int translateValues(int board[][9], int usersInputValue, int x, int y)
 {
+   bool printsOut = false;
    int i = 0;
    int totalPossible[10] = {
       1, 2, 3, 4, 5, 6, 7, 8, 9
    };
+   
+   //set each index to false at first
+   for(int k = 0; k < 10; k++)
+   {
+      totalPossible[i] = printsOut;
+   }
+   
    //check row for input value from possibleValues()
-   for(int i = 0; i < board[x][y]; i++)
+   for(int i = 0; i < 9; i++)
    {
       //check column for input value from possibleValues()
-      for(int j = 0; j < board[x][y]; j++)
+      for(int j = 0; j < 9; j++)
       {
          //second nested for loops checks nondrant rows x 3
          for(int i = 0; i < 3; i++)
@@ -103,20 +107,29 @@ int translateValues(int board[][9], int possibleValues[8], int x, int y)
               for(int j = 0; j < 3; j++)
               {
                  //compare existing board numbers, user's desired input, and totalPossible values
-                 if((board[x][y] != *possibleValues) || (board[x][y] != *totalPossible))
+                 if((board[x][y] != usersInputValue) || (board[x][y] != *totalPossible))
                   {
                      //don't output zeroes as possible values
                      if(board[x][y] != 0)
                         {
-                           //how does one know which variable to use here for outputting those possible values?
-                           std::cout  << *totalPossible << ", ";
+                           //set these values to true
+                           printsOut = true;
+                     }
+                     //for those values set to true, output them
+                     if(printsOut == true)
+                     {
+                        std::cout << totalPossible[i] << ", ";
+                        //otherwise, output nothing
+                     } else
+                     {
+                        std::cout << "";
                      }
                   }
               }
            }
       }
    }
-   return possibleValues[i];
+   return usersInputValue;
 }
 
 /************************************************************************
@@ -130,19 +143,29 @@ int translateValues(int board[][9], int possibleValues[8], int x, int y)
    int x = 0, y = 0;
    int value = 0;
    //int x, y ;//valuesInt[9];
-   int possibleValues[9];
+   int usersInputValue;
    std::cout << "What is the value at " << "'" << square << "'" << ": ";
-   std::cin >> possibleValues[value];
+   std::cin >> usersInputValue;
+   if(rowIndex < 0 || rowIndex > 8 || columnIndex < 0 || columnIndex > 8)
+     {
+        //ERROR: Value '2' in square 'B2' is invalid
+        std::cout << "ERROR: Value " << "'" << square << "'" << "is invalid" << std::endl;
+        //write an if condition to see if the square already has a value
+        editSquare(board, charColumn, charRow, rowIndex, columnIndex);
+     } else
+     {
+        possibleValues(board, charColumn, charRow, rowIndex, columnIndex, square);
+        }
    std::cout << "The possible values for '" << square <<  "' are: ";
    for(int i = 0; i < 9; i++)//iterates across the nondrant (ninth part of a "quadrant").
    {
-      if(possibleValues[i] != 0)
+      if(usersInputValue != 0)
       {
-            translateValues(board, possibleValues, x, y);
-            std::cout << (value += possibleValues[i]) << ", ";//concatenate string values with possibleValues item
+            translateValues(board, usersInputValue, x, y);
+            std::cout << (value += usersInputValue) << ", ";//concatenate string values with possibleValues item
       }
    }
-   return possibleValues[8];
+   return usersInputValue;
 }
 
 /***********************************************************************
@@ -191,14 +214,12 @@ void write(int board[][9])
 ************************************************************************/
    void displayOptions(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
 {
-   //char option = ' ';
    std::cout << "Options:" << std::endl;
    std::cout << "   " << "? " << std::setw(4) << " Show these instructions" << std::endl;
    std::cout << "   D " << std::setw(4) << " Display the board" << std::endl;
    std::cout << "   E " << std::setw(4) << " Edit one square" << std::endl;
    std::cout << "   S " << std::setw(4) << " Show the possible values for a square" << std::endl;
    std::cout << "   Q " << std::setw(4) << " Save and Quit" << std::endl << "\n";
-   //std::cin >> option;
 }
 
 /***********************************************************************
@@ -216,16 +237,12 @@ int read(int board[][9])
    {
       std::cout << "Error opening.";
       fin.close();
-      //return;
    }
   for(int x = 0; x < 9; x++)
    {
       for(int y = 0; y < 9; y++)
       {
-         
          fin >> board[x][y];
-         //std::cout << board[row][column];//confirms that the program is opening
-         //and reading the file successfully
       }
     }
     fin.close();
