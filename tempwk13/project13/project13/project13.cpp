@@ -87,23 +87,47 @@ public:
 ************************************************************************/
 int translateValues(int board[][9], int possibleValues[8])
 {
-   std::cout << *possibleValues;
-   int x = 0;
-   int y = 0;
    bool isFound = false;
-   int i = 0;
+   int i = 9;
+   int j = 9;
    
+   //check row for input value from possibleValues()
+   for(int x = 0; x < board[i][j]; x++)
+   {
+      //if the elements don't match in the row
+      if(board[i][j] != *possibleValues)
+      {
+         //return them
+         isFound = false;
+      }
+   }
+   
+   //check column for input value from possibleValues()
+   for(int y = 0; y < board[i][j]; y++)
+   {
+      if(board[i][j] != *possibleValues)
+      {
+         //return them
+         isFound = false;
+      }
+   }
+   
+   //check nondrant for input value from possibleValues()
+   for(int x = 0; x < 3; x++)
+   {
+      for(int y = 0; y < 3; y++)
+      {
+         if(board[i][j] != *possibleValues)
+         {
+            isFound = false;
+         }
+      }
+   }
+   /*
    for(x = 0; x < 9; x++)//iterate across the row
    {
       for(y = 0; y < 9; y++)//iterate across the column
       {
-      /*   for(int z = 0; z < 3; z++)//nondrant first row
-         {
-            for(int a = 0; a < 3; a++)//nondrant second row
-            {
-               for(int b = 0; b < 3; b++)//nondrant third row
-               {*/
-         std::cout << *possibleValues;
                   if(possibleValues[i] == board[x][y])
                           {
                              isFound = true;
@@ -119,7 +143,7 @@ int translateValues(int board[][9], int possibleValues[8])
                              std::cout << "";
                           }
                        }
-                    }
+                    }*/
    return possibleValues[i];
 }
 
