@@ -85,9 +85,11 @@ int translateValues(int board[][9], int usersInputValue, int x, int y)
 {
    bool printsOut = false;
    int i = 0;
-   int totalPossible[10] = {
-      1, 2, 3, 4, 5, 6, 7, 8, 9
-   };
+   bool totalPossible[10];
+   
+   //nondrant math
+   int minimumColumn = (y / 3) * 3;
+   int minimumRow = (x / 3) * 3;
    
    //set each index to false at first
    for(int k = 0; k < 10; k++)
@@ -98,13 +100,53 @@ int translateValues(int board[][9], int usersInputValue, int x, int y)
    //check row for input value from possibleValues()
    for(int i = 0; i < 9; i++)
    {
+      //hold x as  the constant here to represent the row
+      if((board[x][i] != usersInputValue) || (board[x][i] != *totalPossible))
+      {
+         //don't output zeroes as possible values
+         if(board[x][i] != 0)
+            {
+               //set these values to true
+               printsOut = true;
+         }
+         //for those values set to true, output them
+         if(printsOut == true)
+         {
+            std::cout << totalPossible[i] << ", ";
+            //otherwise, output nothing
+         } else
+         {
+            std::cout << "";
+         }
+   }
+   }
       //check column for input value from possibleValues()
       for(int j = 0; j < 9; j++)
       {
+         if((board[j][y] != usersInputValue) || (board[j][y] != *totalPossible))
+         {
+            //don't output zeroes as possible values
+            if(board[j][y] != 0)
+               {
+                  //set these values to true
+                  printsOut = true;
+            }
+            //for those values set to true, output them
+            if(printsOut == true)
+            {
+               std::cout << totalPossible[i] << ", ";
+               //otherwise, output nothing
+            } else
+            {
+               std::cout << "";
+            }
+      }
+      }
+   
          //second nested for loops checks nondrant rows x 3
-         for(int i = 0; i < 3; i++)
+         for(int i = minimumRow; i <= 3; i++)
            {
-              for(int j = 0; j < 3; j++)
+              for(int j = minimumColumn; j <= 3; j++)
               {
                  //compare existing board numbers, user's desired input, and totalPossible values
                  if((board[x][y] != usersInputValue) || (board[x][y] != *totalPossible))
@@ -127,8 +169,6 @@ int translateValues(int board[][9], int usersInputValue, int x, int y)
                   }
               }
            }
-      }
-   }
    return usersInputValue;
 }
 
@@ -152,10 +192,10 @@ int translateValues(int board[][9], int usersInputValue, int x, int y)
         std::cout << "ERROR: Value " << "'" << square << "'" << "is invalid" << std::endl;
         //write an if condition to see if the square already has a value
         editSquare(board, charColumn, charRow, rowIndex, columnIndex);
-     } else
+     } /*else
      {
         possibleValues(board, charColumn, charRow, rowIndex, columnIndex, square);
-        }
+        }*/
    std::cout << "The possible values for '" << square <<  "' are: ";
    for(int i = 0; i < 9; i++)//iterates across the nondrant (ninth part of a "quadrant").
    {
@@ -298,5 +338,4 @@ int main()
    temp.displayOptions(board, charColumn, charRow, rowIndex, columnIndex);
    temp.displayBoard(board);
    temp.interactions(board, charColumn, charRow, rowIndex, columnIndex, square);
-   temp.possibleValues(board, charColumn, charRow, rowIndex, columnIndex, square);
 }
