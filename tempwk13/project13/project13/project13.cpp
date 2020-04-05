@@ -83,64 +83,46 @@ public:
 ************************************************************************/
 int translateValues(int board[][9], int usersInputValue, int x, int y)
 {
-   bool printsOut = false;
+   bool temp = false;
+   /*Consider the following
+   {
+      char a[] = "software";
+      bool b[] =
+         { false, true, false, false,
+           false, true, false, true };
+
+      for (int i = 0; i < 8; i++)
+         if (b[i])
+            cout << a[i];
+   }*/
    int i = 0;
-   bool totalPossible[10];
+   int totalPossible[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
    
    //nondrant math
    int minimumColumn = (y / 3) * 3;
    int minimumRow = (x / 3) * 3;
    
-   //set each index to false at first
-   for(int k = 0; k < 10; k++)
-   {
-      totalPossible[i] = printsOut;
-   }
-   
    //check row for input value from possibleValues()
    for(int i = 0; i < 9; i++)
    {
       //hold x as  the constant here to represent the row
-      if((board[x][i] != usersInputValue) || (board[x][i] != *totalPossible))
+      if((board[x][i] != usersInputValue) || board[x][i] != 0)
       {
          //don't output zeroes as possible values
-         if(board[x][i] != 0)
-            {
-               //set these values to true
-               printsOut = true;
-         }
-         //for those values set to true, output them
-         if(printsOut == true)
-         {
-            std::cout << totalPossible[i] << ", ";
-            //otherwise, output nothing
-         } else
-         {
-            std::cout << "";
+         //std::cout << totalPossible[i] << ", ";
+         temp = true;
          }
    }
-   }
+
       //check column for input value from possibleValues()
       for(int j = 0; j < 9; j++)
       {
-         if((board[j][y] != usersInputValue) || (board[j][y] != *totalPossible))
+        if((board[i][y] != usersInputValue) || board[i][y] != 0)
          {
             //don't output zeroes as possible values
-            if(board[j][y] != 0)
-               {
-                  //set these values to true
-                  printsOut = true;
+            //std::cout << totalPossible[i] << ", ";
+            temp = true;
             }
-            //for those values set to true, output them
-            if(printsOut == true)
-            {
-               std::cout << totalPossible[i] << ", ";
-               //otherwise, output nothing
-            } else
-            {
-               std::cout << "";
-            }
-      }
       }
    
          //second nested for loops checks nondrant rows x 3
@@ -149,26 +131,15 @@ int translateValues(int board[][9], int usersInputValue, int x, int y)
               for(int j = minimumColumn; j <= 3; j++)
               {
                  //compare existing board numbers, user's desired input, and totalPossible values
-                 if((board[x][y] != usersInputValue) || (board[x][y] != *totalPossible))
-                  {
-                     //don't output zeroes as possible values
-                     if(board[x][y] != 0)
-                        {
-                           //set these values to true
-                           printsOut = true;
-                     }
-                     //for those values set to true, output them
-                     if(printsOut == true)
-                     {
-                        std::cout << totalPossible[i] << ", ";
-                        //otherwise, output nothing
-                     } else
-                     {
-                        std::cout << "";
-                     }
-                  }
+                 if((board[x][y] != usersInputValue) || board[x][y] != 0)
+                 {
+                    //don't output zeroes as possible values
+                    //std::cout << totalPossible[i] << ", ";
+                    temp = true;
+                    }
               }
            }
+   std::cout << std::endl;
    return usersInputValue;
 }
 
