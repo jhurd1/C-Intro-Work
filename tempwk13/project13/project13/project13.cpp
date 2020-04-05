@@ -5,10 +5,12 @@
 * Author:
 *    Jamie Hurd
 * Summary:
-*    This program outputs Sudoku board without error checks.
-*    Estimated:  1.0 hrs
-*    Actual:     15.0 hrs
-*      Please describe briefly what was the most difficult part: Everything!
+*    This program outputs Sudoku board with error checks.
+*    Estimated:  10.0 hrs
+*    Actual:     25.0 hrs
+*      The most difficult part involved the translateValues function. I wrestled with it for several
+* days, trying to get it to output the possible values or return the error that the coordinate
+* is not valid.
 ************************************************************************/
 
 #include <iostream>
@@ -75,26 +77,10 @@ public:
 
 /************************************************************************
 * translateValues
-* call it from editSquare and possibleValues
-* should know what existing values are from the read() of board
-* should scan row, column, and nondrant for a match of the value input from possibleValues
-* should compare that value with those in row, column, and nondrant
-* returns available options for the value
 ************************************************************************/
-int translateValues(int board[][9], int usersInputValue, int x, int y)
+int translateValues(int board[][9], int usersInputValue, int x, int y, std::string square)
 {
    bool temp = false;
-   /*Consider the following
-   {
-      char a[] = "software";
-      bool b[] =
-         { false, true, false, false,
-           false, true, false, true };
-
-      for (int i = 0; i < 8; i++)
-         if (b[i])
-            cout << a[i];
-   }*/
    int i = 0;
    int totalPossible[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
    bool tempArray[10];
@@ -109,27 +95,21 @@ int translateValues(int board[][9], int usersInputValue, int x, int y)
       //hold x as  the constant here to represent the row
       if((board[x][i] != usersInputValue) || board[x][i] != 0)
       {
-         //don't output zeroes as possible values
-         //std::cout << totalPossible[i] << ", ";
          temp = true;
          tempArray[i] = temp;
          }
       }
-
 
       //check column for input value from possibleValues()
       for(int j = 0; j < 9; j++)
       {
         if((board[i][y] != usersInputValue) || board[i][y] != 0)
          {
-            //don't output zeroes as possible values
-            //std::cout << totalPossible[i] << ", ";
             temp = true;
             tempArray[i] = temp;
             }
       }
 
-   
          //second nested for loops checks nondrant rows x 3
          for(int i = minimumRow; i <= 3; i++)
            {
@@ -138,20 +118,21 @@ int translateValues(int board[][9], int usersInputValue, int x, int y)
                  //compare existing board numbers, user's desired input, and totalPossible values
                  if((board[x][y] != usersInputValue) || board[x][y] != 0)
                  {
-                    //don't output zeroes as possible values
-                    //std::cout << totalPossible[i] << ", ";
                     temp = true;
                     tempArray[i] = temp;
                     }
               }
            }
    
-   //output the possible values
+   //output the possible values from the above loops
    for(int i = 0; i < 10; i++)
    {
       if(tempArray[i])
       {
          std::cout << totalPossible[i] << ", ";
+      } else
+      {
+         std::cout << "ERROR: Value " << "'" << usersInputValue << "'" <<  "in square " << square << " is invalid" << std::endl;
       }
    }
     
@@ -179,19 +160,21 @@ int translateValues(int board[][9], int usersInputValue, int x, int y)
         std::cout << "ERROR: Value " << "'" << square << "'" << "is invalid" << std::endl;
         //write an if condition to see if the square already has a value
         editSquare(board, charColumn, charRow, rowIndex, columnIndex);
-     } /*else
+     } else
      {
-        possibleValues(board, charColumn, charRow, rowIndex, columnIndex, square);
-        }*/
-   std::cout << "The possible values for '" << square <<  "' are: ";
-   for(int i = 0; i < 9; i++)//iterates across the nondrant (ninth part of a "quadrant").
+        translateValues(board, usersInputValue, x, y, square);
+        }
+   //The following block was at fault for causing the voluminous output I originally thought
+   //happened in translateValues()
+   //std::cout << "The possible values for '" << square <<  "' are: ";
+ /*  for(int i = 0; i < 9; i++)//iterates across the nondrant (ninth part of a "quadrant").
    {
       if(usersInputValue != 0)
       {
-            translateValues(board, usersInputValue, x, y);
+            translateValues(board, usersInputValue, x, y, square);
             std::cout << (value += usersInputValue) << ", ";//concatenate string values with possibleValues item
       }
-   }
+   }*/
    return usersInputValue;
 }
 
@@ -237,7 +220,6 @@ void write(int board[][9])
 
 /***********************************************************************
 * displayOptions
-* pass those values as reference to make them changeable
 ************************************************************************/
    void displayOptions(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex)
 {
@@ -278,7 +260,6 @@ int read(int board[][9])
 
 /************************************************************************
 * interactions
-* recursive call or a indefinite loop until Q is entered; or a do/while loop or for-each loop
 ************************************************************************/
  void interactions(int board[][9], char& charColumn, char& charRow, int & rowIndex, int & columnIndex,
                    std::string square)
@@ -309,6 +290,7 @@ int read(int board[][9])
    interactions(board, charColumn, charRow, rowIndex, columnIndex, square);
 }
 };//end of class
+
 /***********************************************************************
 * main
 ************************************************************************/
