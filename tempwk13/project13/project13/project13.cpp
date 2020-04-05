@@ -97,6 +97,7 @@ int translateValues(int board[][9], int usersInputValue, int x, int y)
    }*/
    int i = 0;
    int totalPossible[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+   bool tempArray[10];
    
    //nondrant math
    int minimumColumn = (y / 3) * 3;
@@ -111,8 +112,10 @@ int translateValues(int board[][9], int usersInputValue, int x, int y)
          //don't output zeroes as possible values
          //std::cout << totalPossible[i] << ", ";
          temp = true;
+         tempArray[i] = temp;
          }
-   }
+      }
+
 
       //check column for input value from possibleValues()
       for(int j = 0; j < 9; j++)
@@ -122,8 +125,10 @@ int translateValues(int board[][9], int usersInputValue, int x, int y)
             //don't output zeroes as possible values
             //std::cout << totalPossible[i] << ", ";
             temp = true;
+            tempArray[i] = temp;
             }
       }
+
    
          //second nested for loops checks nondrant rows x 3
          for(int i = minimumRow; i <= 3; i++)
@@ -136,9 +141,20 @@ int translateValues(int board[][9], int usersInputValue, int x, int y)
                     //don't output zeroes as possible values
                     //std::cout << totalPossible[i] << ", ";
                     temp = true;
+                    tempArray[i] = temp;
                     }
               }
            }
+   
+   //output the possible values
+   for(int i = 0; i < 10; i++)
+   {
+      if(tempArray[i])
+      {
+         std::cout << totalPossible[i] << ", ";
+      }
+   }
+    
    std::cout << std::endl;
    return usersInputValue;
 }
