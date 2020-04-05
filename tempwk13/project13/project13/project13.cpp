@@ -24,6 +24,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include<iterator>
+#include <vector>
 #define ROW 9
 #define COLUMN 9;
 
@@ -80,10 +81,13 @@ public:
 ************************************************************************/
 int translateValues(int board[][9], int usersInputValue, int x, int y, std::string square)
 {
-   bool temp = false;
+  // bool temp = false;
    int i = 0;
-   int totalPossible[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-   bool tempArray[10];
+   int temp = 0;
+   int tempArray1[10];
+   int tempArray2[10];
+   int tempArray3[10];
+   std::vector<int> totalPossibleVec;
    
    //nondrant math
    int minimumColumn = (y / 3) * 3;
@@ -95,8 +99,10 @@ int translateValues(int board[][9], int usersInputValue, int x, int y, std::stri
       //hold x as  the constant here to represent the row
       if((board[x][i] != usersInputValue) || board[x][i] != 0)
       {
-         temp = true;
-         tempArray[i] = temp;
+         tempArray1[temp] = i;
+         } else
+         {
+            std::cout << "ERROR: Value" << "'" << usersInputValue << "'" <<  "in square " <<  square << "  is invalid" <<  std::endl;
          }
       }
 
@@ -105,8 +111,10 @@ int translateValues(int board[][9], int usersInputValue, int x, int y, std::stri
       {
         if((board[i][y] != usersInputValue) || board[i][y] != 0)
          {
-            temp = true;
-            tempArray[i] = temp;
+            tempArray2[temp] = i;
+            } else
+            {
+               std::cout << "ERROR: Value" << "'" << usersInputValue << "'" <<  "in square " <<  square << "  is invalid" <<  std::endl;
             }
       }
 
@@ -118,24 +126,15 @@ int translateValues(int board[][9], int usersInputValue, int x, int y, std::stri
                  //compare existing board numbers, user's desired input, and totalPossible values
                  if((board[x][y] != usersInputValue) || board[x][y] != 0)
                  {
-                    temp = true;
-                    tempArray[i] = temp;
+                    tempArray3[temp] = i;
+                    } else
+                    {
+                       std::cout << "ERROR: Value" << "'" << usersInputValue << "'" <<  "in square " <<  square << "  is invalid" <<  std::endl;
                     }
               }
            }
    
-   //output the possible values from the above loops
-   for(int i = 0; i < 10; i++)
-   {
-      if(tempArray[i])
-      {
-         std::cout << totalPossible[i] << ", ";
-      } else
-      {
-         std::cout << "ERROR: Value " << "'" << usersInputValue << "'" <<  "in square " << square << " is invalid" << std::endl;
-      }
-   }
-    
+   std::cout << "The possible values for " << square << " are: " << tempArray1[temp] << ", " << tempArray2[temp] << ", " << tempArray3[temp];
    std::cout << std::endl;
    return usersInputValue;
 }
@@ -149,8 +148,6 @@ int translateValues(int board[][9], int usersInputValue, int x, int y, std::stri
                     std::string square)//must copy code from editSquare into here instead of passing in square
 {
    int x = 0, y = 0;
-   int value = 0;
-   //int x, y ;//valuesInt[9];
    int usersInputValue;
    std::cout << "What is the value at " << "'" << square << "'" << ": ";
    std::cin >> usersInputValue;
@@ -164,17 +161,6 @@ int translateValues(int board[][9], int usersInputValue, int x, int y, std::stri
      {
         translateValues(board, usersInputValue, x, y, square);
         }
-   //The following block was at fault for causing the voluminous output I originally thought
-   //happened in translateValues()
-   //std::cout << "The possible values for '" << square <<  "' are: ";
- /*  for(int i = 0; i < 9; i++)//iterates across the nondrant (ninth part of a "quadrant").
-   {
-      if(usersInputValue != 0)
-      {
-            translateValues(board, usersInputValue, x, y, square);
-            std::cout << (value += usersInputValue) << ", ";//concatenate string values with possibleValues item
-      }
-   }*/
    return usersInputValue;
 }
 
