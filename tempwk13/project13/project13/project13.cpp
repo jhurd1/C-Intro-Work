@@ -87,8 +87,7 @@ int translateValues(int board[][9], int usersInputValue, int x, int y, std::stri
    int tempArray1[10];
    int tempArray2[10];
    int tempArray3[10];
-   std::vector<int> totalPossibleVec;
-   
+
    //nondrant math
    int minimumColumn = (y / 3) * 3;
    int minimumRow = (x / 3) * 3;
@@ -111,6 +110,7 @@ int translateValues(int board[][9], int usersInputValue, int x, int y, std::stri
       {
         if((board[i][y] != usersInputValue) || board[i][y] != 0)
          {
+            i++;
             tempArray2[temp] = i;
             } else
             {
@@ -127,6 +127,7 @@ int translateValues(int board[][9], int usersInputValue, int x, int y, std::stri
                  if((board[x][y] != usersInputValue) || board[x][y] != 0)
                  {
                     tempArray3[temp] = i;
+                    tempArray3[temp + 1] = j;
                     } else
                     {
                        std::cout << "ERROR: Value" << "'" << usersInputValue << "'" <<  "in square " <<  square << "  is invalid" <<  std::endl;
@@ -134,7 +135,22 @@ int translateValues(int board[][9], int usersInputValue, int x, int y, std::stri
               }
            }
    
-   std::cout << "The possible values for " << square << " are: " << tempArray1[temp] << ", " << tempArray2[temp] << ", " << tempArray3[temp];
+   //combine the three arrays to get all the possible values from each of three searches
+   //https://www.techiedelight.com/join-two-arrays-cpp/
+   int a = sizeof(tempArray1)/sizeof(tempArray1[0]);
+   int b = sizeof(tempArray2)/sizeof(tempArray2[0]);
+   int c = sizeof(tempArray3)/sizeof(tempArray3[0]);
+   int threeArraysInOne[a + b + c];
+   std::copy(tempArray1, tempArray1 + a, threeArraysInOne);
+   std::copy(tempArray2, tempArray2 + b, threeArraysInOne + a);
+   std::copy(tempArray3, tempArray3 + c, threeArraysInOne + b + a);
+   std::cout << "The possible values for " << square << " are: ";
+   //output the new array values to show the user the possible values
+   for(int i = 0; i < a + b + c; i++)
+   {
+      if(threeArraysInOne[i] != 0)
+       std::cout << threeArraysInOne[i] << ", ";
+   }
    std::cout << std::endl;
    return usersInputValue;
 }
